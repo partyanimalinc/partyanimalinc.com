@@ -8,7 +8,7 @@ import structural from "./redirects.data.json";
 //
 // What's wired up:
 //   - This file: corp / exact legacy redirects (e.g. /Shop -> /products).
-//   - src/middleware.ts: ALL `/Products/*` and `/Licenses/*` routing, including
+//   - src/proxy.ts: ALL `/Products/*` and `/Licenses/*` routing, including
 //     per-product `/Products/{Name}.html` -> `/products/{slug}`.
 //
 // Two reasons `/Products/*` and `/Licenses/*` are NOT in this config:
@@ -22,7 +22,7 @@ export type LegacyRedirect = { source: string; destination: string; permanent: b
 
 export const legacyRedirects: LegacyRedirect[] = (structural as LegacyRedirect[])
   // `/Products/*`, `/Licenses/*`, and the reseller paths are handled in
-  // src/middleware.ts (case-sensitive) so they don't shadow the new lowercase
+  // src/proxy.ts (case-sensitive) so they don't shadow the new lowercase
   // pages under case-insensitive config matching.
   .filter(
     (r) =>

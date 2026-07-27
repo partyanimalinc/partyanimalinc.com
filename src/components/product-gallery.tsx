@@ -18,6 +18,12 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
     [count],
   );
 
+  // Open the lightbox at a specific image (used by every desktop tile).
+  const openAt = useCallback((i: number) => {
+    setActive(i);
+    setOpen(true);
+  }, []);
+
   // Keyboard controls + body-scroll lock while the lightbox is open.
   useEffect(() => {
     if (!open) return;
@@ -38,50 +44,92 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="relative aspect-square overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm">
-        {main ? (
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            aria-label="View larger image"
-            className="group block h-full w-full cursor-zoom-in"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={main} alt={alt} className="h-full w-full object-contain p-6" />
-            {/* zoom hint */}
-            <span
-              aria-hidden
-              className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-ink/70 text-white opacity-80 shadow-md transition-opacity group-hover:opacity-100"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
-                <path d="M21 21l-4.3-4.3M11 8v6M8 11h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </span>
-          </button>
-        ) : (
+      {images.length === 0 ? (
+        <div className="aspect-square overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm">
           <ProductImagePlaceholder />
-        )}
-      </div>
-
-      {images.length > 1 && (
-        <div className="grid grid-cols-5 gap-3">
-          {images.slice(0, 10).map((img, i) => (
-            <button
-              key={img}
-              type="button"
-              onClick={() => setActive(i)}
-              aria-label={`View image ${i + 1}`}
-              aria-current={i === active}
-              className={`aspect-square overflow-hidden rounded-lg border bg-white transition-colors ${
-                i === active ? "border-brand-red ring-1 ring-brand-red" : "border-black/10 hover:border-black/40"
-              }`}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img} alt="" className="h-full w-full object-contain p-1.5" />
-            </button>
-          ))}
         </div>
+      ) : (
+        <>
+          {/* Desktop: scrolling tiled gallery — a full-width hero followed by
+              2-up rows. Every image is click-to-zoom into the lightbox. */}
+          <div className="hidden grid-cols-2 gap-3 lg:grid">
+            {images.map((img, i) => (
+              <button
+                key={`d-${i}-${img}`}
+                type="button"
+                onClick={() => openAt(i)}
+                aria-label={`View image ${i + 1} larger`}
+                className={`group relative aspect-square cursor-zoom-in overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm ${
+                  i === 0 ? "col-span-2" : ""
+                }`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={img}
+                  alt={i === 0 ? alt : ""}
+                  className={`h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03] ${
+                    i === 0 ? "p-10" : "p-6"
+                  }`}
+                />
+                {/* zoom hint (reveals on hover) */}
+                <span
+                  aria-hidden
+                  className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-ink/70 text-white opacity-0 shadow-md transition-opacity group-hover:opacity-100"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+                    <path d="M21 21l-4.3-4.3M11 8v6M8 11h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile/tablet: main image + thumbnail switcher */}
+          <div className="flex flex-col gap-4 lg:hidden">
+            <div className="relative aspect-square overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm">
+              <button
+                type="button"
+                onClick={() => setOpen(true)}
+                aria-label="View larger image"
+                className="group block h-full w-full cursor-zoom-in"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={main} alt={alt} className="h-full w-full object-contain p-6" />
+                {/* zoom hint */}
+                <span
+                  aria-hidden
+                  className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-ink/70 text-white opacity-80 shadow-md transition-opacity group-hover:opacity-100"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+                    <path d="M21 21l-4.3-4.3M11 8v6M8 11h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </button>
+            </div>
+
+            {images.length > 1 && (
+              <div className="grid grid-cols-5 gap-3">
+                {images.slice(0, 10).map((img, i) => (
+                  <button
+                    key={`m-${i}-${img}`}
+                    type="button"
+                    onClick={() => setActive(i)}
+                    aria-label={`View image ${i + 1}`}
+                    aria-current={i === active}
+                    className={`aspect-square overflow-hidden rounded-lg border bg-white transition-colors ${
+                      i === active ? "border-brand-red ring-1 ring-brand-red" : "border-black/10 hover:border-black/40"
+                    }`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={img} alt="" className="h-full w-full object-contain p-1.5" />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </>
       )}
 
       {open && main && (

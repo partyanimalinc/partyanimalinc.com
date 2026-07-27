@@ -2,9 +2,9 @@ import { NextResponse, type NextRequest } from "next/server";
 import { slugify } from "@/lib/slug";
 import legacyCats from "@/lib/legacy-product-categories.json";
 
-// Legacy NetSuite URL routing. Lives in middleware (not next.config
+// Legacy NetSuite URL routing. Lives in proxy (not next.config
 // `redirects()`) because config sources match case-INSENSITIVELY and would
-// swallow the new lowercase pages; middleware sees exact case and acts only on
+// swallow the new lowercase pages; proxy sees exact case and acts only on
 // the capital-letter legacy namespaces.
 //
 // Products:
@@ -31,7 +31,7 @@ const EXACT: Record<string, string> = {
   "/Reseller-Specials": "/become-a-reseller",
 };
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const p = req.nextUrl.pathname;
   const url = req.nextUrl.clone();
 

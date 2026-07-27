@@ -214,6 +214,34 @@ export async function getProduct(slug: string): Promise<ProductDetail | null> {
 }
 
 // ---------------------------------------------------------------------------
+// Nav typeahead: lightweight product search (SKU / name), exact + fuzzy.
+// ---------------------------------------------------------------------------
+export type SearchProduct = {
+  sku: string;
+  slug: string | null;
+  name: string;
+  image: string | null;
+  series: number | null;
+};
+
+export async function searchProducts(
+  q: string,
+  limit = 8,
+): Promise<{ products: SearchProduct[]; fuzzy: boolean }> {
+  const p = new URLSearchParams({ q, limit: String(limit) });
+  try {
+    const r = await fetch(`${BASE}/api/public/search?${p}`, {
+      headers: headers(),
+      next: { revalidate: 60 },
+    });
+    if (!r.ok) return { products: [], fuzzy: false };
+    return await r.json();
+  } catch {
+    return { products: [], fuzzy: false };
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Licenses (leagues + teams) taxonomy for /licenses hub + landing pages.
 // ---------------------------------------------------------------------------
 export type LicenseTeam = {

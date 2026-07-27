@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { NAV } from "@/lib/site";
 import { EnterToWinButton } from "@/components/enter-to-win-button";
+import { NavSearch } from "@/components/nav-search";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -75,8 +76,9 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        {/* CTA + mobile toggle */}
+        {/* Search + CTA + mobile toggle */}
         <div className="flex items-center gap-3">
+          <NavSearch />
           <span className="hidden lg:block">
             <EnterToWinButton />
           </span>

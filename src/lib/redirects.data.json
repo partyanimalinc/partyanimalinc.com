@@ -1,0 +1,912 @@
+[
+  {
+    "source": "/Products/Projector-Flashlights/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Big-Shot-Ballers/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Speed-Cubes/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Electric-Football/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/TeenyMates/",
+    "destination": "/teenymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/PA-Sport-Stamps/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/SqueezyMates/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Jumbo-Squeezys/",
+    "destination": "/jumbo-squeezy",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Team-Shield-Banners/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Premium-Garden-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Player-Silhouette-Banner-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Premium-Banner-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Tall-Team-Flag-Kits/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Other-Flags-Stands-and-Poles/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Vertical-Pennants/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Party-Cup-4-Packs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Giant-8ft-Banners/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Big-Sip-Water-Bottles/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Water-Cooler-Mugs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Big-Sip-Drink-Mugs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/3D-Football-Mugs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Helmet-Bottle-Openers/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MotiGlow-Light-Up-Signs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/LED-Night-Lights/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Helmet-String-Lights/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Squeezy-Water-Bottles/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Embossed-Metal-Signs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Laser-Cut-Metal-Signs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Player-Jersey-Aprons/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Face-Decorations/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Shop/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/MLBPA/",
+    "destination": "/licenses",
+    "permanent": true
+  },
+  {
+    "source": "/MORE/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/about-us",
+    "destination": "/about",
+    "permanent": true
+  },
+  {
+    "source": "/Become-A-Reseller.html",
+    "destination": "/where-to-buy",
+    "permanent": true
+  },
+  {
+    "source": "/contact-us",
+    "destination": "/contact",
+    "permanent": true
+  },
+  {
+    "source": "/Become-A-Reseller",
+    "destination": "/where-to-buy",
+    "permanent": true
+  },
+  {
+    "source": "/faq.html",
+    "destination": "/contact",
+    "permanent": true
+  },
+  {
+    "source": "/Reseller-Specials",
+    "destination": "/where-to-buy",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Store-Displays/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Game-Day/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Whats-New/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Jumbo-Squeezy-Helmets/",
+    "destination": "/jumbo-squeezy",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Wall-Decor/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Flags-Banners/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Toys-Fun/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Drinkware/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Hot-Items/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-LED-Night-Lights/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Team-Frosted-Night-Lights/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLS-Squeezy-Water-Bottles/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Projector-Flashlights/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Projector-Flashlights/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Toy-Newsletter-Signup.html",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Big-Shot-Ballers/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Big-Shot-Ballers/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Legends-Big-Shot-Ballers/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NBA-Big-Shot-Ballers/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Electric-Football-Team-Sets/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Electric-Football-Action-Figures/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Electric-Football-Game-Sets/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Electric-Football-Jersey-Number-Sets/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/TeenyMates-Collector-Tins/",
+    "destination": "/teenymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/TeenyMates-Locker-Room-Sets/",
+    "destination": "/teenymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/TeenyMates-Advent-Calendars/",
+    "destination": "/teenymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/TeenyMates-Blind-Packs/",
+    "destination": "/teenymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/TeenyMates-Gift-Sets/",
+    "destination": "/teenymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/TeenyMates-Tagalong-Keychains/",
+    "destination": "/teenymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/TeenyMates-Gravity-Feed-Displays/",
+    "destination": "/teenymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-PASport-Stamps/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/SqueezyMates-Gift-Sets/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/DC-Comics-SqueezyMates/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/SqueezyMates-Single-Figures/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/SqueezyMates-Blind-Packs/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NBA-Garden-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Garden-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLS-Premium-Garden-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Garden-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NHL-Garden-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Garden-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NBA-Applique-Banner-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLS-Premium-Banner-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Applique-Banner-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Applique-Banner-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NHL-Applique-Banner-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Applique-Banner-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Tall-Team-Flag-Kits/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Tall-Team-Flag-Kits/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Yard-Wall-Pennants/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Flag-Poles/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Bold-Logo-Garden-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Plastic-Lawn-Signs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Swooper-Flag-Kits/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Bold-Logo-Banner-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Party-Cup-4-Packs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Party-Cups/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Party-Cup-4-Packs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Giant-8ft-Banners/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NHL-Giant-8ft-Banners/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Giant-8ft-Banners/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Big-Sip-3D-Water-Bottles/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/WWE-Big-Sip-3D-Water-Bottles/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/DC-Comics-Big-Sips/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Big-Sip-3D-Water-Bottles/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NBA-Big-Sips/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Big-Sip-3D-Water-Bottles/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NHL-Big-Sips/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Water-Cooler-Mugs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Water-Cooler-Mugs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Water-Cooler-Mugs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Football-Mugs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Football-Mugs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NHL-MotiGlow-Light-Up-Signs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-MotiGlow-Light-Up-Signs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-MotiGlow-Light-Up-Signs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-MotiGlow-Light-Up-Signs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/DC-Comics-Night-Lights/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NHL-LED-Night-Lights/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-LED-Night-Lights/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-String-Lights/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-String-Lights/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NHL-Squeezy-Water-Bottles/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Squeezy-Water-Bottles/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Squeezy-Water-Bottles/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Squeezy-Water-Bottles/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NHL-Embossed-Metal-Signs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Embossed-Metal-Signs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Superhero-Metal-Signs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Magnetic-Standings-Boards/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Embossed-Metal-Signs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Player-Jersey-Aprons/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Team-Jersey-Aprons/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Team-Jersey-Aprons/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Face-Decorations/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Face-Decorations/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Wholesale-Product-Catalog.html",
+    "destination": "/where-to-buy",
+    "permanent": true
+  },
+  {
+    "source": "/contact-us.html",
+    "destination": "/contact",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Licensed-MLS-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NHL-Big-Sip-Water-Bottles/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLS-Soccer-TeenyMates/",
+    "destination": "/teenymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Big-Sip-Mugs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Players-SqueezyMates/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Player-Uniform-Aprons/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/New-TeenyMates/",
+    "destination": "/teenymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/New-Drinkware/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Embossed-Metal-Helmet-Signs/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/TeenyFreaks/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Other-Toys/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/FlexMates/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Ride-On-Cars/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Mad-Lids/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Kites/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Team-Kites/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-TeenyMates-Tagalongs-Keychains/",
+    "destination": "/teenymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NHL-TeenyMates-Tagalongs-Keychains/",
+    "destination": "/teenymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/TMKC-WWE/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-NFL-TeenyMate-Tagalong-Keychains/",
+    "destination": "/teenymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-TeenyMates-Tagalongs-Keychains/",
+    "destination": "/teenymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-SqueezyMates/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NBA-Team-SqueezyMates/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Team-SqueezyMates/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Player-SqueezyMates/",
+    "destination": "/squeezymates",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Swooper-Flag-Kits/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Swooper-Flag-Kits/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Bold-Logo-Banner-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NHL-Bold-Logo-Banner-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Bold-Logo-Banner-Flags/",
+    "destination": "/team-gear",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Lil-Teammates/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Ride-On-Cars/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Ride-On-Cars/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Lil-Teammates-Single-Packs/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/Lil-Teammates-Team-Sets/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NHL-Lil-Teammates/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Lil-Teammates/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NBA-Lil-Teammates/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Lil-Teammates-Team-Sets/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Lil-Teammates-Team-Sets/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/MLB-Lil-Teammates/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NFL-Lil-Teammates/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/College-Lil-Teammates-Team-Sets/",
+    "destination": "/products",
+    "permanent": true
+  },
+  {
+    "source": "/Products/NHL-Lil-Teammates-Team-Sets/",
+    "destination": "/products",
+    "permanent": true
+  }
+]

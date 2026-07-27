@@ -1,0 +1,193 @@
+@import "tailwindcss";
+
+/* ---- Brand design tokens (from Figma "Corp-site") ---- */
+@theme {
+  --color-brand-red: #d90f1d;
+  --color-brand-red-dark: #b00b16;
+  --color-brand-gold: #fdb902;
+  --color-ink: #0a0a0a;
+  --color-ink-soft: #141414;
+  --color-ink-line: #262626;
+
+  /* Font families are provided by next/font as CSS variables (see layout.tsx).
+     Kommon Grotesk Bold Italic is the licensed heading face; Archivo is the
+     drop-in substitute until the licensed .woff2 is added. */
+  --font-heading: var(--font-archivo), system-ui, sans-serif;
+  --font-body: var(--font-montserrat), system-ui, sans-serif;
+  --font-brush: var(--font-pinkblue), system-ui, cursive;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--color-ink);
+  color: #ffffff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Flex/grid children default to min-width:auto, which lets wide content (e.g.
+   the newsletter field) overflow narrow columns and shove the layout. Reset it
+   globally since Tailwind's min-w-0 utility isn't reliably emitted in this build. */
+main > *,
+footer,
+footer * {
+  min-width: 0;
+}
+
+/* Athletic heading treatment: substitute is italicized to echo Kommon Bold Italic. */
+.font-heading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+/* Utility for the uppercase italic nav / eyebrow labels */
+.label-athletic {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+/* Legibility shadow for text set over hero imagery */
+.text-shadow-hero {
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.65),
+    0 2px 18px rgba(0, 0, 0, 0.8);
+}
+
+/* Infinite logo marquee (licenses & partners) */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 45s linear infinite;
+  will-change: transform;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+/* Rendered PIM description HTML (product detail) */
+.rich-text p {
+  margin: 0 0 0.75rem;
+  line-height: 1.65;
+}
+.rich-text p:last-child {
+  margin-bottom: 0;
+}
+.rich-text ul,
+.rich-text ol {
+  margin: 0 0 0.75rem;
+  padding-left: 1.15rem;
+  list-style: disc;
+}
+.rich-text ol {
+  list-style: decimal;
+}
+.rich-text li {
+  margin: 0.25rem 0;
+  line-height: 1.55;
+}
+.rich-text b,
+.rich-text strong {
+  font-weight: 700;
+}
+
+/* Long-form legal / policy copy */
+.legal-prose {
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.7;
+}
+.legal-prose > p {
+  margin: 0 0 1.15rem;
+}
+.legal-prose h2 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  font-size: 1.35rem;
+  margin: 2.25rem 0 0.85rem;
+}
+.legal-prose h2:first-child {
+  margin-top: 0;
+}
+.legal-prose ul {
+  margin: 0 0 1.15rem;
+  padding-left: 1.2rem;
+  list-style: disc;
+}
+.legal-prose li {
+  margin: 0.35rem 0;
+}
+.legal-prose a {
+  color: var(--color-brand-red);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal-prose a:hover {
+  color: #ffffff;
+}
+.legal-prose strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Mobile filter drawer entrance */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

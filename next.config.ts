@@ -12,6 +12,17 @@ const nextConfig: NextConfig = {
   async redirects() {
     return legacyRedirects;
   },
+  // Keep pre-launch preview hosts (*.vercel.app) out of the search index. The
+  // real partyanimalinc.com host doesn't match, so it indexes normally at cutover.
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "(.*\\.vercel\\.app)" }],
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

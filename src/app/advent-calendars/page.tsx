@@ -200,13 +200,21 @@ export default async function AdventCalendarsPage() {
 
       {/* ===================== RETAILERS ===================== */}
       <section className="relative overflow-hidden border-t border-ink-line">
-        {/* festive bg with a red brush divider baked into the center */}
+        {/* mobile bg: portrait, no divider (the columns stack) */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/advent/shop-at-bg-mobile.png"
+          alt=""
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover md:hidden"
+        />
+        {/* desktop bg: red brush divider baked into the center */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/advent/shop-at-bg.png"
           alt=""
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 hidden h-full w-full object-cover md:block"
         />
         <div aria-hidden className="absolute inset-0" style={{ background: "rgba(6,7,9,0.32)" }} />
         <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-2 md:gap-0 lg:px-8">

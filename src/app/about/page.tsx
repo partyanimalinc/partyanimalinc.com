@@ -29,12 +29,12 @@ export default function AboutPage() {
         </div>
 
         <h2 className="font-heading text-center text-xl uppercase leading-tight text-white sm:text-3xl">
-          Bringing <span className="text-brand-red">the Party</span> for 35 Years
+          Bringing <span className="text-brand-red">the Party</span> for 37 Years
         </h2>
 
         <div className="mt-8 space-y-6 text-lg leading-relaxed text-white/80">
           <p>
-            <strong className="text-white">Since 1991</strong>, Party Animal has
+            <strong className="text-white">Since 1989</strong>, Party Animal has
             made officially licensed products that let fans celebrate the teams
             and players they love. We turned fandom into something you can hold,
             display, and share, and every piece still comes from the same place

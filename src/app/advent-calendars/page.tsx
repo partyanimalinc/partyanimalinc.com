@@ -217,14 +217,14 @@ export default async function AdventCalendarsPage() {
           className="absolute inset-0 hidden h-full w-full object-cover md:block"
         />
         <div aria-hidden className="absolute inset-0" style={{ background: "rgba(6,7,9,0.32)" }} />
-        <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-2 md:gap-0 lg:px-8">
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 py-20 md:grid-cols-2 md:gap-0 lg:px-8">
           {/* Amazon (left of the red divider) */}
           <div className="flex flex-col items-center text-center md:pr-14">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/advent/amazon-available.png" alt="Available at Amazon" width={1500} height={723} className="h-20 w-auto sm:h-24" />
             <p className="mt-3 text-sm text-white/60">Fast, easy, and reliable.</p>
             <a
-              href="https://www.amazon.com/stores/PartyAnimalInc/page/6A6BA724-BD28-4888-868B-B57287C3DFCB"
+              href="https://www.amazon.com/stores/page/6A6BA724-BD28-4888-868B-B57287C3DFCB/search?terms=Advent%20Calendar"
               target="_blank"
               rel="noopener noreferrer"
               className="label-athletic mt-6 inline-flex items-center gap-2 rounded-full bg-brand-red px-7 py-3.5 text-sm text-white shadow-lg shadow-brand-red/30 transition-colors hover:bg-brand-red-dark"
@@ -241,14 +241,33 @@ export default async function AdventCalendarsPage() {
             <img src="/advent/dsg-primary.svg" alt="Dick's Sporting Goods" width={946} height={388} className="h-14 w-auto sm:h-16" />
             <p className="mt-4 font-heading text-xl uppercase text-white">Exclusive Rare Figures</p>
             <p className="font-heading text-lg uppercase text-brand-gold">Only at Dick&apos;s</p>
-            <p className="mt-2 max-w-xs text-sm text-white/70">
-              Find ultra rare, exclusive figures in select TeenyMates Advent Calendars.
+            {/* the 4 exclusive rare chase figures */}
+            <div className="mt-5 flex items-end justify-center gap-1.5 sm:gap-3">
+              {[1, 2, 3, 4].map((i) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={i}
+                  src={`/advent/dsg-rarefig${i}.png`}
+                  alt=""
+                  aria-hidden
+                  className="h-24 w-auto sm:h-28 lg:h-32"
+                  style={{ filter: "drop-shadow(0 10px 18px rgba(0,0,0,0.5))" }}
+                />
+              ))}
+            </div>
+            <p className="mt-4 max-w-xs text-sm text-white/70">
+              Find ultra rare chase figures in select TeenyMates Advent Calendars.
             </p>
             <a
-              href="#"
-              className="label-athletic mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm text-white transition-colors hover:border-white hover:bg-white/10"
+              href="https://www.dickssportinggoods.com/f/fan-shop-advent-calendars"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="label-athletic mt-5 inline-flex items-center gap-2 rounded-full border border-white/40 px-7 py-3.5 text-sm text-white transition-colors hover:border-brand-red hover:bg-brand-red"
             >
-              Learn More
+              Shop at Dick&apos;s
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </a>
           </div>
         </div>

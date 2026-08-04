@@ -20,6 +20,7 @@ export async function CollectionCatalogPage({
   heroWidth,
   heroHeight,
   heroTextPos,
+  afterHero,
   description,
   searchParams,
 }: {
@@ -32,6 +33,9 @@ export async function CollectionCatalogPage({
   // Desktop overlay position of the description within the hero art. Per-brand
   // tunable since the four hero layouts differ.
   heroTextPos?: { top?: string; left?: string; width?: string };
+  // Optional band rendered between the hero and the catalog (e.g. TeenyMates
+  // "What Are TeenyMates?" explainer). Omitted brands render nothing here.
+  afterHero?: React.ReactNode;
   description: string;
   searchParams: Promise<SP>;
 }) {
@@ -87,6 +91,8 @@ export async function CollectionCatalogPage({
           </p>
         )}
       </section>
+
+      {afterHero}
 
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* When the description is overlaid on the hero (heroTextPos), show this

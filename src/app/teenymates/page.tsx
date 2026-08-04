@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CollectionCatalogPage } from "@/components/collection-catalog-page";
+import { WhatAreTeenymates } from "@/components/what-are-teenymates";
 
 export const metadata: Metadata = {
   title: "TeenyMates",
@@ -18,7 +19,7 @@ export default function TeenyMatesPage({ searchParams }: { searchParams: Promise
       heroSrc="/lineup/teenymates-hero.png"
       heroWidth={1672}
       heroHeight={941}
-      heroTextPos={{ top: "60%", left: "6%", width: "24%" }}
+      afterHero={<WhatAreTeenymates />}
       description="Tiny figures. Serious collectibles. Incredible detail, officially licensed teams, star players, and rare chase figures. Built for fans who never stop collecting."
       searchParams={searchParams}
     />

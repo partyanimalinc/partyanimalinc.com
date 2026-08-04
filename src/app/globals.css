@@ -191,3 +191,37 @@ footer * {
     transform: translateX(0);
   }
 }
+
+/* "What Are TeenyMates?" band — figures/pencils scale photo as a rotated
+   background layer behind the row content (see what-are-teenymates.tsx). */
+.wat-figures-bg {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 60px 20px 40px 20px;
+}
+/* Desktop only: figures/pencils as a rotated background behind the row, with
+   the feature row pushed down to sit beneath them. On mobile the figures show
+   as a real inline <img> instead (see what-are-teenymates.tsx), so it flows in
+   the whitespace between the intro and the features without overlap. */
+@media (min-width: 1024px) {
+  .wat-figures-bg {
+    /* extra left inset on desktop so the headline/intro isn't flush left */
+    padding-left: 4.5rem;
+  }
+  .wat-figures-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: url(/lineup/what-are/teenymates-pencil.png);
+    background-repeat: no-repeat;
+    background-position: 100% 16%;
+    background-size: 65%;
+    transform: rotate(-1.87deg);
+    pointer-events: none;
+  }
+  .wat-features {
+    margin-top: 30%;
+  }
+}

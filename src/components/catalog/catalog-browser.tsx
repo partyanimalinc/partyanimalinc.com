@@ -9,6 +9,7 @@ import { FilterDrawer } from "@/components/catalog/filter-drawer";
 import { SortMenu } from "@/components/catalog/sort-menu";
 import {
   catalogHref,
+  editionLabel,
   hasActiveFilters,
   SORT_OPTIONS,
   type CatalogSearch,
@@ -23,6 +24,8 @@ function SearchForm({ base, current }: { base: string; current: CatalogSearch })
       {current.league && <input type="hidden" name="league" value={current.league} />}
       {current.team && <input type="hidden" name="team" value={current.team} />}
       {current.series && <input type="hidden" name="series" value={current.series} />}
+      {current.line && <input type="hidden" name="line" value={current.line} />}
+      {current.edition && <input type="hidden" name="edition" value={current.edition} />}
       {current.sort && <input type="hidden" name="sort" value={current.sort} />}
       <input
         type="search"
@@ -63,6 +66,8 @@ function ActiveChips({
     chips.push({ label: applied.team, href: catalogHref(current, { team: null }, base) });
   if (current.series)
     chips.push({ label: `Series ${current.series}`, href: catalogHref(current, { series: null }, base) });
+  if (current.edition)
+    chips.push({ label: editionLabel(current.edition), href: catalogHref(current, { edition: null }, base) });
   if (current.q) chips.push({ label: `“${current.q}”`, href: catalogHref(current, { q: null }, base) });
 
   if (chips.length === 0) return null;

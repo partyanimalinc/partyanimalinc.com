@@ -15,8 +15,8 @@ const L = {
 };
 
 const FAVORITES: Fav[] = [
-  { league: "NFL Legends", series: "90's Pop", img: "nfl-legends", href: `/teenymates/all?league=${L.nflLegends}` },
-  { league: "NBA Legends", series: "90's Pop", img: "nba-legends", href: `/teenymates/all?league=${L.nbaLegends}` },
+  { league: "NFL Legends", series: "90's Pop", img: "nfl-legends", href: `/teenymates/all?league=${L.nflLegends}&edition=90s-pop` },
+  { league: "NBA Legends", series: "90's Pop", img: "nba-legends", href: `/teenymates/all?league=${L.nbaLegends}&edition=90s-pop` },
   { league: "NHL", series: "Series 12 · Silver", img: "nhl-silver", href: `/teenymates/all?league=${L.nhl}&series=12` },
   { league: "USSF", series: "Series 1", img: "ussf", href: `/teenymates/all?league=${L.ussf}&series=1` },
   { league: "MLB", series: "Series X (10)", img: "mlb-x", href: `/teenymates/all?league=${L.mlb}&series=10` },

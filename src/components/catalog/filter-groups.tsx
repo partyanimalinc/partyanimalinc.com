@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { catalogHref, CATALOG_BASE, type CatalogSearch } from "@/lib/catalog-url";
+import { catalogHref, CATALOG_BASE, editionLabel, type CatalogSearch } from "@/lib/catalog-url";
 import type { CatalogResponse } from "@/lib/pim";
 
 export type FeaturedCollection = { slug: string; name: string; href: string };
@@ -228,6 +228,28 @@ export function FilterGroups({
             </p>
           </div>
         )
+      )}
+
+      {/* Editions: themed one-off releases (90's Pop, Rookies) — a separate axis
+          from the numbered series, pinned to the bottom of the filter list. */}
+      {(facets.editions ?? []).length > 0 && (
+        <div>
+          <GroupHeading>Editions</GroupHeading>
+          <div className="flex flex-col gap-0.5">
+            {(facets.editions ?? []).map((e) => {
+              const active = current.edition === e.slug;
+              return (
+                <FacetRow
+                  key={e.slug}
+                  label={editionLabel(e.slug)}
+                  count={e.count}
+                  active={active}
+                  href={catalogHref(current, { edition: active ? null : e.slug }, base)}
+                />
+              );
+            })}
+          </div>
+        </div>
       )}
     </div>
   );

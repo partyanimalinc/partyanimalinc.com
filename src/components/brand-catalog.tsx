@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getCatalog } from "@/lib/pim";
-import { parseCatalogSearch } from "@/lib/catalog-url";
+import { parseCatalogSearch, editionLabel } from "@/lib/catalog-url";
 import { CatalogBrowser } from "@/components/catalog/catalog-browser";
 import { FEATURED_COLLECTIONS, TEAM_GEAR_SUBCATEGORIES } from "@/lib/featured-collections";
 import type { SubCategory } from "@/components/catalog/filter-groups";
@@ -36,6 +36,7 @@ export async function BrandCatalog({
     team: current.team,
     series: current.series ? Number(current.series) : undefined,
     line: current.line,
+    edition: current.edition,
     q: current.q,
     sort: current.sort,
     page: 1,
@@ -52,10 +53,13 @@ export async function BrandCatalog({
       : undefined;
   const teamName = current.team ? data.facets.teams.find((t) => t.id === current.team)?.name : undefined;
   const leagueName = current.league ? data.facets.leagues.find((l) => l.id === current.league)?.name : undefined;
+  const editionName = current.edition ? editionLabel(current.edition) : undefined;
   const heading =
-    lineName ??
-    subName ??
-    (teamName ? `${name} — ${teamName}` : leagueName ? `${name} — ${leagueName}` : `All ${name}`);
+    editionName
+      ? `${name} — ${editionName}${leagueName ? ` (${leagueName})` : ""}`
+      : (lineName ??
+        subName ??
+        (teamName ? `${name} — ${teamName}` : leagueName ? `${name} — ${leagueName}` : `All ${name}`));
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">

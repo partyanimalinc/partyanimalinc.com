@@ -100,6 +100,7 @@ export type FacetValue = { id: string; name: string; count: number };
 export type CollectionFacet = { slug: string; name: string; count: number };
 export type SeriesFacet = { num: number; count: number };
 export type LineFacet = { code: string; name: string; count: number };
+export type EditionFacet = { slug: string; count: number };
 
 export type CatalogResponse = {
   products: CategoryProduct[];
@@ -108,7 +109,7 @@ export type CatalogResponse = {
   pageSize: number;
   pageCount: number;
   sort: string;
-  applied: { collection?: string; league?: string; team?: string };
+  applied: { collection?: string; league?: string; team?: string; edition?: string };
   facets: {
     total: number;
     collections: CollectionFacet[];
@@ -116,6 +117,7 @@ export type CatalogResponse = {
     teams: FacetValue[];
     series: SeriesFacet[];
     lines: LineFacet[];
+    editions: EditionFacet[];
   };
 };
 
@@ -126,6 +128,7 @@ export type CatalogParams = {
   q?: string;
   series?: number;
   line?: string;
+  edition?: string;
   sort?: string;
   page?: number;
   pageSize?: number;
@@ -139,7 +142,7 @@ const EMPTY_CATALOG: CatalogResponse = {
   pageCount: 1,
   sort: "featured",
   applied: {},
-  facets: { total: 0, collections: [], leagues: [], teams: [], series: [], lines: [] },
+  facets: { total: 0, collections: [], leagues: [], teams: [], series: [], lines: [], editions: [] },
 };
 
 export async function getCatalog(params: CatalogParams): Promise<CatalogResponse> {
@@ -150,6 +153,7 @@ export async function getCatalog(params: CatalogParams): Promise<CatalogResponse
   if (params.q) p.set("q", params.q);
   if (params.series) p.set("series", String(params.series));
   if (params.line) p.set("line", params.line);
+  if (params.edition) p.set("edition", params.edition);
   if (params.sort) p.set("sort", params.sort);
   if (params.page) p.set("page", String(params.page));
   if (params.pageSize) p.set("pageSize", String(params.pageSize));

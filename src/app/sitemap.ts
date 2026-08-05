@@ -12,9 +12,13 @@ const STATIC: { path: string; priority: number; changeFrequency: Freq }[] = [
   { path: "/products", priority: 0.9, changeFrequency: "weekly" },
   { path: "/products/all", priority: 0.8, changeFrequency: "weekly" },
   { path: "/teenymates", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/teenymates/all", priority: 0.7, changeFrequency: "weekly" },
   { path: "/squeezymates", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/squeezymates/all", priority: 0.7, changeFrequency: "weekly" },
   { path: "/jumbo-squeezy", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/jumbo-squeezy/all", priority: 0.7, changeFrequency: "weekly" },
   { path: "/team-gear", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/team-gear/all", priority: 0.7, changeFrequency: "weekly" },
   { path: "/licenses", priority: 0.7, changeFrequency: "monthly" },
   { path: "/about", priority: 0.6, changeFrequency: "monthly" },
   { path: "/where-to-buy", priority: 0.7, changeFrequency: "monthly" },
@@ -49,9 +53,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     urls.push(entry(`/products/${c.slug}`, 0.7, "weekly"));
   }
 
-  // League + team landing pages.
+  // League + team landing pages (cross-brand) + per-league TeenyMates landings.
   for (const l of leagues) {
     urls.push(entry(`/licenses/${l.slug}`, 0.7, "weekly"));
+    urls.push(entry(`/teenymates/${l.slug}`, 0.7, "weekly"));
     for (const t of l.teams) urls.push(entry(`/licenses/${t.slug}`, 0.6, "weekly"));
   }
 

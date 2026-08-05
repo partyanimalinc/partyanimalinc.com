@@ -1,6 +1,23 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getCatalog } from "@/lib/pim";
-import { parseCatalogSearch, editionLabel } from "@/lib/catalog-url";
+import { parseCatalogSearch, hasActiveFilters, editionLabel } from "@/lib/catalog-url";
+
+// Shared metadata for catalog pages: noindex the *filtered* permutations (the
+// combinatorial ?league=/?series=/?line= views are thin + duplicative — keep
+// them out of the index), while the unfiltered base list stays indexable.
+export async function brandCatalogMetadata(
+  title: string,
+  description: string,
+  searchParams: Promise<Record<string, string | string[] | undefined>>,
+): Promise<Metadata> {
+  const filtered = hasActiveFilters(parseCatalogSearch(await searchParams));
+  return {
+    title,
+    description,
+    ...(filtered ? { robots: { index: false, follow: true } } : {}),
+  };
+}
 import { CatalogBrowser } from "@/components/catalog/catalog-browser";
 import { FEATURED_COLLECTIONS, TEAM_GEAR_SUBCATEGORIES } from "@/lib/featured-collections";
 import type { SubCategory } from "@/components/catalog/filter-groups";
@@ -16,13 +33,20 @@ export async function BrandCatalog({
   brandSlug,
   base,
   searchParams,
+  league,
 }: {
   name: string;
   brandSlug: string;
   base: string; // e.g. "/teenymates/all"
   searchParams: Promise<SP>;
+  // When rendered from a clean path landing (e.g. /teenymates/nba) the league is
+  // fixed by the route, not the query string — inject it so the catalog scopes
+  // to it and the sidebar reflects it. Filter interactions still use `base`
+  // (the query-mode /all route, which is noindexed).
+  league?: { id: string; name: string };
 }) {
-  const current = parseCatalogSearch(await searchParams);
+  const parsed = parseCatalogSearch(await searchParams);
+  const current = league ? { ...parsed, league: league.id } : parsed;
   const page = Math.min(Math.max(Number(current.page) || 1, 1), 10);
 
   const isTeamGear = brandSlug === "team-gear";
@@ -54,8 +78,9 @@ export async function BrandCatalog({
   const teamName = current.team ? data.facets.teams.find((t) => t.id === current.team)?.name : undefined;
   const leagueName = current.league ? data.facets.leagues.find((l) => l.id === current.league)?.name : undefined;
   const editionName = current.edition ? editionLabel(current.edition) : undefined;
-  const heading =
-    editionName
+  const heading = league
+    ? `${name} — ${league.name}`
+    : editionName
       ? `${name} — ${editionName}${leagueName ? ` (${leagueName})` : ""}`
       : (lineName ??
         subName ??
@@ -72,7 +97,17 @@ export async function BrandCatalog({
           {name}
         </Link>
         <span className="px-2">/</span>
-        <span className="text-white/70">All</span>
+        {league ? (
+          <>
+            <Link href={base.replace(/\/all$/, "/all")} className="transition-colors hover:text-white">
+              All
+            </Link>
+            <span className="px-2">/</span>
+            <span className="text-white/70">{league.name}</span>
+          </>
+        ) : (
+          <span className="text-white/70">All</span>
+        )}
       </nav>
 
       <div className="mb-8 flex flex-wrap items-end justify-between gap-x-4 gap-y-1">

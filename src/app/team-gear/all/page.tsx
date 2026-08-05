@@ -1,12 +1,14 @@
-import type { Metadata } from "next";
-import { BrandCatalog } from "@/components/brand-catalog";
+import { BrandCatalog, brandCatalogMetadata } from "@/components/brand-catalog";
 
 type SP = Record<string, string | string[] | undefined>;
 
-export const metadata: Metadata = {
-  title: "All Team Gear",
-  description: "Browse all Team Gear — flags and banners, drinkware, and homegating décor to rep your team.",
-};
+export function generateMetadata({ searchParams }: { searchParams: Promise<SP> }) {
+  return brandCatalogMetadata(
+    "All Team Gear",
+    "Browse all Team Gear — flags and banners, drinkware, and homegating décor to rep your team.",
+    searchParams,
+  );
+}
 
 export default function TeamGearAllPage({ searchParams }: { searchParams: Promise<SP> }) {
   return (

@@ -10,19 +10,20 @@ import { useEffect, useRef } from "react";
 // is normalized back into the middle copy while idle (seamless, since copies
 // match). Desktop gets arrow controls; mobile is swipe/scroll.
 
-type League = { name: string; id: string; content: string; accent: string };
+type League = { name: string; slug: string; content: string; accent: string };
 
-// league_id values are the PIM catalog facet ids (verified against the public API).
+// slug = slugify(league name), matching the /licenses convention; links to the
+// clean, indexable /teenymates/{slug} landing page.
 const LEAGUES: League[] = [
-  { name: "NFL", id: "81873da9-c31e-4936-a1cc-f7c3eeca1405", content: "content-nfl", accent: "#2b6fe0" },
-  { name: "MLB", id: "9fbe856f-3a9d-4bd5-83e5-354f423e9a31", content: "content-mlb", accent: "#e0263b" },
-  { name: "NBA", id: "6ce9faef-2394-45f7-82b3-7419513e6631", content: "content-nba", accent: "#e0263b" },
-  { name: "NHL", id: "c9b5d975-451d-4077-b7c2-e6447fd8e591", content: "content-nhl", accent: "#9aa4ad" },
-  { name: "WNBA", id: "7306bee7-47bb-49dc-9ab3-b5d779253657", content: "content-wnba", accent: "#ff7a1a" },
-  { name: "NFL Legends", id: "678f240f-9f96-4ab6-8c0e-75adfc68386d", content: "content-nfl-legends", accent: "#d4a017" },
-  { name: "NBA Legends", id: "8b40af39-eb24-4853-ae77-28a82b6747e1", content: "content-nba-legends", accent: "#d4a017" },
-  { name: "USA Soccer", id: "98b86f9d-1b74-4992-b589-12b7fefa3a54", content: "content-ussf", accent: "#2b6fe0" },
-  { name: "College", id: "e5e7e2ad-889f-4d66-9879-af418c26082e", content: "content-college", accent: "#c0392b" },
+  { name: "NFL", slug: "nfl", content: "content-nfl", accent: "#2b6fe0" },
+  { name: "MLB", slug: "mlb", content: "content-mlb", accent: "#e0263b" },
+  { name: "NBA", slug: "nba", content: "content-nba", accent: "#e0263b" },
+  { name: "NHL", slug: "nhl", content: "content-nhl", accent: "#9aa4ad" },
+  { name: "WNBA", slug: "wnba", content: "content-wnba", accent: "#ff7a1a" },
+  { name: "NFL Legends", slug: "nfl-legends", content: "content-nfl-legends", accent: "#d4a017" },
+  { name: "NBA Legends", slug: "nba-legends", content: "content-nba-legends", accent: "#d4a017" },
+  { name: "USA Soccer", slug: "usa-soccer", content: "content-ussf", accent: "#2b6fe0" },
+  { name: "College", slug: "college", content: "content-college", accent: "#c0392b" },
 ];
 
 // three copies so the loop has room to wrap in either direction
@@ -31,7 +32,7 @@ const LOOP = [...LEAGUES, ...LEAGUES, ...LEAGUES];
 function LeagueCard({ l, real }: { l: League; real: boolean }) {
   return (
     <a
-      href={`/teenymates/all?league=${l.id}`}
+      href={`/teenymates/${l.slug}`}
       aria-label={real ? `Browse TeenyMates ${l.name}` : undefined}
       aria-hidden={real ? undefined : true}
       tabIndex={real ? undefined : -1}

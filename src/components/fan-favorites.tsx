@@ -6,6 +6,7 @@ type Fav = { league: string; series: string; img: string; href: string };
 
 // league_id values are the PIM catalog facet ids (verified against the public API).
 const L = {
+  nfl: "81873da9-c31e-4936-a1cc-f7c3eeca1405",
   nflLegends: "678f240f-9f96-4ab6-8c0e-75adfc68386d",
   nbaLegends: "8b40af39-eb24-4853-ae77-28a82b6747e1",
   nhl: "c9b5d975-451d-4077-b7c2-e6447fd8e591",
@@ -21,6 +22,7 @@ const FAVORITES: Fav[] = [
   { league: "USSF", series: "Series 1", img: "ussf", href: `/teenymates/all?league=${L.ussf}&series=1` },
   { league: "MLB", series: "Series X (10)", img: "mlb-x", href: `/teenymates/all?league=${L.mlb}&series=10` },
   { league: "WNBA", series: "Series 2", img: "wnba", href: `/teenymates/all?league=${L.wnba}&series=2` },
+  { league: "NFL Rookies", series: "1st Edition", img: "rookies", href: `/teenymates/all?league=${L.nfl}&edition=rookies` },
 ];
 
 export function FanFavorites() {
@@ -31,7 +33,7 @@ export function FanFavorites() {
           Fan Favorites
         </h2>
 
-        <div className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:mt-12 lg:grid-cols-6 lg:gap-5">
+        <div className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:mt-12 lg:grid-cols-7 lg:gap-4">
           {FAVORITES.map((f) => (
             <a
               key={f.img}

@@ -1,24 +1,20 @@
 import type { Metadata } from "next";
-import { CollectionCatalogPage } from "@/components/collection-catalog-page";
+import { BrandLanding } from "@/components/brand-landing";
 
 export const metadata: Metadata = {
   title: "Team Gear",
   description: "Team Gear: flags, bottles, signs and more to rep your team everywhere.",
 };
 
-type SP = Record<string, string | string[] | undefined>;
-
-export default function TeamGearPage({ searchParams }: { searchParams: Promise<SP> }) {
+export default function TeamGearPage() {
   return (
-    <CollectionCatalogPage
+    <BrandLanding
       name="Team Gear"
-      brandSlug="team-gear"
       base="/team-gear"
       heroSrc="/lineup/team-gear-hero.png"
       heroWidth={1672}
       heroHeight={940}
       description="From flags and banners to drinkware, signs and homegating décor, Team Gear has everything you need to rep your team, everywhere."
-      searchParams={searchParams}
     />
   );
 }

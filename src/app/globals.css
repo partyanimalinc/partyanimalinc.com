@@ -225,3 +225,206 @@ footer * {
     margin-top: 30%;
   }
 }
+
+/* Collect-by-League carousel hover/focus interactions. Driven from CSS because
+   this build does not emit Tailwind hover:/group-hover: transform utilities.
+   The card supplies the dynamic accent background + border; the designed
+   figure/logo/label ride on top as a transparent content image. */
+.cbl-card {
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.cbl-card:hover,
+.cbl-card:focus-visible {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 24px 48px -14px rgba(0, 0, 0, 0.75);
+}
+.cbl-card:focus-visible {
+  outline: 2px solid var(--color-brand-red);
+  outline-offset: 4px;
+}
+.cbl-glow,
+.cbl-content {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.cbl-glow {
+  opacity: 0;
+}
+.cbl-card:hover .cbl-glow,
+.cbl-card:focus-visible .cbl-glow {
+  opacity: 1;
+}
+.cbl-card:hover .cbl-content,
+.cbl-card:focus-visible .cbl-content {
+  transform: scale(1.05);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cbl-card,
+  .cbl-glow,
+  .cbl-content {
+    transition: none;
+  }
+  .cbl-card:hover,
+  .cbl-card:focus-visible,
+  .cbl-card:hover .cbl-content,
+  .cbl-card:focus-visible .cbl-content {
+    transform: none;
+  }
+}
+
+/* Featured Collections row — light band of category tiles. Hover driven from
+   CSS (Tailwind hover transforms don't emit in this build). */
+.fc-tile {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.1rem;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.fc-img {
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+.fc-card:hover .fc-tile,
+.fc-card:focus-visible .fc-tile {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 34px -10px rgba(0, 0, 0, 0.22);
+  border-color: rgba(217, 15, 29, 0.55);
+}
+.fc-card:hover .fc-img,
+.fc-card:focus-visible .fc-img {
+  transform: scale(1.06);
+}
+.fc-card:focus-visible {
+  outline: none;
+}
+.fc-card:focus-visible .fc-tile {
+  outline: 2px solid var(--color-brand-red);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fc-tile,
+  .fc-img {
+    transition: none;
+  }
+  .fc-card:hover .fc-tile,
+  .fc-card:focus-visible .fc-tile,
+  .fc-card:hover .fc-img,
+  .fc-card:focus-visible .fc-img {
+    transform: none;
+  }
+}
+
+/* Chase Figures band — gold rare figure pinned right, text column on the left.
+   The figure is a right-anchored layer (not a full-bleed cover) so the text
+   always stays to its LEFT, even on mobile. The left fade blends the image's
+   dark edge into the section background (#060402 matches the art's black). */
+.chase-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: #060402;
+  min-height: 400px;
+}
+/* Small screens: a tight figure crop, contained and pinned right, so the text
+   column on the left is never crowded by it. */
+.chase-fig {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 50%;
+  background-image: url(/lineup/teenymates-rare-figure.png);
+  background-size: contain;
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+.chase-fig::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #060402 0%, rgba(6, 4, 2, 0.35) 30%, rgba(6, 4, 2, 0) 60%);
+}
+.chase-text {
+  position: relative;
+  max-width: 48%;
+}
+@media (min-width: 640px) {
+  .chase-text {
+    max-width: 22rem;
+  }
+}
+/* Large screens: the full spotlit scene as a cover layer (dim figures + sparkles
+   read at this size), figure still pinned right, text still on the left. */
+@media (min-width: 1024px) {
+  .chase-section {
+    min-height: 460px;
+  }
+  .chase-fig {
+    width: 58%;
+    background-image: url(/lineup/teenymates-rare-bg.png);
+    background-size: cover;
+  }
+  .chase-fig::before {
+    background: linear-gradient(90deg, #060402 0%, rgba(6, 4, 2, 0.6) 20%, rgba(6, 4, 2, 0) 46%);
+  }
+  .chase-text {
+    max-width: 30rem;
+  }
+}
+
+/* Fan Favorites row — light band of series blind-pack (foil bag) tiles. Portrait
+   tiles suit the tall foil bags. Hover driven from CSS. */
+.ff-tile {
+  aspect-ratio: 4 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.ff-img {
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+.ff-card:hover .ff-tile,
+.ff-card:focus-visible .ff-tile {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 34px -10px rgba(0, 0, 0, 0.22);
+  border-color: rgba(217, 15, 29, 0.55);
+}
+.ff-card:hover .ff-img,
+.ff-card:focus-visible .ff-img {
+  transform: scale(1.05);
+}
+.ff-card:focus-visible {
+  outline: none;
+}
+.ff-card:focus-visible .ff-tile {
+  outline: 2px solid var(--color-brand-red);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ff-tile,
+  .ff-img {
+    transition: none;
+  }
+  .ff-card:hover .ff-tile,
+  .ff-card:focus-visible .ff-tile,
+  .ff-card:hover .ff-img,
+  .ff-card:focus-visible .ff-img {
+    transform: none;
+  }
+}

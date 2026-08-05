@@ -94,7 +94,7 @@ export async function CollectionCatalogPage({
 
       {afterHero}
 
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <section id="catalog" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* When the description is overlaid on the hero (heroTextPos), show this
             copy on mobile only; otherwise show it at all sizes (default). */}
         <p

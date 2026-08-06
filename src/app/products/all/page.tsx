@@ -33,6 +33,8 @@ export default async function AllProductsPage(props: { searchParams: Promise<SP>
     league: current.league,
     team: current.team,
     series: current.series ? Number(current.series) : undefined,
+    line: current.line,
+    edition: current.edition,
     q: current.q,
     sort: current.sort,
     page: 1,

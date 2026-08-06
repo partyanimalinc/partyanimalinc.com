@@ -52,11 +52,20 @@ const HAS_LANDING = new Set(["teenymates", "squeezymates", "jumbo-squeezy"]);
 const hrefFor = (slug: string) =>
   HAS_LANDING.has(slug) ? `/${slug}` : `/products/${slug}`;
 
+// `displaySlug` is the category the tile represents (where a hand-picked
+// Featured image lives); `productSlug` is where to pull products from for the
+// auto-pick fallback (usually the same, but e.g. SqueezyMates sources from its
+// single-figures child). A category thumbnail set in the PIM always wins.
 async function pickHero(
-  slug: string,
+  displaySlug: string,
+  productSlug: string,
   used: Set<string>,
 ): Promise<{ image: string | null }> {
-  const d = await getCategory(slug, { limit: 60 });
+  const same = displaySlug === productSlug;
+  const disp = await getCategory(displaySlug, { limit: same ? 60 : 1 });
+  if (disp?.category.thumbnailUrl) return { image: disp.category.thumbnailUrl };
+
+  const d = same ? disp : await getCategory(productSlug, { limit: 60 });
   const imgs = (d?.products ?? []).filter((p): p is CategoryProduct & { image: string } => Boolean(p.image));
   if (!imgs.length) return { image: null };
 
@@ -173,9 +182,12 @@ export default async function ProductsPage() {
   // sequential so hero teams don't repeat across cards
   const used = new Set<string>();
   const featuredCards: { def: (typeof FEATURED)[number]; image: string | null }[] = [];
-  for (const def of FEATURED) featuredCards.push({ def, image: (await pickHero(def.heroSlug ?? def.slug, used)).image });
+  for (const def of FEATURED) featuredCards.push({ def, image: (await pickHero(def.slug, def.heroSlug ?? def.slug, used)).image });
   const categoryCards: { cat: (typeof topLevels)[number]; image: string | null }[] = [];
-  for (const cat of topLevels) categoryCards.push({ cat, image: (await pickHero(cat.slug, used)).image });
+  for (const cat of topLevels) {
+    const image = cat.thumbnail_url ?? (await pickHero(cat.slug, cat.slug, used)).image;
+    categoryCards.push({ cat, image });
+  }
 
   const childCount = (id: string) => tree.filter((c) => c.parent_id === id).length;
 

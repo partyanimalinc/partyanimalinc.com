@@ -43,6 +43,7 @@ export type CategoryDetail = {
     slug: string;
     template: "standard" | "brand";
     bannerImageUrl: string | null;
+    thumbnailUrl: string | null;
     description: string | null;
     breadcrumb: string[];
     seoTitle: string | null;

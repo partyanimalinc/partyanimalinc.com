@@ -44,17 +44,8 @@ export function ProductView({ p }: { p: ProductDetail }) {
       : {}),
     brand: { "@type": "Brand", name: p.leagueName ? `Party Animal ${p.leagueName}` : "Party Animal" },
     ...(p.upc ? { gtin12: p.upc } : {}),
-    ...(p.msrp && consumer[0]
-      ? {
-          offers: {
-            "@type": "Offer",
-            price: p.msrp.toFixed(2),
-            priceCurrency: "USD",
-            availability: "https://schema.org/InStock",
-            url: consumer[0].url,
-          },
-        }
-      : {}),
+    // MSRP intentionally not surfaced on the web catalog yet — no price in the
+    // visible UI or the structured data.
   };
 
   return (
@@ -94,11 +85,6 @@ export function ProductView({ p }: { p: ProductDetail }) {
             {p.name}
           </h1>
 
-          {p.msrp !== null && (
-            <p className="mt-3 text-lg text-ink/80">
-              <span className="text-ink/45">MSRP</span> ${p.msrp.toFixed(2)}
-            </p>
-          )}
 
           {/* Buy links */}
           <div className="mt-6 flex flex-col gap-3">

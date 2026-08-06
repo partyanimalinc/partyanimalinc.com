@@ -47,6 +47,7 @@ export type CategoryDetail = {
     breadcrumb: string[];
     seoTitle: string | null;
     seoDescription: string | null;
+    seoBody: string | null;
   };
   subcategories: {
     name: string;

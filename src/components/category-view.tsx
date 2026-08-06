@@ -52,6 +52,22 @@ export function CategoryView({ data }: { data: CategoryDetail }) {
           </div>
         )}
       </section>
+
+      {/* SEO copy — required by this template on every category listing page.
+          Long-form, keyword-relevant description of the collection (editable in
+          the PIM as categories.seo_body). */}
+      {cat.seoBody && (
+        <section className="mx-auto max-w-4xl px-4 pb-16 sm:px-6 lg:px-8">
+          <div className="border-t border-ink-line pt-10">
+            <h2 className="font-heading mb-4 text-xl uppercase text-white/90">About {cat.name}</h2>
+            <div className="space-y-4 text-sm leading-relaxed text-white/60">
+              {cat.seoBody.split(/\n\n+/).map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }

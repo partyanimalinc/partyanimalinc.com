@@ -57,6 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const l of leagues) {
     urls.push(entry(`/licenses/${l.slug}`, 0.7, "weekly"));
     urls.push(entry(`/teenymates/${l.slug}`, 0.7, "weekly"));
+    urls.push(entry(`/squeezymates/${l.slug}`, 0.7, "weekly"));
     for (const t of l.teams) urls.push(entry(`/licenses/${t.slug}`, 0.6, "weekly"));
   }
 

@@ -250,22 +250,6 @@ export default async function TeamGearPage() {
         </div>
       </section>
 
-      {/* Ready to Rip — closing CTA band */}
-      <section className="bg-brand-red">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 px-4 py-8 text-center sm:px-6 lg:flex-row lg:text-left">
-          <div>
-            <h2 className="font-heading text-2xl uppercase text-white sm:text-3xl">Ready to Rip?</h2>
-            <p className="mt-1 text-white/85">Explore the full catalog and bring the energy home.</p>
-          </div>
-          <Link
-            href="/team-gear/all"
-            className="label-athletic inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm text-brand-red transition-colors hover:bg-white/90"
-          >
-            Browse All Team Gear
-            <Arrow />
-          </Link>
-        </div>
-      </section>
     </>
   );
 }

@@ -3,10 +3,10 @@
 // The figure layer and the capped-width text column keep the text to the LEFT of
 // the figure at every breakpoint (see .chase-* rules in globals.css).
 
-export function ChaseFigures() {
+export function ChaseFigures({ figClassName = "" }: { figClassName?: string } = {}) {
   return (
     <section className="chase-section" aria-label="Chase figures">
-      <div className="chase-fig" aria-hidden />
+      <div className={`chase-fig ${figClassName}`.trim()} aria-hidden />
       <div className="relative mx-auto w-full max-w-7xl px-6 sm:px-8">
         <div className="chase-text py-12 lg:py-16">
           <h2 className="font-heading text-3xl uppercase leading-none text-brand-gold sm:text-4xl lg:text-5xl">

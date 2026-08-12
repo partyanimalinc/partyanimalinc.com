@@ -379,6 +379,22 @@ footer * {
   }
 }
 
+/* SqueezyMates variant of the Chase Figures band — same layout, SM rare-figure
+   background (glowing green hero, right-of-center). Higher specificity so it
+   wins over .chase-fig at both breakpoints. Mobile biases the position toward
+   the green hero so it isn't cropped out of the narrow right layer. */
+.chase-fig.chase-fig-sm {
+  background-image: url(/lineup/squeezymates-rare-bg.png);
+  background-size: cover;
+  background-position: 72% center;
+}
+@media (min-width: 1024px) {
+  .chase-fig.chase-fig-sm {
+    background-image: url(/lineup/squeezymates-rare-bg.png);
+    background-position: right center;
+  }
+}
+
 /* Fan Favorites row — light band of series blind-pack (foil bag) tiles. Portrait
    tiles suit the tall foil bags. Hover driven from CSS. */
 .ff-tile {

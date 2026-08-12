@@ -147,6 +147,31 @@ const EMPTY_CATALOG: CatalogResponse = {
   facets: { total: 0, collections: [], leagues: [], teams: [], series: [], lines: [], editions: [] },
 };
 
+// Facet counts depend only on the FILTER params, not page/pageSize/sort — so we
+// fetch them from their own endpoint with a filter-only cache key + long TTL.
+// The same filter combo then reuses ONE cached result across every page and
+// "Load more", instead of re-running the heavy facets query on each request.
+async function getFacets(params: CatalogParams): Promise<CatalogResponse["facets"]> {
+  const p = new URLSearchParams();
+  if (params.collection) p.set("collection", params.collection);
+  if (params.league) p.set("league", params.league);
+  if (params.team) p.set("team", params.team);
+  if (params.q) p.set("q", params.q);
+  if (params.series) p.set("series", String(params.series));
+  if (params.line) p.set("line", params.line);
+  if (params.edition) p.set("edition", params.edition);
+  try {
+    const r = await fetch(`${BASE}/api/public/facets?${p}`, {
+      headers: headers(),
+      next: { revalidate: 1800 },
+    });
+    if (!r.ok) return EMPTY_CATALOG.facets;
+    return (await r.json()).facets ?? EMPTY_CATALOG.facets;
+  } catch {
+    return EMPTY_CATALOG.facets;
+  }
+}
+
 export async function getCatalog(params: CatalogParams): Promise<CatalogResponse> {
   const p = new URLSearchParams();
   if (params.collection) p.set("collection", params.collection);
@@ -160,12 +185,13 @@ export async function getCatalog(params: CatalogParams): Promise<CatalogResponse
   if (params.page) p.set("page", String(params.page));
   if (params.pageSize) p.set("pageSize", String(params.pageSize));
   try {
-    const r = await fetch(`${BASE}/api/public/products?${p}`, {
-      headers: headers(),
-      next: { revalidate: 300 },
-    });
+    const [r, facets] = await Promise.all([
+      fetch(`${BASE}/api/public/products?${p}`, { headers: headers(), next: { revalidate: 300 } }),
+      getFacets(params),
+    ]);
     if (!r.ok) return EMPTY_CATALOG;
-    return await r.json();
+    const data = await r.json();
+    return { ...data, facets };
   } catch {
     return EMPTY_CATALOG;
   }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { CategoryProduct } from "@/lib/pim";
 import { ProductImagePlaceholder } from "@/components/product-image-placeholder";
+import { amazonAttributed } from "@/lib/amazon";
 
 // Shared product tile: white cutout, name, "Available at" retailer buttons (or
 // "Available in stores"). Used on category, catalog, and license pages.
@@ -60,7 +61,7 @@ export function ProductCard({ p, hideTeam }: { p: CategoryProduct; hideTeam?: bo
               {p.retailers.map((r) => (
                 <a
                   key={r.retailer}
-                  href={r.url}
+                  href={amazonAttributed(r.url)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="label-athletic rounded-full bg-brand-red px-3 py-1 text-[11px] text-white transition-colors hover:bg-brand-red-dark"

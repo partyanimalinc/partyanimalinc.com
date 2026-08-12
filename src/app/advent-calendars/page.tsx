@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getCatalog, type CategoryProduct } from "@/lib/pim";
+import { amazonAttributed } from "@/lib/amazon";
 import { AdventVideoCarousel } from "@/components/advent/video-carousel";
 import { AdventCalendarGrid, type CalendarCard } from "@/components/advent/calendar-grid";
 
@@ -224,7 +225,7 @@ export default async function AdventCalendarsPage() {
             <img src="/advent/amazon-available.png" alt="Available at Amazon" width={1500} height={723} className="h-20 w-auto sm:h-24" />
             <p className="mt-3 text-sm text-white/60">Fast, easy, and reliable.</p>
             <a
-              href="https://www.amazon.com/stores/page/6A6BA724-BD28-4888-868B-B57287C3DFCB/search?terms=Advent%20Calendar"
+              href={amazonAttributed("https://www.amazon.com/stores/page/6A6BA724-BD28-4888-868B-B57287C3DFCB/search?terms=Advent%20Calendar")}
               target="_blank"
               rel="noopener noreferrer"
               className="label-athletic mt-6 inline-flex items-center gap-2 rounded-full bg-brand-red px-7 py-3.5 text-sm text-white shadow-lg shadow-brand-red/30 transition-colors hover:bg-brand-red-dark"

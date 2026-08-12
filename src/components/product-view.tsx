@@ -3,6 +3,7 @@ import { ProductGallery } from "@/components/product-gallery";
 import { ProductCard } from "@/components/product-card";
 import { sanitizeHtml, htmlToText } from "@/lib/html";
 import { slugify } from "@/lib/slug";
+import { amazonAttributed } from "@/lib/amazon";
 import type { ProductDetail } from "@/lib/pim";
 
 const RETAILER_LABEL: Record<string, string> = {
@@ -91,7 +92,7 @@ export function ProductView({ p }: { p: ProductDetail }) {
             {consumer.map((r) => (
               <a
                 key={r.retailer}
-                href={r.url}
+                href={amazonAttributed(r.url)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="label-athletic inline-flex items-center justify-center gap-2 rounded-full bg-brand-red px-7 py-3.5 text-sm text-white shadow-lg shadow-brand-red/25 transition-colors hover:bg-brand-red-dark"
@@ -105,7 +106,7 @@ export function ProductView({ p }: { p: ProductDetail }) {
             {wholesale.map((r) => (
               <a
                 key={r.retailer}
-                href={r.url}
+                href={amazonAttributed(r.url)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="label-athletic inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 bg-white px-7 py-3.5 text-sm text-ink transition-colors hover:border-brand-red hover:text-brand-red"

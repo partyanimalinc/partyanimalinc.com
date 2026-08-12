@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
+import { amazonAttributed } from "@/lib/amazon";
 
 export const metadata: Metadata = { title: "Where to Buy" };
 
@@ -34,7 +35,7 @@ export default function WhereToBuyPage() {
           {RETAILERS.map((r) => (
             <li key={r.name}>
               <a
-                href={r.href}
+                href={amazonAttributed(r.href)}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Shop Party Animal at ${r.name}`}

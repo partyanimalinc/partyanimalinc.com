@@ -230,6 +230,20 @@ export type SearchProduct = {
   series: number | null;
 };
 
+// All web-visible product slugs (+ last-modified) for the sitemap.
+export async function getProductSlugs(): Promise<{ slug: string; updatedAt: string | null }[]> {
+  try {
+    const r = await fetch(`${BASE}/api/public/product-slugs`, {
+      headers: headers(),
+      next: { revalidate: 3600 },
+    });
+    if (!r.ok) return [];
+    return (await r.json()).slugs ?? [];
+  } catch {
+    return [];
+  }
+}
+
 export async function searchProducts(
   q: string,
   limit = 8,

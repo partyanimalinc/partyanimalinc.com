@@ -5,6 +5,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { PreFooterCTA } from "@/components/pre-footer-cta";
+import { UmamiAnalytics } from "@/components/umami-analytics";
 
 // Body copy - matches the Figma spec (Montserrat).
 const montserrat = Montserrat({
@@ -42,6 +43,13 @@ export const metadata: Metadata = {
     description:
       "Officially licensed sports collectibles and fan gear. Built for real ones.",
     type: "website",
+    siteName: "Party Animal",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Party Animal: Ready to Rip",
+    description:
+      "Officially licensed sports collectibles and fan gear. Built for real ones.",
   },
 };
 
@@ -58,6 +66,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <PreFooterCTA />
         <SiteFooter />
+        <UmamiAnalytics />
       </body>
     </html>
   );

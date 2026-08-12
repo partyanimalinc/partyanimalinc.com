@@ -3,10 +3,10 @@ import { legacyRedirects } from "./src/lib/redirects";
 
 const nextConfig: NextConfig = {
   images: {
-    // Next 16 defaults optimized-image cache TTL to 4 hours, which makes a
-    // swapped-in-place asset (same path) look stale for hours. Keep it short
-    // so updated art shows on the next refresh. Raise before production launch.
-    minimumCacheTTL: 0,
+    // Cache optimized images at the edge for 30 days. PIM art is versioned by
+    // URL (new uploads get a new path), so a long TTL is safe and keeps LCP fast
+    // / origin load low in production.
+    minimumCacheTTL: 2592000,
   },
   // Legacy NetSuite store -> new-site 301s. See src/lib/redirects.ts.
   async redirects() {

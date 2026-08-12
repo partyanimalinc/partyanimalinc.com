@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getCategories, getLicenses } from "@/lib/pim";
+import { getCategories, getLicenses, getProductSlugs } from "@/lib/pim";
 
 // Canonical host (matches metadataBase in layout.tsx).
 const SITE_URL = "https://partyanimalinc.com";
@@ -44,7 +44,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry(r.path, r.priority, r.changeFrequency),
   );
 
-  const [categories, leagues] = await Promise.all([getCategories(), getLicenses()]);
+  const [categories, leagues, productSlugs] = await Promise.all([
+    getCategories(),
+    getLicenses(),
+    getProductSlugs(),
+  ]);
+
+  // Product detail pages — the bulk of the indexable long-tail catalog.
+  for (const p of productSlugs) {
+    urls.push({
+      url: `${SITE_URL}/products/${p.slug}`,
+      lastModified: p.updatedAt ? new Date(p.updatedAt) : now,
+      changeFrequency: "weekly",
+      priority: 0.6,
+    });
+  }
 
   // Standard category pages (brand nodes have their own top-level landing,
   // already in STATIC, so skip them here to avoid 404s/dupes).

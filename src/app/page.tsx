@@ -1,11 +1,52 @@
 import Link from "next/link";
 import Image from "next/image";
-import { LINEUP } from "@/lib/site";
+import { LINEUP, SOCIALS } from "@/lib/site";
 import { LicensesMarquee } from "@/components/licenses-marquee";
+
+const SITE_URL = "https://partyanimalinc.com";
+
+// Organization + WebSite structured data (helps the brand knowledge panel and
+// enables a potential sitelinks search box pointing at the catalog search).
+const ORG_JSONLD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "Party Animal",
+      legalName: "Party Animal, Inc.",
+      url: SITE_URL,
+      logo: `${SITE_URL}/brand/pa-logo.png`,
+      foundingDate: "1989",
+      description:
+        "Party Animal creates fun, high-quality officially licensed sports products: TeenyMates, SqueezyMates, Jumbo Squeezy, Team Gear and more.",
+      sameAs: SOCIALS.filter((s) => s.icon !== "amazon").map((s) => s.href),
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Party Animal",
+      publisher: { "@id": `${SITE_URL}/#organization` },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${SITE_URL}/products/all?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
+};
 
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_JSONLD) }}
+      />
       {/* ---------------- Hero ---------------- */}
       <section className="relative overflow-hidden bg-ink">
         <div className="absolute inset-0">

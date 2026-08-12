@@ -3,18 +3,16 @@ import { PageHeader } from "@/components/page-header";
 
 export const metadata: Metadata = { title: "Where to Buy" };
 
-// Retailer tiles, in display order. NOTE: hrefs are placeholders pointing at each
-// store's homepage — swap them for the exact Party Animal landing/search URL per
-// retailer when available. Fanatics + Rally House use wordmark placeholders until
-// brand logos are supplied.
+// Retailer tiles, in display order. Retailers with a Party Animal brand/search
+// page link straight to it; Target + Rally House point at the homepage until a
+// specific landing URL is available.
 const RETAILERS: { name: string; logo: string; href: string }[] = [
-  { name: "Dick's Sporting Goods", logo: "/retailers/dicks.svg", href: "https://www.dickssportinggoods.com" },
-  { name: "Fanatics", logo: "/retailers/fanatics.png", href: "https://www.fanatics.com" },
+  { name: "Dick's Sporting Goods", logo: "/retailers/dicks.svg", href: "https://www.dickssportinggoods.com/f/fan-shop-sale?filterFacets=X_BRAND%253AParty%2520Animal" },
   { name: "Amazon.com", logo: "/retailers/amazon.png", href: "https://www.amazon.com/stores/PartyAnimalInc/page/6A6BA724-BD28-4888-868B-B57287C3DFCB" },
   { name: "Target", logo: "/retailers/target.svg", href: "https://www.target.com" },
-  { name: "Walgreens", logo: "/retailers/walgreens.png", href: "https://www.walgreens.com" },
-  { name: "Walmart", logo: "/retailers/walmart.jpg", href: "https://www.walmart.com" },
-  { name: "Rally House", logo: "/retailers/rally-house.png", href: "https://www.rallyhouse.com" },
+  { name: "Walgreens", logo: "/retailers/walgreens.png", href: "https://www.walgreens.com/store/c/productlist/N=20001330-9000149767" },
+  { name: "Walmart", logo: "/retailers/walmart.png", href: "https://www.walmart.com/c/brand/party-animal" },
+  { name: "Rally House", logo: "/retailers/rally-house.svg", href: "https://www.rallyhouse.com" },
 ];
 
 export default function WhereToBuyPage() {

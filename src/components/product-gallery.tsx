@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ProductImagePlaceholder } from "@/components/product-image-placeholder";
+import Image from "next/image";
 
 // Product image gallery: large active image + thumbnail strip. Clicking the
 // main image opens a full-size lightbox (Escape / arrow keys / backdrop close),
@@ -63,10 +64,11 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
                   i === 0 ? "col-span-2" : ""
                 }`}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={img}
                   alt={i === 0 ? alt : ""}
+                  width={700}
+                  height={700}
                   className={`h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03] ${
                     i === 0 ? "p-10" : "p-6"
                   }`}
@@ -94,8 +96,7 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
                 aria-label="View larger image"
                 className="group block h-full w-full cursor-zoom-in"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={main} alt={alt} className="h-full w-full object-contain p-6" />
+                <Image src={main} alt={alt} width={800} height={800} className="h-full w-full object-contain p-6" />
                 {/* zoom hint */}
                 <span
                   aria-hidden
@@ -122,8 +123,7 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
                       i === active ? "border-brand-red ring-1 ring-brand-red" : "border-black/10 hover:border-black/40"
                     }`}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={img} alt="" className="h-full w-full object-contain p-1.5" />
+                    <Image src={img} alt="" width={160} height={160} className="h-full w-full object-contain p-1.5" />
                   </button>
                 ))}
               </div>

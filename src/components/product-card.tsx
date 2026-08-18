@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { CategoryProduct } from "@/lib/pim";
 import { ProductImagePlaceholder } from "@/components/product-image-placeholder";
 import { amazonAttributed } from "@/lib/amazon";
+import Image from "next/image";
 
 // Shared product tile: white cutout, name, "Available at" retailer buttons (or
 // "Available in stores"). Used on category, catalog, and license pages.
@@ -23,11 +24,11 @@ export function ProductCard({ p, hideTeam }: { p: CategoryProduct; hideTeam?: bo
         </span>
       )}
       {p.image ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+        <Image
           src={p.image}
           alt={p.name}
-          loading="lazy"
+          width={500}
+          height={500}
           className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.04]"
         />
       ) : (

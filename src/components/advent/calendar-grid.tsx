@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export type CalendarCard = {
   sku: string;
@@ -21,11 +22,11 @@ function Card({ c }: { c: CalendarCard }) {
     >
       <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-brand-red/50 group-hover:bg-white/[0.06]">
         {c.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={c.image}
             alt={c.name}
-            loading="lazy"
+            width={500}
+            height={500}
             className="max-h-full w-full object-contain drop-shadow-[0_10px_24px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-[1.04]"
           />
         ) : (

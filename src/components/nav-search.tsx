@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { SearchProduct } from "@/lib/pim";
+import Image from "next/image";
 
 const SEE_ALL = (q: string) => `/products/all?q=${encodeURIComponent(q)}`;
 
@@ -221,8 +222,7 @@ export function NavSearch() {
                   >
                     <span className="grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-lg bg-white">
                       {p.image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={p.image} alt="" className="h-full w-full object-contain p-1" />
+                        <Image src={p.image} alt="" width={88} height={88} className="h-full w-full object-contain p-1" />
                       ) : (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src="/brand/pa-monkey-mark.png" alt="" aria-hidden className="h-7 w-7 opacity-[0.12]" />

@@ -123,11 +123,11 @@ function CollectionCard({
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-white/5" />
         {image ? (
           <div className="relative z-10 flex h-full items-center justify-center p-6">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={image}
               alt={label}
-              loading="lazy"
+              width={600}
+              height={600}
               className="max-h-full w-[74%] object-contain shadow-[0_14px_34px_rgba(0,0,0,0.45)] transition-transform duration-300 group-hover:scale-[1.05]"
             />
           </div>

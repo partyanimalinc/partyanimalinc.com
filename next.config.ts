@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
     // URL (new uploads get a new path), so a long TTL is safe and keeps LCP fast
     // / origin load low in production.
     minimumCacheTTL: 2592000,
+    remotePatterns: [
+      { protocol: "https", hostname: "prgnshkxyyxygdpowdnu.supabase.co", pathname: "/storage/v1/object/public/**" },
+    ],
   },
   // Legacy NetSuite store -> new-site 301s. See src/lib/redirects.ts.
   async redirects() {

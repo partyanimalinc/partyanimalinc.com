@@ -291,8 +291,7 @@ function TileRow({
               className="fc-card flex flex-col items-center text-center"
             >
               <div className="fc-tile w-full">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={t.img} alt={t.name} width={640} height={640} loading="lazy" className="fc-img" />
+                <Image src={t.img} alt={t.name} width={640} height={640} className="fc-img" />
               </div>
               <span
                 className={`font-heading mt-4 text-sm uppercase leading-tight tracking-wide sm:text-base ${

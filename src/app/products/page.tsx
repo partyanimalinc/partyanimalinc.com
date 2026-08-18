@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/page-header";
 import { getCategories, getCategory, type CategoryProduct } from "@/lib/pim";
 import { EXTERNAL } from "@/lib/site";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Our Products",

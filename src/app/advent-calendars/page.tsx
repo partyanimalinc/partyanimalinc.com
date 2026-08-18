@@ -5,7 +5,7 @@ import { amazonAttributed } from "@/lib/amazon";
 import { AdventVideoCarousel } from "@/components/advent/video-carousel";
 import { AdventCalendarGrid, type CalendarCard } from "@/components/advent/calendar-grid";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Advent Calendars",

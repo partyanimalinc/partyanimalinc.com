@@ -4,7 +4,7 @@ import Link from "next/link";
 import { getLicenses } from "@/lib/pim";
 import { TeamFinder } from "@/components/team-finder";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Team Gear",

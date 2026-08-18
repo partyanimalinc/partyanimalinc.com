@@ -5,7 +5,7 @@ import { getCatalog } from "@/lib/pim";
 import { parseCatalogSearch, hasActiveFilters, CATALOG_BASE } from "@/lib/catalog-url";
 import { FEATURED_COLLECTIONS } from "@/lib/featured-collections";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 const PER = 48;
 type SP = Record<string, string | string[] | undefined>;

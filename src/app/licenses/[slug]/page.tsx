@@ -12,7 +12,7 @@ import {
 } from "@/lib/license-url";
 import { SORT_OPTIONS } from "@/lib/catalog-url";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 export const dynamicParams = true;
 
 const PER = 48;

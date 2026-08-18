@@ -5,7 +5,7 @@ import { ProductView } from "@/components/product-view";
 import { getCategories, getCategory, getProduct } from "@/lib/pim";
 import { htmlToText } from "@/lib/html";
 
-export const revalidate = 300;
+export const revalidate = 86400;
 export const dynamicParams = true;
 
 // Pre-render the (few) category pages at build; the ~2,000 product pages render

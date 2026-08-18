@@ -66,7 +66,7 @@ export async function getCategories(): Promise<CategoryNode[]> {
   try {
     const r = await fetch(`${BASE}/api/public/categories`, {
       headers: headers(),
-      next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["categories"] },
     });
     if (!r.ok) return [];
     return (await r.json()).categories ?? [];
@@ -86,7 +86,7 @@ export async function getCategory(
   try {
     const r = await fetch(`${BASE}/api/public/categories/${slug}?${p}`, {
       headers: headers(),
-      next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["categories", `category:${slug}`] },
     });
     if (!r.ok) return null;
     return await r.json();
@@ -163,7 +163,7 @@ async function getFacets(params: CatalogParams): Promise<CatalogResponse["facets
   try {
     const r = await fetch(`${BASE}/api/public/facets?${p}`, {
       headers: headers(),
-      next: { revalidate: 1800 },
+      next: { revalidate: 3600, tags: ["catalog"] },
     });
     if (!r.ok) return EMPTY_CATALOG.facets;
     return (await r.json()).facets ?? EMPTY_CATALOG.facets;
@@ -186,7 +186,7 @@ export async function getCatalog(params: CatalogParams): Promise<CatalogResponse
   if (params.pageSize) p.set("pageSize", String(params.pageSize));
   try {
     const [r, facets] = await Promise.all([
-      fetch(`${BASE}/api/public/products?${p}`, { headers: headers(), next: { revalidate: 300 } }),
+      fetch(`${BASE}/api/public/products?${p}`, { headers: headers(), next: { revalidate: 3600, tags: ["catalog"] } }),
       getFacets(params),
     ]);
     if (!r.ok) return EMPTY_CATALOG;
@@ -236,7 +236,7 @@ export async function getProduct(slug: string): Promise<ProductDetail | null> {
   try {
     const r = await fetch(`${BASE}/api/public/products/${slug}`, {
       headers: headers(),
-      next: { revalidate: 300 },
+      next: { revalidate: 86400, tags: ["product", `product:${slug}`] },
     });
     if (!r.ok) return null;
     return await r.json();
@@ -261,7 +261,7 @@ export async function getProductSlugs(): Promise<{ slug: string; updatedAt: stri
   try {
     const r = await fetch(`${BASE}/api/public/product-slugs`, {
       headers: headers(),
-      next: { revalidate: 3600 },
+      next: { revalidate: 3600, tags: ["product-slugs"] },
     });
     if (!r.ok) return [];
     return (await r.json()).slugs ?? [];
@@ -278,7 +278,7 @@ export async function searchProducts(
   try {
     const r = await fetch(`${BASE}/api/public/search?${p}`, {
       headers: headers(),
-      next: { revalidate: 60 },
+      next: { revalidate: 300, tags: ["catalog"] },
     });
     if (!r.ok) return { products: [], fuzzy: false };
     return await r.json();
@@ -310,7 +310,7 @@ export async function getLicenses(): Promise<LicenseLeague[]> {
   try {
     const r = await fetch(`${BASE}/api/public/licenses`, {
       headers: headers(),
-      next: { revalidate: 300 },
+      next: { revalidate: 3600, tags: ["licenses"] },
     });
     if (!r.ok) return [];
     return (await r.json()).leagues ?? [];

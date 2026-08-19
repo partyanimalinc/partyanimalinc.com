@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getCatalog, type CategoryProduct } from "@/lib/pim";
-import { amazonAttributed } from "@/lib/amazon";
 import { AdventVideoCarousel } from "@/components/advent/video-carousel";
-import { AdventCalendarGrid, type CalendarCard } from "@/components/advent/calendar-grid";
+import { AdventShop, type CalendarCard } from "@/components/advent/advent-shop";
 
 export const revalidate = 3600;
 
@@ -42,10 +41,6 @@ function toCards(order: [string, string][], bySku: Map<string, CategoryProduct>)
       return { sku, league, slug: p.slug, name: p.name, image: p.image };
     })
     .filter((c): c is CalendarCard => c !== null);
-}
-
-function Star() {
-  return <span className="text-brand-gold">★</span>;
 }
 
 export default async function AdventCalendarsPage() {
@@ -185,94 +180,8 @@ export default async function AdventCalendarsPage() {
         </div>
       </section>
 
-      {/* ===================== SHOP ALL CALENDARS ===================== */}
-      <section id="calendars" className="border-t border-ink-line" style={{ scrollMarginTop: "5rem" }}>
-        <div className="mx-auto max-w-7xl px-6 py-18 lg:px-8" style={{ paddingTop: "4.5rem", paddingBottom: "4.5rem" }}>
-          <div className="mb-10 flex items-center justify-center gap-4">
-            <Star />
-            <h2 className="font-heading text-center text-2xl uppercase text-white sm:text-3xl">
-              Shop All Advent Calendars
-            </h2>
-            <Star />
-          </div>
-          <AdventCalendarGrid teeny={teeny} squeezy={squeezy} />
-        </div>
-      </section>
+      <AdventShop teeny={teeny} squeezy={squeezy} />
 
-      {/* ===================== RETAILERS ===================== */}
-      <section className="relative overflow-hidden border-t border-ink-line">
-        {/* mobile bg: portrait, no divider (the columns stack) */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/advent/shop-at-bg-mobile.png"
-          alt=""
-          aria-hidden
-          className="absolute inset-0 h-full w-full object-cover md:hidden"
-        />
-        {/* desktop bg: red brush divider baked into the center */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/advent/shop-at-bg.png"
-          alt=""
-          aria-hidden
-          className="absolute inset-0 hidden h-full w-full object-cover md:block"
-        />
-        <div aria-hidden className="absolute inset-0" style={{ background: "rgba(6,7,9,0.32)" }} />
-        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 py-20 md:grid-cols-2 md:gap-0 lg:px-8">
-          {/* Amazon (left of the red divider) */}
-          <div className="flex flex-col items-center text-center md:pr-14">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/advent/amazon-available.png" alt="Available at Amazon" width={1500} height={723} className="h-20 w-auto sm:h-24" />
-            <p className="mt-3 text-sm text-white/60">Fast, easy, and reliable.</p>
-            <a
-              href={amazonAttributed("https://www.amazon.com/stores/page/6A6BA724-BD28-4888-868B-B57287C3DFCB/search?terms=Advent%20Calendar")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="label-athletic mt-6 inline-flex items-center gap-2 rounded-full bg-brand-red px-7 py-3.5 text-sm text-white shadow-lg shadow-brand-red/30 transition-colors hover:bg-brand-red-dark"
-            >
-              Shop on Amazon
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </a>
-          </div>
-          {/* Dick's (right of the red divider) */}
-          <div className="flex flex-col items-center text-center md:pl-14">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/advent/dsg-primary.svg" alt="Dick's Sporting Goods" width={946} height={388} className="h-14 w-auto sm:h-16" />
-            <p className="mt-4 font-heading text-xl uppercase text-white">Exclusive Rare Figures</p>
-            <p className="font-heading text-lg uppercase text-brand-gold">Only at Dick&apos;s</p>
-            {/* the 4 exclusive rare chase figures */}
-            <div className="mt-5 flex items-end justify-center gap-1.5 sm:gap-3">
-              {[1, 2, 3, 4].map((i) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={i}
-                  src={`/advent/dsg-rarefig${i}.png`}
-                  alt=""
-                  aria-hidden
-                  className="h-24 w-auto sm:h-28 lg:h-32"
-                  style={{ filter: "drop-shadow(0 10px 18px rgba(0,0,0,0.5))" }}
-                />
-              ))}
-            </div>
-            <p className="mt-4 max-w-xs text-sm text-white/70">
-              Find ultra rare chase figures in select TeenyMates Advent Calendars.
-            </p>
-            <a
-              href="https://www.dickssportinggoods.com/f/fan-shop-advent-calendars"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="label-athletic mt-5 inline-flex items-center gap-2 rounded-full border border-white/40 px-7 py-3.5 text-sm text-white transition-colors hover:border-brand-red hover:bg-brand-red"
-            >
-              Shop at Dick&apos;s
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

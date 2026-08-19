@@ -132,7 +132,7 @@ function FanaticsRetailers() {
       <div aria-hidden className="absolute inset-0" style={{ background: "rgba(6,7,9,0.42)" }} />
       <div className="relative mx-auto flex max-w-xl flex-col items-center px-6 py-20 text-center lg:px-8">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/advent/fanatics-white.png" alt="Fanatics" width={969} height={433} className="h-12 w-auto sm:h-14" />
+        <img src="/advent/fanatics-white.png" alt="Fanatics" width={969} height={433} className="w-64 h-auto sm:w-72" />
         <p className="mt-6 font-heading text-xl uppercase leading-tight text-white sm:text-2xl">
           SqueezyMates Helmet Advent Calendars
         </p>

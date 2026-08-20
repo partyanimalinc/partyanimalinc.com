@@ -112,20 +112,22 @@ export default async function AdventCalendarsPage() {
                 href="#calendars"
                 className="label-athletic inline-flex items-center gap-2 rounded-full bg-brand-red px-7 py-3.5 text-sm text-white shadow-xl shadow-brand-red/30 transition-colors hover:bg-brand-red-dark"
               >
-                Shop All Calendars
+                All Calendars
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </Link>
-              <Link
-                href="#videos"
+              <a
+                href="https://www.dickssportinggoods.com/f/fan-shop-advent-calendars"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="label-athletic inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm text-white transition-colors hover:border-white hover:bg-white/10"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                  <path d="M8 5.5v13l11-6.5-11-6.5Z" />
+                Shop at Dick&apos;s Sporting Goods
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Watch Video
-              </Link>
+              </a>
             </div>
           </div>
         </div>

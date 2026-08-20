@@ -61,11 +61,23 @@ export function AdventVideoGallery() {
       else if (e.key === "ArrowLeft" || e.key === "ArrowDown") go(-1);
     };
     document.addEventListener("keydown", onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    // iOS-safe scroll lock: overflow:hidden alone doesn't stop touch scrolling
+    // on mobile Safari, so pin the body in place and restore on close.
+    const scrollY = window.scrollY;
+    const body = document.body;
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prevOverflow;
+      body.style.position = "";
+      body.style.top = "";
+      body.style.left = "";
+      body.style.right = "";
+      body.style.width = "";
+      window.scrollTo(0, scrollY);
     };
   }, [open, close, go]);
 
@@ -145,7 +157,10 @@ export function AdventVideoGallery() {
 
       {/* ---------- Overlay ---------- */}
       {open && active && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/92 backdrop-blur-sm">
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/92 backdrop-blur-sm"
+          style={{ touchAction: "none", overscrollBehavior: "contain" }}
+        >
           <button
             type="button"
             onClick={close}

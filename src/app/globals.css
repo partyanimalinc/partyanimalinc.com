@@ -472,3 +472,14 @@ footer * {
     transform: none;
   }
 }
+
+/* Advent video overlay — force the Cloudflare Stream player (iframe, and any
+   wrapper it renders) to completely fill the 9:16 phone frame. */
+.videoframe > *,
+.videoframe iframe {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  border: 0;
+}

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Stream, type StreamPlayerApi } from "@cloudflare/stream-react";
-import { ADVENT_VIDEOS, posterUrl } from "@/lib/advent-videos";
+import { ADVENT_VIDEOS, posterUrl, CF_CUSTOMER_CODE } from "@/lib/advent-videos";
 
 const COUNT = ADVENT_VIDEOS.length;
 
@@ -95,6 +95,11 @@ export function AdventVideoGallery() {
 
   return (
     <>
+      {/* Warm the connection to Cloudflare Stream so the player + first bytes
+          fetch fast when a visitor opens a clip. */}
+      <link rel="preconnect" href={`https://${CF_CUSTOMER_CODE}.cloudflarestream.com`} crossOrigin="" />
+      <link rel="preconnect" href="https://embed.cloudflarestream.com" crossOrigin="" />
+
       {/* ---------- Horizontal poster strip ---------- */}
       <div className="flex items-center gap-3">
         <Arrow dir="l" onClick={() => scrollStrip(-1)} />
@@ -178,12 +183,23 @@ export function AdventVideoGallery() {
             className="relative h-[100dvh] w-full overflow-hidden bg-black sm:h-[88vh] sm:w-auto sm:rounded-[2rem] sm:ring-1 sm:ring-white/15 sm:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)]"
             style={{ aspectRatio: "9 / 16" }}
           >
+            {/* Poster paints instantly (already cached from the strip) while the
+                player boots + buffers, so it never opens on a black frame. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={posterUrl(active.uid, active.t)}
+              alt=""
+              aria-hidden
+              className="absolute inset-0 h-full w-full object-cover"
+            />
             {/* Cloudflare player, forced to fill via .videoframe (globals.css) */}
             <div className="videoframe absolute inset-0">
               <Stream
                 key={active.uid}
                 streamRef={player}
                 src={active.uid}
+                poster={posterUrl(active.uid, active.t)}
+                preload="auto"
                 autoplay
                 muted={muted}
                 controls={false}
@@ -224,7 +240,7 @@ export function AdventVideoGallery() {
               type="button"
               onClick={toggleMute}
               aria-label={muted ? "Unmute" : "Mute"}
-              className="absolute right-3 top-4 z-20 grid h-10 w-10 place-items-center rounded-full bg-black/40 text-white transition-colors hover:bg-black/60"
+              className="absolute left-3 top-4 z-20 grid h-10 w-10 place-items-center rounded-full bg-black/40 text-white transition-colors hover:bg-black/60"
             >
               {muted ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>

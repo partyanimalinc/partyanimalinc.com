@@ -33,15 +33,17 @@ export function AdventVideoGallery() {
   const open = index !== null;
   const active = open ? ADVENT_VIDEOS[index] : null;
 
+  // Assume not-playing until the player actually reports onPlay, so the play
+  // button shows whenever autoplay is blocked (e.g. after a swipe/auto-advance).
   const openAt = (i: number) => {
     setProgress(0);
-    setPlaying(true);
+    setPlaying(false);
     setIndex(i);
   };
   const close = useCallback(() => setIndex(null), []);
   const go = useCallback((dir: number) => {
     setProgress(0);
-    setPlaying(true);
+    setPlaying(false);
     setIndex((i) => (i === null ? i : (i + dir + COUNT) % COUNT));
   }, []);
 
@@ -195,7 +197,6 @@ export function AdventVideoGallery() {
             {/* Cloudflare player, forced to fill via .videoframe (globals.css) */}
             <div className="videoframe absolute inset-0">
               <Stream
-                key={active.uid}
                 streamRef={player}
                 src={active.uid}
                 poster={posterUrl(active.uid, active.t)}
@@ -222,8 +223,8 @@ export function AdventVideoGallery() {
               className="absolute inset-0 z-10"
             >
               {!playing && (
-                <span className="absolute left-1/2 top-1/2 grid h-16 w-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-black/45 text-white">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <span className="absolute left-1/2 top-1/2 grid h-20 w-20 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-brand-red/90 text-white shadow-2xl ring-4 ring-white/15">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden className="ml-1">
                     <path d="M8 5.5v13l11-6.5-11-6.5Z" />
                   </svg>
                 </span>

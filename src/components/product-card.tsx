@@ -40,7 +40,7 @@ export function ProductCard({ p, hideTeam }: { p: CategoryProduct; hideTeam?: bo
   return (
     <article className="group flex flex-col overflow-hidden rounded-xl border border-black/10 bg-white shadow-sm transition-shadow hover:shadow-lg">
       {href ? (
-        <Link href={href} className="relative aspect-square bg-white p-3">
+        <Link href={href} prefetch={false} className="relative aspect-square bg-white p-3">
           {media}
         </Link>
       ) : (
@@ -48,7 +48,7 @@ export function ProductCard({ p, hideTeam }: { p: CategoryProduct; hideTeam?: bo
       )}
       <div className="flex flex-1 flex-col gap-2 border-t border-black/5 p-3">
         {href ? (
-          <Link href={href}>
+          <Link href={href} prefetch={false}>
             <h3 className="line-clamp-2 text-sm font-semibold text-ink transition-colors group-hover:text-brand-red">
               {p.name}
             </h3>

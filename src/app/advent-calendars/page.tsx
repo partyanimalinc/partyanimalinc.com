@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getCatalog, type CategoryProduct } from "@/lib/pim";
-import { AdventVideoCarousel } from "@/components/advent/video-carousel";
+import { AdventVideoGallery } from "@/components/advent/advent-video-gallery";
 import { AdventShop, type CalendarCard } from "@/components/advent/advent-shop";
 
 export const revalidate = 3600;
@@ -133,7 +133,7 @@ export default async function AdventCalendarsPage() {
         </div>
       </section>
 
-      {/* ===================== VIDEO (placeholder stub) ===================== */}
+      {/* ===================== VIDEO GALLERY (Bijan mini-me series) ===================== */}
       <section
         id="videos"
         className="relative border-t border-ink-line bg-ink-soft"
@@ -165,19 +165,7 @@ export default async function AdventCalendarsPage() {
           </div>
 
           <div className="relative z-20">
-            <AdventVideoCarousel />
-          </div>
-
-          <div className="mt-8 flex justify-center">
-            <button
-              type="button"
-              className="label-athletic inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3 text-xs uppercase tracking-wide text-white transition-colors hover:border-brand-red hover:bg-brand-red"
-            >
-              View Full Video Gallery
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
+            <AdventVideoGallery />
           </div>
         </div>
       </section>

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { LINEUP, SOCIALS } from "@/lib/site";
 import { LicensesMarquee } from "@/components/licenses-marquee";
 
-const SITE_URL = "https://partyanimalinc.com";
+const SITE_URL = "https://www.partyanimalinc.com";
 
 // Organization + WebSite structured data (helps the brand knowledge panel and
 // enables a potential sitelinks search box pointing at the catalog search).

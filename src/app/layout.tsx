@@ -31,7 +31,7 @@ const pinkBlue = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://partyanimalinc.com"),
+  metadataBase: new URL("https://www.partyanimalinc.com"),
   title: {
     default: "Party Animal: Ready to Rip",
     template: "%s | Party Animal",

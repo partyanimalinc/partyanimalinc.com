@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getCategories, getLicenses, getProductSlugs } from "@/lib/pim";
 
 // Canonical host (matches metadataBase in layout.tsx).
-const SITE_URL = "https://partyanimalinc.com";
+const SITE_URL = "https://www.partyanimalinc.com";
 
 type Freq = MetadataRoute.Sitemap[number]["changeFrequency"];
 

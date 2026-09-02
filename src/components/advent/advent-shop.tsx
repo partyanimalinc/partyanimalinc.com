@@ -11,6 +11,7 @@ export type CalendarCard = {
   name: string;
   league: string;
   image: string | null;
+  exclusive?: string;
 };
 
 function Star() {
@@ -34,6 +35,11 @@ function Card({ c }: { c: CalendarCard }) {
       aria-label={`Shop the ${c.league} advent calendar`}
     >
       <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-brand-red/50 group-hover:bg-white/[0.06]">
+        {c.exclusive && (
+          <span className="label-athletic absolute left-2 top-2 z-10 rounded-full bg-brand-gold px-2.5 py-0.5 text-[10px] font-bold uppercase text-ink shadow">
+            {c.exclusive}
+          </span>
+        )}
         {c.image ? (
           <Image
             src={c.image}
@@ -155,9 +161,11 @@ function FanaticsRetailers() {
 }
 
 export function AdventShop({
+  teenyDsg = [],
   teeny,
   squeezy,
 }: {
+  teenyDsg?: CalendarCard[];
   teeny: CalendarCard[];
   squeezy: CalendarCard[];
 }) {
@@ -200,6 +208,23 @@ export function AdventShop({
               <TabBtn id="squeezy" label="SqueezyMates" />
             </div>
           </div>
+          {/* Dick's Sporting Goods exclusives — featured at the top of the
+              TeenyMates tab (these have the exclusive rare chase figures). */}
+          {tab === "teeny" && teenyDsg.length > 0 && (
+            <div className="mb-16">
+              <p className="text-center font-heading text-lg uppercase text-brand-gold">
+                <Star /> Dick&apos;s Sporting Goods Exclusives <Star />
+              </p>
+              <p className="mx-auto mt-1 mb-8 max-w-md text-center text-sm text-white/60">
+                The only calendars with the exclusive rare metallic Ice and one-of-one Gold chase figures.
+              </p>
+              <div className="mx-auto grid max-w-5xl grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
+                {teenyDsg.map((c) => (
+                  <Card key={c.sku} c={c} />
+                ))}
+              </div>
+            </div>
+          )}
           <div className="mx-auto grid max-w-5xl grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
             {cards.map((c) => (
               <Card key={c.sku} c={c} />

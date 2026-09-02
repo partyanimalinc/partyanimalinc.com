@@ -17,8 +17,18 @@ export const metadata: Metadata = {
   },
 };
 
+// Dick's Sporting Goods exclusives — featured at the TOP of the TeenyMates grid.
+// These are the only calendars with the exclusive rare metallic Ice + 1-of-1
+// Gold chase figures.
+const TEENY_DSG: [string, string][] = [
+  ["TMANF26D", "NFL"],
+  ["TMANB26D", "NBA"],
+  ["TMAML26D", "MLB"],
+  ["TMANH26D", "NHL"],
+];
+
 // Curated grid: one card per league (base 2026 retail SKU), in display order.
-// Channel-exclusive (DSG/Amazon) and older variants are intentionally hidden.
+// Amazon/older variants stay hidden; the DSG exclusives above are shown.
 const TEENY: [string, string][] = [
   ["TMANF26", "NFL"],
   ["TMANL26", "NFL Legends"],
@@ -33,12 +43,16 @@ const SQUEEZY: [string, string][] = [
   ["SHAML26", "MLB Cap"],
 ];
 
-function toCards(order: [string, string][], bySku: Map<string, CategoryProduct>): CalendarCard[] {
+function toCards(
+  order: [string, string][],
+  bySku: Map<string, CategoryProduct>,
+  exclusive?: string,
+): CalendarCard[] {
   return order
-    .map(([sku, league]) => {
+    .map(([sku, league]): CalendarCard | null => {
       const p = bySku.get(sku);
       if (!p) return null;
-      return { sku, league, slug: p.slug, name: p.name, image: p.image };
+      return { sku, league, slug: p.slug, name: p.name, image: p.image, exclusive };
     })
     .filter((c): c is CalendarCard => c !== null);
 }
@@ -51,6 +65,7 @@ export default async function AdventCalendarsPage() {
   const bySku = new Map<string, CategoryProduct>();
   for (const p of [...teenyCat.products, ...squeezyCat.products]) bySku.set(p.sku, p);
 
+  const teenyDsg = toCards(TEENY_DSG, bySku, "Dick's Exclusive");
   const teeny = toCards(TEENY, bySku);
   const squeezy = toCards(SQUEEZY, bySku);
 
@@ -170,7 +185,7 @@ export default async function AdventCalendarsPage() {
         </div>
       </section>
 
-      <AdventShop teeny={teeny} squeezy={squeezy} />
+      <AdventShop teenyDsg={teenyDsg} teeny={teeny} squeezy={squeezy} />
 
     </div>
   );

@@ -40,6 +40,14 @@ const ORG_JSONLD = {
   ],
 };
 
+// Vimeo autoplay (muted) embed for the "Collect Like Bijan" featured drop.
+// NOTE: if the Vimeo video is Private/Unlisted, this URL MUST include the privacy
+// hash from the share embed code, e.g. .../video/1223460331?h=XXXXXXXX&autoplay=1...
+// Without it Vimeo blocks playback ("Because of its privacy settings, this video
+// cannot be played here.").
+const VIMEO_SRC =
+  "https://player.vimeo.com/video/1223460331?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0&pip=0&dnt=1";
+
 export default function HomePage() {
   return (
     <>
@@ -93,6 +101,69 @@ export default function HomePage() {
 
       {/* ---------------- Partners / Licenses marquee ---------------- */}
       <LicensesMarquee />
+
+      {/* ---------------- Featured Drop (Collect Like Bijan) ---------------- */}
+      <section className="relative overflow-hidden bg-ink py-14 sm:py-20">
+        {/* Festive product background, shared with the Advent page. The TeenyMates
+            calendar + figures are baked into the RIGHT side of this art, so on
+            desktop they read as the "product shot" beside the video. */}
+        <Image
+          src="/advent/advent-bg3.png"
+          alt=""
+          aria-hidden
+          fill
+          sizes="100vw"
+          className="object-cover object-[72%_center] lg:object-center"
+        />
+        {/* Legibility scrims: heavy on the left (behind the copy), clearing right */}
+        <div
+          aria-hidden
+          className="absolute inset-0 hidden lg:block bg-[linear-gradient(90deg,rgba(6,7,9,0.96)_0%,rgba(6,7,9,0.82)_26%,rgba(6,7,9,0.35)_50%,transparent_72%)]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 lg:hidden bg-[linear-gradient(180deg,rgba(6,7,9,0.72)_0%,rgba(6,7,9,0.88)_100%)]"
+        />
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Copy (left) + video (center); product shows through on the right (lg) */}
+          <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-6">
+            <div className="order-2 text-center lg:order-1 lg:col-span-4 lg:text-left">
+              <h3 className="font-heading text-4xl uppercase italic leading-none text-white sm:text-5xl">
+                Collect Like Bijan
+              </h3>
+              <p className="mx-auto mt-4 max-w-md text-base leading-relaxed text-white/80 lg:mx-0">
+                See how NFL star Bijan Robinson reacts to finding his mini-me in
+                the new TeenyMates NFL Advent Calendar.
+              </p>
+              <div className="mt-7">
+                <Link
+                  href="/advent-calendars"
+                  className="label-athletic inline-flex items-center gap-2 rounded-full bg-brand-red px-7 py-3.5 text-sm text-white shadow-xl shadow-brand-red/30 transition-colors hover:bg-brand-red-dark"
+                >
+                  Explore Advent Calendars
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </Link>
+              </div>
+            </div>
+
+            <div className="order-1 lg:order-2 lg:col-span-5 lg:col-start-5">
+              <div className="aspect-video overflow-hidden rounded-xl bg-black shadow-2xl">
+                <iframe
+                  src={VIMEO_SRC}
+                  title="Collect Like Bijan"
+                  className="h-full w-full border-0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ---------------- Choose Your Lineup ---------------- */}
       <section className="bg-ink py-14 sm:py-20">

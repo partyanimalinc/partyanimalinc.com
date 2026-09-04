@@ -1,3 +1,4 @@
+import Image from "next/image";
 // "Featured Collections" band for the SqueezyMates landing page, styled to match
 // the TeenyMates FeaturedCollections band. Leads with the squeezy object variety
 // by sport (the line's hook: helmets / basketballs / pucks / batting helmets),
@@ -36,13 +37,11 @@ export function SqueezyFeaturedCollections() {
               className="fc-card flex flex-col items-center text-center"
             >
               <div className="fc-tile w-full">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={c.img}
                   alt={`SqueezyMates ${c.name}`}
                   width={640}
                   height={640}
-                  loading="lazy"
                   className="fc-img"
                 />
               </div>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 // "Fan Favorites" row for the SqueezyMates landing — same framing as the
 // TeenyMates FanFavorites (light band, portrait blind-pack tiles). Tiles,
 // images, and links are the exact set specified for SqueezyMates.
@@ -62,13 +63,11 @@ export function SqueezyFanFavorites() {
               className="ff-card flex flex-col items-center text-center"
             >
               <div className="ff-tile w-full">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={f.img}
                   alt={`${f.league} ${f.series} SqueezyMates blind pack`}
                   width={620}
                   height={780}
-                  loading="lazy"
                   className="ff-img"
                 />
               </div>

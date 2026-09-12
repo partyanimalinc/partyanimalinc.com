@@ -20,7 +20,7 @@ export default function BecomeAResellerPage() {
       <section className="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="legal-prose">
           <p>
-            Thank you for your interest in Party Animal, Inc. and our products! If you are
+            Thank you for your interest in Party Animal, LLC and our products! If you are
             interested in ordering our products for your retail or distribution outlet,
             and have valid vendor resale credentials for the U.S. or Canada, we would love
             to set you up as our customer.

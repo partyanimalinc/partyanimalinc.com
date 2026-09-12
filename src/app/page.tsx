@@ -14,7 +14,7 @@ const ORG_JSONLD = {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
       name: "Party Animal",
-      legalName: "Party Animal, Inc.",
+      legalName: "Party Animal, LLC",
       url: SITE_URL,
       logo: `${SITE_URL}/brand/pa-logo.png`,
       foundingDate: "1989",

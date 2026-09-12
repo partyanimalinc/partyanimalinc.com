@@ -26,7 +26,7 @@ export default function ContactPage() {
           <div>
             <InfoHeading>Address</InfoHeading>
             <address className="not-italic leading-relaxed text-white/75">
-              Party Animal, Inc.
+              Party Animal, LLC
               <br />
               909 Crocker Rd.
               <br />

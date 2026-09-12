@@ -27,6 +27,7 @@ const STATIC: { path: string; priority: number; changeFrequency: Freq }[] = [
   { path: "/careers", priority: 0.5, changeFrequency: "monthly" },
   { path: "/privacy-policy", priority: 0.3, changeFrequency: "yearly" },
   { path: "/terms", priority: 0.3, changeFrequency: "yearly" },
+  { path: "/accessibility", priority: 0.3, changeFrequency: "yearly" },
 ];
 
 export const revalidate = 3600; // rebuild the sitemap hourly

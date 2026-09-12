@@ -4,7 +4,7 @@ import { ObfuscatedEmail } from "@/components/obfuscated-email";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How Party Animal, Inc. collects, uses, and protects your personal information.",
+  description: "How Party Animal, LLC collects, uses, and protects your personal information.",
 };
 
 export default function PrivacyPage() {
@@ -23,10 +23,12 @@ export default function PrivacyPage() {
             but any changes will be posted and changes will only apply to activities and
             information on a going forward, not retroactive basis. You are encouraged to
             review the privacy policy whenever you visit the site to make sure that you
-            understand how any personal information you provide will be used. Note: the
-            privacy practices set forth in this privacy policy are for this web site
-            only. If you link to other web sites, please review the privacy policies
-            posted at those sites.
+            understand how any personal information you provide will be used. This privacy
+            policy applies to the Party Animal, LLC websites and online store where it is
+            posted, including partyanimalinc.com and our online retail store. Our kids and
+            avatar experience at partyanimaltoys.com is governed by its own separate
+            privacy policy and children&rsquo;s privacy policy. If you link to other web
+            sites, please review the privacy policies posted at those sites.
           </p>
 
           <h2>Collection of Information</h2>

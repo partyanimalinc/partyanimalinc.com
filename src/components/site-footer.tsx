@@ -19,6 +19,7 @@ const SUPPORT = [
   { label: "Where to Buy", href: "/where-to-buy" },
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms", href: "/terms" },
+  { label: "Accessibility", href: "/accessibility" },
   { label: "Contact Us", href: "/contact" },
 ];
 
@@ -205,7 +206,7 @@ export function SiteFooter() {
         />
         <div className="relative mx-auto flex max-w-7xl flex-col items-center gap-4 px-6 py-7 text-center md:flex-row md:justify-between md:text-left lg:px-8">
           <p className="order-2 text-xs text-white/40 md:order-1 lg:text-white">
-            &copy; 2026 Party Animal, Inc. All rights reserved.
+            &copy; 2026 Party Animal, LLC. All rights reserved.
             <br className="hidden sm:block" /> Officially licensed products.
           </p>
           <p className="font-brush order-1 text-lg uppercase tracking-wide text-white sm:text-2xl md:order-2">
@@ -213,7 +214,7 @@ export function SiteFooter() {
             <span className="text-brand-red">•</span> Celebrate
           </p>
           <p className="order-3 max-w-[16rem] text-xs text-white/40 lg:text-white">
-            Party Animal is a registered trademark of Party Animal, Inc.
+            Party Animal is a registered trademark of Party Animal, LLC.
           </p>
         </div>
       </div>

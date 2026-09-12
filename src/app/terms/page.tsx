@@ -3,7 +3,7 @@ import { PageHeader } from "@/components/page-header";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions",
-  description: "Terms and conditions of use for the Party Animal, Inc. website.",
+  description: "Terms and conditions of use for the Party Animal, LLC website.",
 };
 
 export default function TermsPage() {
@@ -15,7 +15,7 @@ export default function TermsPage() {
 
         <div className="legal-prose">
           <p>
-            Welcome to Party Animal, Inc. Please review the following terms of use for
+            Welcome to Party Animal, LLC. Please review the following terms of use for
             your protection.
           </p>
 
@@ -41,7 +41,7 @@ export default function TermsPage() {
 
           <h2>Online Marketplaces</h2>
           <p>
-            Consumers are prohibited from purchasing products from Party Animal, Inc. or
+            Consumers are prohibited from purchasing products from Party Animal, LLC or
             any authorized retailer or distributor and reselling them on any online
             marketplace, including but not limited to Amazon, eBay, and Walmart.com.
           </p>
@@ -49,7 +49,7 @@ export default function TermsPage() {
           <h2>Disclaimer</h2>
           <p>
             The products on the website are provided &ldquo;as is&rdquo; from the
-            manufacturer and as such, Party Animal, Inc. makes no warranties, whether
+            manufacturer and as such, Party Animal, LLC makes no warranties, whether
             express or implied, including without limitation, implied warranties or
             conditions of merchantability, fitness for a particular purpose, or
             non-infringement of intellectual property or other violation of rights. By

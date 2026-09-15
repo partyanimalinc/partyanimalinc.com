@@ -5,7 +5,7 @@
 export const EXTERNAL = {
   // The DTC store + contest live on the toys site, not this corporate site.
   toysStore: "https://partyanimaltoys.com",
-  enterToWin: "https://partyanimaltoys.com",
+  enterToWin: "https://play.partyanimaltoys.com",
 };
 
 // Social profiles shown in the footer.

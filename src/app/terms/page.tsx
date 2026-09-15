@@ -80,8 +80,8 @@ export default function TermsPage() {
           <p>
             For complete rules and terms of conditions, we have moved all sweepstakes and
             contest information to{" "}
-            <a href="https://partyanimaltoys.com" target="_blank" rel="noopener noreferrer">
-              partyanimaltoys.com
+            <a href="https://play.partyanimaltoys.com" target="_blank" rel="noopener noreferrer">
+              play.partyanimaltoys.com
             </a>
             . Please visit that address for more details.
           </p>

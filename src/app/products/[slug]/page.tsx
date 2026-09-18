@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { CategoryView } from "@/components/category-view";
 import { ProductView } from "@/components/product-view";
 import { getCategories, getCategory, getProduct } from "@/lib/pim";
@@ -34,13 +34,16 @@ export async function generateMetadata(props: {
 
   const product = await getProduct(slug);
   if (product) {
+    // Canonical is the product's CURRENT url: for a retired slug the page 308s
+    // anyway, but metadata is generated first and must not advertise the old one.
+    const canonicalSlug = product.movedTo || slug;
     const desc =
       htmlToText(product.storeDescription).slice(0, 160) ||
       `${product.name} from Party Animal.${product.teamName ? ` Officially licensed ${product.teamName} fan gear.` : ""}`;
     return {
       title: `${product.name}${product.teamName ? "" : ""}`,
       description: desc,
-      alternates: { canonical: `/products/${slug}` },
+      alternates: { canonical: `/products/${canonicalSlug}` },
       openGraph: product.gallery.length
         ? { images: [{ url: product.gallery[0] }], title: product.name, description: desc }
         : undefined,
@@ -60,7 +63,15 @@ export default async function ProductsSlugPage(props: {
   if (cat) return <CategoryView data={cat} />;
 
   const product = await getProduct(slug);
-  if (product) return <ProductView p={product} />;
+  if (product) {
+    // The slug was retired and the API resolved it to the product's current
+    // one. 308 so the old URL keeps working and search engines consolidate on
+    // the new address instead of indexing both.
+    if (product.movedTo && product.movedTo !== slug) {
+      permanentRedirect(`/products/${product.movedTo}`);
+    }
+    return <ProductView p={product} />;
+  }
 
   notFound();
 }

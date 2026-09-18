@@ -212,6 +212,14 @@ export type RelatedProduct = {
 export type ProductDetail = {
   sku: string;
   slug: string;
+  /**
+   * Set when the requested slug was a RETIRED one and the API served the
+   * product it became. Product URLs get rebuilt when the original slug was
+   * inherited from a different product, so the old URL has to keep working.
+   * Pages must 308 to this rather than render, or the same product is
+   * reachable at two addresses.
+   */
+  movedTo?: string | null;
   name: string;
   gallery: string[];
   msrp: number | null;

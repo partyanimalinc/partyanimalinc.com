@@ -41,6 +41,17 @@ export function ProductView({ p }: { p: ProductDetail }) {
   const consumer = p.retailers.filter((r) => !r.wholesale);
   const wholesale = p.retailers.filter((r) => r.wholesale);
 
+  // "Also available at fine retailers everywhere" contradicts the product name
+  // on an exclusive — a DSG/Fanatics/Grosnor exclusive is, by definition, the
+  // one place to get it. Suppress the line rather than tell shoppers to look
+  // elsewhere and come up empty.
+  //
+  // Keyed off the displayed name because that is where the claim is made:
+  // marketing writes "(DSG Exclusive)", "Fanatics Exclusive", "Team Exclusive".
+  // If the name does not say exclusive, the page never claims it is one, so
+  // there is nothing to contradict.
+  const isExclusive = /\bexclusive\b/i.test(p.name);
+
   // Product structured data (helps these pages read as real products, not thin).
   const jsonLd = {
     "@context": "https://schema.org/",
@@ -125,11 +136,13 @@ export function ProductView({ p }: { p: ProductDetail }) {
                 </svg>
               </a>
             ))}
-            <p className="text-xs text-ink/45">
-              {consumer.length > 0
-                ? "Also available at fine retailers everywhere."
-                : "Available at fine retailers everywhere."}
-            </p>
+            {!isExclusive && (
+              <p className="text-xs text-ink/45">
+                {consumer.length > 0
+                  ? "Also available at fine retailers everywhere."
+                  : "Available at fine retailers everywhere."}
+              </p>
+            )}
           </div>
 
           {/* Marketing copy */}

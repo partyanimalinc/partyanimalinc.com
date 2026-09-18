@@ -13,12 +13,6 @@ export type CalendarCard = {
   league: string;
   image: string | null;
   exclusive?: string;
-  /**
-   * Retailer product URL. Set on the Dick's exclusives: those editions are not
-   * sold anywhere else, so sending shoppers to our own page — which has no buy
-   * button for them — is a dead end. When present the card links straight out.
-   */
-  externalUrl?: string | null;
 };
 
 function Star() {
@@ -34,23 +28,16 @@ function Arrow() {
 }
 
 function Card({ c }: { c: CalendarCard }) {
-  const external = c.externalUrl
-    ? dsgAttributed(c.externalUrl, { campaign: "advent-2026", content: c.sku })
-    : null;
-  const href = external ?? (c.slug ? `/products/${c.slug}` : "/products");
-  const Wrapper = external ? "a" : Link;
-  const linkProps = external
-    ? { href, target: "_blank" as const, rel: "noopener noreferrer" }
-    : { href };
+  // Always our own product page. The retailer hand-off belongs on the PDP,
+  // where every product exposes the same "Shop on Dick's Sporting Goods"
+  // button from products.dsg_url -- one consistent path for shoppers, rather
+  // than some cards jumping straight out to a retailer and others not.
+  const href = c.slug ? `/products/${c.slug}` : "/products";
   return (
-    <Wrapper
-      {...linkProps}
+    <Link
+      href={href}
       className="group flex flex-col items-center text-center"
-      aria-label={
-        external
-          ? `Shop the ${c.league} advent calendar at Dick's Sporting Goods`
-          : `Shop the ${c.league} advent calendar`
-      }
+      aria-label={`Shop the ${c.league} advent calendar`}
     >
       <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-brand-red/50 group-hover:bg-white/[0.06]">
         {c.exclusive && (
@@ -77,7 +64,7 @@ function Card({ c }: { c: CalendarCard }) {
           <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </span>
-    </Wrapper>
+    </Link>
   );
 }
 

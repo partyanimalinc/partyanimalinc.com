@@ -53,12 +53,7 @@ function toCards(
     .map(([sku, league]): CalendarCard | null => {
       const p = bySku.get(sku);
       if (!p) return null;
-      // A Dick's exclusive cannot be bought on our own site, so if the PIM has
-      // a Dick's product URL for it the card links straight there. Comes from
-      // products.dsg_url via the API's retailer list, so adding a URL in the
-      // PIM is all it takes — no code change per season.
-      const externalUrl = p.retailers.find((r) => r.retailer === "dsg")?.url ?? null;
-      return { sku, league, slug: p.slug, name: p.name, image: p.image, exclusive, externalUrl };
+      return { sku, league, slug: p.slug, name: p.name, image: p.image, exclusive };
     })
     .filter((c): c is CalendarCard => c !== null);
 }

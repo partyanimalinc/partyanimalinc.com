@@ -4,12 +4,20 @@ import { ProductCard } from "@/components/product-card";
 import { sanitizeHtml, htmlToText } from "@/lib/html";
 import { slugify } from "@/lib/slug";
 import { amazonAttributed } from "@/lib/amazon";
+import { dsgAttributed } from "@/lib/dsg";
 import type { ProductDetail } from "@/lib/pim";
 
 const RETAILER_LABEL: Record<string, string> = {
   amazon: "Buy on Amazon",
+  dsg: "Shop on Dick's Sporting Goods",
   faire: "Order Wholesale on Faire",
 };
+
+// Each retailer gets its own tracking treatment; both helpers ignore URLs that
+// are not theirs, so the order does not matter.
+function retailerHref(url: string, sku: string): string {
+  return dsgAttributed(amazonAttributed(url), { campaign: "product-page", content: sku });
+}
 
 function Spec({ label, value }: { label: string; value: string | number | null }) {
   if (value === null || value === "" || value === undefined) return null;
@@ -92,7 +100,7 @@ export function ProductView({ p }: { p: ProductDetail }) {
             {consumer.map((r) => (
               <a
                 key={r.retailer}
-                href={amazonAttributed(r.url)}
+                href={retailerHref(r.url, p.sku)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="label-athletic inline-flex items-center justify-center gap-2 rounded-full bg-brand-red px-7 py-3.5 text-sm text-white shadow-lg shadow-brand-red/25 transition-colors hover:bg-brand-red-dark"
@@ -106,7 +114,7 @@ export function ProductView({ p }: { p: ProductDetail }) {
             {wholesale.map((r) => (
               <a
                 key={r.retailer}
-                href={amazonAttributed(r.url)}
+                href={retailerHref(r.url, p.sku)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="label-athletic inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 bg-white px-7 py-3.5 text-sm text-ink transition-colors hover:border-brand-red hover:text-brand-red"

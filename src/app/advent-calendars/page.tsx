@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getCatalog, type CategoryProduct } from "@/lib/pim";
 import { AdventVideoGallery } from "@/components/advent/advent-video-gallery";
 import { AdventShop, type CalendarCard } from "@/components/advent/advent-shop";
+import { dsgAttributed, DSG_BRAND_PAGE } from "@/lib/dsg";
 
 export const revalidate = 3600;
 
@@ -52,7 +53,12 @@ function toCards(
     .map(([sku, league]): CalendarCard | null => {
       const p = bySku.get(sku);
       if (!p) return null;
-      return { sku, league, slug: p.slug, name: p.name, image: p.image, exclusive };
+      // A Dick's exclusive cannot be bought on our own site, so if the PIM has
+      // a Dick's product URL for it the card links straight there. Comes from
+      // products.dsg_url via the API's retailer list, so adding a URL in the
+      // PIM is all it takes — no code change per season.
+      const externalUrl = p.retailers.find((r) => r.retailer === "dsg")?.url ?? null;
+      return { sku, league, slug: p.slug, name: p.name, image: p.image, exclusive, externalUrl };
     })
     .filter((c): c is CalendarCard => c !== null);
 }
@@ -133,7 +139,7 @@ export default async function AdventCalendarsPage() {
                 </svg>
               </Link>
               <a
-                href="https://www.dickssportinggoods.com/f/fan-shop-advent-calendars"
+                href={dsgAttributed(DSG_BRAND_PAGE, { campaign: "advent-2026", content: "hero-cta" })}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="label-athletic inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm text-white transition-colors hover:border-white hover:bg-white/10"

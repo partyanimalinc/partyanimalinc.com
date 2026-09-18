@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { amazonAttributed } from "@/lib/amazon";
+import { dsgAttributed, DSG_BRAND_PAGE } from "@/lib/dsg";
 
 export type CalendarCard = {
   sku: string;
@@ -12,6 +13,12 @@ export type CalendarCard = {
   league: string;
   image: string | null;
   exclusive?: string;
+  /**
+   * Retailer product URL. Set on the Dick's exclusives: those editions are not
+   * sold anywhere else, so sending shoppers to our own page — which has no buy
+   * button for them — is a dead end. When present the card links straight out.
+   */
+  externalUrl?: string | null;
 };
 
 function Star() {
@@ -27,12 +34,23 @@ function Arrow() {
 }
 
 function Card({ c }: { c: CalendarCard }) {
-  const href = c.slug ? `/products/${c.slug}` : "/products";
+  const external = c.externalUrl
+    ? dsgAttributed(c.externalUrl, { campaign: "advent-2026", content: c.sku })
+    : null;
+  const href = external ?? (c.slug ? `/products/${c.slug}` : "/products");
+  const Wrapper = external ? "a" : Link;
+  const linkProps = external
+    ? { href, target: "_blank" as const, rel: "noopener noreferrer" }
+    : { href };
   return (
-    <Link
-      href={href}
+    <Wrapper
+      {...linkProps}
       className="group flex flex-col items-center text-center"
-      aria-label={`Shop the ${c.league} advent calendar`}
+      aria-label={
+        external
+          ? `Shop the ${c.league} advent calendar at Dick's Sporting Goods`
+          : `Shop the ${c.league} advent calendar`
+      }
     >
       <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-brand-red/50 group-hover:bg-white/[0.06]">
         {c.exclusive && (
@@ -59,7 +77,7 @@ function Card({ c }: { c: CalendarCard }) {
           <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </span>
-    </Link>
+    </Wrapper>
   );
 }
 
@@ -114,7 +132,7 @@ function TeenyRetailers() {
             Find ultra rare chase figures in select TeenyMates Advent Calendars.
           </p>
           <a
-            href="https://www.dickssportinggoods.com/f/fan-shop-advent-calendars"
+            href={dsgAttributed(DSG_BRAND_PAGE, { campaign: "advent-2026", content: "shop-at-dicks-cta" })}
             target="_blank"
             rel="noopener noreferrer"
             className="label-athletic mt-5 inline-flex items-center gap-2 rounded-full border border-white/40 px-7 py-3.5 text-sm text-white transition-colors hover:border-brand-red hover:bg-brand-red"

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
 import { amazonAttributed } from "@/lib/amazon";
+import { dsgAttributed, DSG_BRAND_PAGE } from "@/lib/dsg";
 
 export const metadata: Metadata = { title: "Where to Buy" };
 
@@ -8,7 +9,9 @@ export const metadata: Metadata = { title: "Where to Buy" };
 // page link straight to it; Target + Rally House point at the homepage until a
 // specific landing URL is available.
 const RETAILERS: { name: string; logo: string; href: string }[] = [
-  { name: "Dick's Sporting Goods", logo: "/retailers/dicks.svg", href: "https://www.dickssportinggoods.com/f/fan-shop-sale?filterFacets=X_BRAND%253AParty%2520Animal" },
+  // Dick's built us a real brand page; this used to be a brand facet bolted
+  // onto their sale category, which only ever showed discounted stock.
+  { name: "Dick's Sporting Goods", logo: "/retailers/dicks.svg", href: DSG_BRAND_PAGE },
   { name: "Amazon.com", logo: "/retailers/amazon.png", href: "https://www.amazon.com/stores/PartyAnimalInc/page/6A6BA724-BD28-4888-868B-B57287C3DFCB" },
   { name: "Target", logo: "/retailers/target.svg", href: "https://www.target.com" },
   { name: "Walgreens", logo: "/retailers/walgreens.png", href: "https://www.walgreens.com/store/c/productlist/N=20001330-9000149767" },
@@ -35,7 +38,7 @@ export default function WhereToBuyPage() {
           {RETAILERS.map((r) => (
             <li key={r.name}>
               <a
-                href={amazonAttributed(r.href)}
+                href={dsgAttributed(amazonAttributed(r.href), { campaign: "where-to-buy" })}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Shop Party Animal at ${r.name}`}

@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Scratch — one-off scripts, audit runs, and their outputs. Underscore prefix = never committed.
+scripts/_*
+/scratchpad_*
+# claude code: commit agents/commands, keep local settings private
+.claude/settings.local.json

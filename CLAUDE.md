@@ -31,8 +31,27 @@ strategy and open PIM decisions).
 - A PIM field this site needs but AppHub does not expose → note it for
   AppHub's `pim` agent; do not invent it here.
 
-## Scratch files
-`scripts/_<name>.<ext>` — underscore prefix is gitignored.
+## Scripts — three tiers
+
+The test is "does this ship?", not "is this useful?".
+
+| What | Where | Git |
+|---|---|---|
+| Imported by the app / runs on Vercel | `lib/` `app/` | tracked |
+| **Recurring local tooling** — run by hand, every time we need it | `scripts/local/` | ignored, kept |
+| One-off: audits, backfills, investigations, generated bundles | `scripts/_<name>` | ignored, disposable |
+
+`scripts/local/` is **its own git repo** — ignored here so it never reaches this
+repo, but versioned and backed up on its own remote. Its contents must stay
+inside the working tree: they need `node_modules`, the `@/` alias and
+`--env-file=.env.local`. Ignored is not the same as homeless.
+
+Planning and working docs live in `~/Documents/planning/<project>/`, in no repo.
+
+**Stage by explicit path — never `git add -A` or `git add -u`.** These repos
+regularly carry in-progress work; a blanket add ships it under an unrelated
+commit message.
+
 
 ## Shipping
 `/ship` runs lint + build, commits, pushes `main`. Vercel deploys.

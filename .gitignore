@@ -41,7 +41,15 @@ yarn-error.log*
 next-env.d.ts
 
 # Scratch — one-off scripts, audit runs, and their outputs. Underscore prefix = never committed.
+# Local-only tooling. Two ignored tiers, and the difference matters:
+#   scripts/_*      one-off, scratch, generated bundles — delete freely
+#   scripts/local/  RECURRING local tooling — ignored here, but kept: it is its
+#                   own git repo (private ops remote), so it has history and a
+#                   backup without ever entering this repo. Do not delete.
+# Both must live inside the repo: they need node_modules, the @/ alias and
+# .env.local. Ignored is not the same as disposable.
 scripts/_*
+scripts/local/
 /scratchpad_*
 # claude code: commit agents/commands, keep local settings private
 .claude/settings.local.json

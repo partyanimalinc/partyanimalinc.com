@@ -40,8 +40,21 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Provide paths and/or tags." }, { status: 400 });
   }
 
-  for (const t of tags) revalidateTag(t, "max");
-  for (const p of paths) revalidatePath(p, "page");
+  // Expire tagged data immediately rather than stale-while-revalidate. The path
+  // revalidation below makes the next request re-render the page; if the tag were
+  // only marked stale ("max"), that render would reuse the OLD payload and cache
+  // it for another full TTL. `{ expire: 0 }` is the documented form for webhooks
+  // and other external callers — `updateTag` is Server-Action-only, not usable here.
+  for (const t of tags) revalidateTag(t, { expire: 0 });
+
+  // `type` applies ONLY to route patterns like "/products/[slug]". Passing it
+  // alongside a literal path silently no-ops: the endpoint still reports success
+  // while the CDN entry keeps aging. apphub's revalidateSiteForProduct always
+  // sends a literal /products/<web_slug>, so every per-product ping was lost.
+  for (const p of paths) {
+    if (p.includes("[")) revalidatePath(p, "page");
+    else revalidatePath(p);
+  }
 
   return NextResponse.json({ revalidated: true, paths, tags });
 }

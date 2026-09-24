@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/link";
 import { getCatalog } from "@/lib/pim";
 import { parseCatalogSearch, hasActiveFilters, editionLabel } from "@/lib/catalog-url";
 

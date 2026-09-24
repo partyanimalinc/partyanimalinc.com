@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/link";
 
 // Simple brand landing (SqueezyMates / Jumbo Squeezy / Team Gear): the designed
 // hero + a short intro and a primary CTA into the brand catalog (/{base}/all).

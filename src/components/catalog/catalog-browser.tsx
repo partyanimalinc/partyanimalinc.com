@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/link";
 import { ProductCard } from "@/components/product-card";
 import {
   FilterGroups,

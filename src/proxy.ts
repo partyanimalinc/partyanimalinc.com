@@ -55,9 +55,41 @@ const EXACT: Record<string, string> = {
   "/Reseller-Specials": "/become-a-reseller",
 };
 
+// Query params a page on this site actually reads, plus the tracking params
+// analytics needs to see on arrival. Anything else is stripped with a 308.
+//
+// Why: the listing routes render on demand per unique URL. Legacy NetSuite
+// links still in the index and in scraper lists carry SuiteCommerce session
+// params (vid, ck, cktime, sj, chrole, promocode, gc, nxtPslug …), so every
+// visit was a never-before-seen URL and a fresh function invocation. Folding
+// them onto the canonical URL makes one URL per page again.
+const KNOWN_PARAMS = new Set([
+  // facets (catalog-url.ts, license-url.ts)
+  "collection", "league", "team", "q", "series", "line", "edition", "sort", "page",
+  // Next.js RSC fetches
+  "_rsc",
+  // attribution — read client-side by Umami on first paint
+  "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
+  "gclid", "fbclid", "msclkid", "ttclid", "ref",
+]);
+
+// Mutates url.searchParams; returns true when something was removed.
+function stripUnknownParams(url: URL): boolean {
+  let changed = false;
+  for (const key of Array.from(url.searchParams.keys())) {
+    if (!KNOWN_PARAMS.has(key)) {
+      url.searchParams.delete(key);
+      changed = true;
+    }
+  }
+  return changed;
+}
+
 export function proxy(req: NextRequest) {
   const p = req.nextUrl.pathname;
   const url = req.nextUrl.clone();
+  // Scrub first so a legacy path with legacy params fixes both in one hop.
+  const scrubbed = stripUnknownParams(url);
 
   // Retired product slug -> current URL. Checked first and case-sensitively:
   // slugs are lowercase by construction, so a non-matching case is not ours.
@@ -68,7 +100,7 @@ export function proxy(req: NextRequest) {
       url.pathname = `/products/${moved}`;
       return NextResponse.redirect(url, 308);
     }
-    return NextResponse.next();
+    return scrubbed ? NextResponse.redirect(url, 308) : NextResponse.next();
   }
 
   if (EXACT[p]) {
@@ -99,12 +131,18 @@ export function proxy(req: NextRequest) {
     return NextResponse.redirect(url, 308);
   }
 
-  return NextResponse.next();
+  return scrubbed ? NextResponse.redirect(url, 308) : NextResponse.next();
 }
 
 export const config = {
   matcher: [
     "/products/:path*",
+    // On-demand listing routes: scrub unknown query params (see KNOWN_PARAMS).
+    "/licenses/:path*",
+    "/teenymates/:path*",
+    "/squeezymates/:path*",
+    "/jumbo-squeezy/all",
+    "/team-gear/all",
     "/Products",
     "/Products/:path*",
     "/Licenses",

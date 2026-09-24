@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/link";
 import Image from "next/image";
 
 // Individual league/partner logos sliced from the "All Licenses (on light)"

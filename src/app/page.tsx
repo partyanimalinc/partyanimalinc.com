@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/link";
 import Image from "next/image";
 import { LINEUP, SOCIALS } from "@/lib/site";
 import { LicensesMarquee } from "@/components/licenses-marquee";

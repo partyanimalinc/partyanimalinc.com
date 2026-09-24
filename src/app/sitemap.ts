@@ -1,8 +1,11 @@
 import type { MetadataRoute } from "next";
 import { getCategories, getLicenses, getProductSlugs } from "@/lib/pim";
+import { SITE_URL } from "@/lib/seo";
 
-// Canonical host (matches metadataBase in layout.tsx).
-const SITE_URL = "https://www.partyanimalinc.com";
+// lastModified for the static entries. Evaluated once when the module loads
+// (at build, then per server instance), not per request: a sitemap whose
+// every <lastmod> is "now" tells crawlers nothing and gets ignored.
+const STATIC_LAST_MODIFIED = new Date();
 
 type Freq = MetadataRoute.Sitemap[number]["changeFrequency"];
 
@@ -19,6 +22,7 @@ const STATIC: { path: string; priority: number; changeFrequency: Freq }[] = [
   { path: "/jumbo-squeezy/all", priority: 0.7, changeFrequency: "weekly" },
   { path: "/team-gear", priority: 0.9, changeFrequency: "weekly" },
   { path: "/team-gear/all", priority: 0.7, changeFrequency: "weekly" },
+  { path: "/advent-calendars", priority: 0.8, changeFrequency: "weekly" },
   { path: "/licenses", priority: 0.7, changeFrequency: "monthly" },
   { path: "/about", priority: 0.6, changeFrequency: "monthly" },
   { path: "/where-to-buy", priority: 0.7, changeFrequency: "monthly" },
@@ -33,10 +37,9 @@ const STATIC: { path: string; priority: number; changeFrequency: Freq }[] = [
 export const revalidate = 3600; // rebuild the sitemap hourly
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
   const entry = (path: string, priority: number, changeFrequency: Freq) => ({
     url: `${SITE_URL}${path === "/" ? "" : path}`,
-    lastModified: now,
+    lastModified: STATIC_LAST_MODIFIED,
     changeFrequency,
     priority,
   });
@@ -55,7 +58,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const p of productSlugs) {
     urls.push({
       url: `${SITE_URL}/products/${p.slug}`,
-      lastModified: p.updatedAt ? new Date(p.updatedAt) : now,
+      lastModified: p.updatedAt ? new Date(p.updatedAt) : STATIC_LAST_MODIFIED,
       changeFrequency: "weekly",
       priority: 0.6,
     });

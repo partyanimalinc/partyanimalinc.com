@@ -1,11 +1,14 @@
 import Link from "@/components/link";
 import { ProductGallery } from "@/components/product-gallery";
 import { ProductCard } from "@/components/product-card";
+import { JsonLd } from "@/components/json-ld";
 import { sanitizeHtml, htmlToText } from "@/lib/html";
 import { slugify } from "@/lib/slug";
 import { amazonAttributed } from "@/lib/amazon";
 import { dsgAttributed } from "@/lib/dsg";
-import type { ProductDetail } from "@/lib/pim";
+import { relFor } from "@/lib/outbound";
+import { breadcrumbJsonLd, productCanonical, productJsonLd } from "@/lib/seo";
+import { categoryHref, type ProductDetail } from "@/lib/pim";
 
 const RETAILER_LABEL: Record<string, string> = {
   amazon: "Buy on Amazon",
@@ -32,11 +35,9 @@ function Spec({ label, value }: { label: string; value: string | number | null }
 export function ProductView({ p }: { p: ProductDetail }) {
   const teamHref = p.teamName ? `/licenses/${slugify(p.teamName)}` : null;
   const leagueHref = p.leagueName ? `/licenses/${slugify(p.leagueName)}` : null;
-  const collectionHref = p.collection
-    ? p.collection.template === "brand"
-      ? `/${p.collection.slug}`
-      : `/products/${p.collection.slug}`
-    : null;
+  // categoryHref: brand nodes WITH a landing go to it; the rest (and every
+  // standard category) use /products/[slug].
+  const collectionHref = p.collection ? categoryHref(p.collection) : null;
 
   const consumer = p.retailers.filter((r) => !r.wholesale);
   const wholesale = p.retailers.filter((r) => r.wholesale);
@@ -53,28 +54,20 @@ export function ProductView({ p }: { p: ProductDetail }) {
   const isExclusive = /\bexclusive\b/i.test(p.name);
 
   // Product structured data (helps these pages read as real products, not thin).
-  const jsonLd = {
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    name: p.name,
-    sku: p.sku,
-    ...(p.gallery.length ? { image: p.gallery } : {}),
-    ...(p.storeDescription
-      ? { description: htmlToText(p.storeDescription).slice(0, 500) }
-      : {}),
-    brand: { "@type": "Brand", name: p.leagueName ? `Party Animal ${p.leagueName}` : "Party Animal" },
-    ...(p.upc ? { gtin12: p.upc } : {}),
-    // MSRP intentionally not surfaced on the web catalog yet — no price in the
-    // visible UI or the structured data.
-  };
+  // No MSRP in the visible UI or the JSON-LD; an Offer appears only when the
+  // SKU is buyable direct (p.dtc) — see productJsonLd.
+  const jsonLd = productJsonLd(p, htmlToText(p.storeDescription).slice(0, 500));
+  const crumbs = breadcrumbJsonLd([
+    { name: "Products", path: "/products" },
+    ...(p.collection && collectionHref ? [{ name: p.collection.name, path: collectionHref }] : []),
+    { name: p.name, path: productCanonical(p) },
+  ]);
 
   return (
     <div className="bg-[#f4f4f6] text-ink">
     <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
+      <JsonLd data={crumbs} />
 
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-1.5 text-xs text-ink/45">
@@ -113,7 +106,7 @@ export function ProductView({ p }: { p: ProductDetail }) {
                 key={r.retailer}
                 href={retailerHref(r.url, p.sku)}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel={relFor(r.url)}
                 className="label-athletic inline-flex items-center justify-center gap-2 rounded-full bg-brand-red px-7 py-3.5 text-sm text-white shadow-lg shadow-brand-red/25 transition-colors hover:bg-brand-red-dark"
               >
                 {RETAILER_LABEL[r.retailer] ?? r.retailer}
@@ -127,7 +120,7 @@ export function ProductView({ p }: { p: ProductDetail }) {
                 key={r.retailer}
                 href={retailerHref(r.url, p.sku)}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel={relFor(r.url)}
                 className="label-athletic inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 bg-white px-7 py-3.5 text-sm text-ink transition-colors hover:border-brand-red hover:text-brand-red"
               >
                 {RETAILER_LABEL[r.retailer] ?? r.retailer}

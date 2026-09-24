@@ -1,7 +1,9 @@
 import Link from "@/components/link";
 import { PageHeader } from "@/components/page-header";
 import { ProductCard } from "@/components/product-card";
+import { JsonLd } from "@/components/json-ld";
 import { categoryHref, type CategoryDetail } from "@/lib/pim";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 // The category / collection page body (grunge header, subcategory chips,
 // aggregated product grid). Rendered by /products/[slug] when the slug resolves
@@ -11,6 +13,14 @@ export function CategoryView({ data }: { data: CategoryDetail }) {
 
   return (
     <>
+      {/* Intermediate ancestors (cat.breadcrumb) arrive as names only, no slugs,
+          so the trail is Products -> this collection. */}
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Products", path: "/products" },
+          { name: cat.name, path: `/products/${cat.slug}` },
+        ])}
+      />
       <PageHeader
         title={cat.name}
         eyebrow={cat.breadcrumb.slice(0, -1).join(" / ") || "Products"}

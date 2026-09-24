@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
 import { ObfuscatedEmail } from "@/components/obfuscated-email";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Become a Reseller",
   description:
     "Carry Party Animal products in your store. Order wholesale on Faire or contact our sales team to get set up as a vendor.",
-};
+  path: "/become-a-reseller",
+});
 
 export default function BecomeAResellerPage() {
   return (

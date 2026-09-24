@@ -2,6 +2,8 @@ import Link from "@/components/link";
 import type { CategoryProduct } from "@/lib/pim";
 import { ProductImagePlaceholder } from "@/components/product-image-placeholder";
 import { amazonAttributed } from "@/lib/amazon";
+import { dsgAttributed } from "@/lib/dsg";
+import { relFor } from "@/lib/outbound";
 import Image from "next/image";
 
 // Shared product tile: white cutout, name, "Available at" retailer buttons (or
@@ -62,9 +64,9 @@ export function ProductCard({ p, hideTeam }: { p: CategoryProduct; hideTeam?: bo
               {p.retailers.map((r) => (
                 <a
                   key={r.retailer}
-                  href={amazonAttributed(r.url)}
+                  href={dsgAttributed(amazonAttributed(r.url), { campaign: "product-card", content: p.sku })}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel={relFor(r.url)}
                   className="label-athletic rounded-full bg-brand-red px-3 py-1 text-[11px] text-white transition-colors hover:bg-brand-red-dark"
                 >
                   {r.retailer}

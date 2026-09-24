@@ -5,6 +5,7 @@ import Link from "@/components/link";
 import Image from "next/image";
 import { amazonAttributed } from "@/lib/amazon";
 import { dsgAttributed, DSG_BRAND_PAGE } from "@/lib/dsg";
+import { relFor } from "@/lib/outbound";
 
 export type CalendarCard = {
   sku: string;
@@ -14,6 +15,9 @@ export type CalendarCard = {
   image: string | null;
   exclusive?: string;
 };
+
+const AMAZON_ADVENT =
+  "https://www.amazon.com/stores/page/6A6BA724-BD28-4888-868B-B57287C3DFCB/search?terms=Advent%20Calendar";
 
 function Star() {
   return <span className="text-brand-gold">★</span>;
@@ -86,9 +90,9 @@ function TeenyRetailers() {
           <img src="/advent/amazon-available.png" alt="Available at Amazon" width={1500} height={723} className="h-20 w-auto sm:h-24" />
           <p className="mt-3 text-sm text-white/60">Fast, easy, and reliable.</p>
           <a
-            href={amazonAttributed("https://www.amazon.com/stores/page/6A6BA724-BD28-4888-868B-B57287C3DFCB/search?terms=Advent%20Calendar")}
+            href={amazonAttributed(AMAZON_ADVENT)}
             target="_blank"
-            rel="noopener noreferrer"
+            rel={relFor(AMAZON_ADVENT)}
             className="label-athletic mt-6 inline-flex items-center gap-2 rounded-full bg-brand-red px-7 py-3.5 text-sm text-white shadow-lg shadow-brand-red/30 transition-colors hover:bg-brand-red-dark"
           >
             Shop on Amazon
@@ -121,7 +125,7 @@ function TeenyRetailers() {
           <a
             href={dsgAttributed(DSG_BRAND_PAGE, { campaign: "advent-2026", content: "shop-at-dicks-cta" })}
             target="_blank"
-            rel="noopener noreferrer"
+            rel={relFor(DSG_BRAND_PAGE)}
             className="label-athletic mt-5 inline-flex items-center gap-2 rounded-full border border-white/40 px-7 py-3.5 text-sm text-white transition-colors hover:border-brand-red hover:bg-brand-red"
           >
             Shop at Dick&apos;s

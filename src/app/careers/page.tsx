@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import Link from "@/components/link";
 import { PageHeader } from "@/components/page-header";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Careers" };
+export const metadata: Metadata = pageMetadata({
+  title: "Careers",
+  description:
+    "Join the Party Animal team in Westlake, Ohio. See our open roles on LinkedIn or send a direct inquiry; we are always glad to hear from sports-loving people.",
+  path: "/careers",
+});
 
 export default function CareersPage() {
   return (

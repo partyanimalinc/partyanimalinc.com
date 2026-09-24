@@ -1,52 +1,45 @@
 import type { Metadata } from "next";
 import Link from "@/components/link";
-import { getCatalog } from "@/lib/pim";
-import { parseCatalogSearch, hasActiveFilters, editionLabel } from "@/lib/catalog-url";
-
-// Shared metadata for catalog pages: noindex the *filtered* permutations (the
-// combinatorial ?league=/?series=/?line= views are thin + duplicative — keep
-// them out of the index), while the unfiltered base list stays indexable.
-export async function brandCatalogMetadata(
-  title: string,
-  description: string,
-  searchParams: Promise<Record<string, string | string[] | undefined>>,
-): Promise<Metadata> {
-  const filtered = hasActiveFilters(parseCatalogSearch(await searchParams));
-  return {
-    title,
-    description,
-    ...(filtered ? { robots: { index: false, follow: true } } : {}),
-  };
-}
 import { CatalogBrowser } from "@/components/catalog/catalog-browser";
-import { FEATURED_COLLECTIONS, TEAM_GEAR_SUBCATEGORIES } from "@/lib/featured-collections";
 import type { SubCategory } from "@/components/catalog/filter-groups";
+import { getCatalog } from "@/lib/pim";
+import { editionLabel, type CatalogSearch } from "@/lib/catalog-url";
+import { FEATURED_COLLECTIONS, TEAM_GEAR_SUBCATEGORIES } from "@/lib/featured-collections";
+import { pageMetadata } from "@/lib/seo";
+
+// Metadata for the clean, indexable /{brand}/all page. The filtered variants
+// (rendered by the /_f twin) wrap this with filteredVariantMetadata().
+export function brandCatalogMetadata(title: string, description: string, path: string): Metadata {
+  return pageMetadata({ title, description, path });
+}
 
 const PER = 48;
-type SP = Record<string, string | string[] | undefined>;
 
-// Brand catalog page (/{brand}/all): the shared filterable catalog scoped to one
-// brand, with a breadcrumb + filter-aware heading. `base` must be this route so
-// the COLLECTIONS switcher highlights the active brand (active = base === href).
+// Brand catalog page body (/{brand}/all and /{brand}/[league]): the shared
+// filterable catalog scoped to one brand, with a breadcrumb + filter-aware
+// heading. `base` must be the /all route so the COLLECTIONS switcher highlights
+// the active brand (active = base === href).
+//
+// `search` is the parsed query. The public routes pass {} (they never read
+// searchParams, which is what keeps them ISR); the /_f twins pass the real one.
 export async function BrandCatalog({
   name,
   brandSlug,
   base,
-  searchParams,
+  search,
   league,
 }: {
   name: string;
   brandSlug: string;
   base: string; // e.g. "/teenymates/all"
-  searchParams: Promise<SP>;
+  search: CatalogSearch;
   // When rendered from a clean path landing (e.g. /teenymates/nba) the league is
   // fixed by the route, not the query string — inject it so the catalog scopes
   // to it and the sidebar reflects it. Filter interactions still use `base`
   // (the query-mode /all route, which is noindexed).
   league?: { id: string; name: string };
 }) {
-  const parsed = parseCatalogSearch(await searchParams);
-  const current = league ? { ...parsed, league: league.id } : parsed;
+  const current = league ? { ...search, league: league.id } : search;
   const page = Math.min(Math.max(Number(current.page) || 1, 1), 10);
 
   const isTeamGear = brandSlug === "team-gear";
@@ -99,7 +92,7 @@ export async function BrandCatalog({
         <span className="px-2">/</span>
         {league ? (
           <>
-            <Link href={base.replace(/\/all$/, "/all")} className="transition-colors hover:text-white">
+            <Link href={base} className="transition-colors hover:text-white">
               All
             </Link>
             <span className="px-2">/</span>

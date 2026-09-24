@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "About Us" };
+export const metadata: Metadata = pageMetadata({
+  title: "About Us",
+  description:
+    "Since 1989 Party Animal has made officially licensed sports collectibles and fan gear: TeenyMates, SqueezyMates, Jumbo Squeezy and Team Gear, in partnership with the NFL, MLB, NBA, NHL, WNBA, MLS and College.",
+  path: "/about",
+});
 
 const DIFFERENCE: { label: string; body: string }[] = [
   { label: "Fan-First Approach", body: "Every product starts with the fan experience." },

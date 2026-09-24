@@ -2,8 +2,15 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
 import { amazonAttributed } from "@/lib/amazon";
 import { dsgAttributed, DSG_BRAND_PAGE } from "@/lib/dsg";
+import { relFor } from "@/lib/outbound";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Where to Buy" };
+export const metadata: Metadata = pageMetadata({
+  title: "Where to Buy",
+  description:
+    "Find Party Animal collectibles and fan gear at Dick's Sporting Goods, Amazon, Target, Walgreens, Walmart, Rally House and more, in stores and online.",
+  path: "/where-to-buy",
+});
 
 // Retailer tiles, in display order. Retailers with a Party Animal brand/search
 // page link straight to it; Target + Rally House point at the homepage until a
@@ -40,7 +47,7 @@ export default function WhereToBuyPage() {
               <a
                 href={dsgAttributed(amazonAttributed(r.href), { campaign: "where-to-buy" })}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel={relFor(r.href)}
                 aria-label={`Shop Party Animal at ${r.name}`}
                 className="group flex h-32 items-center justify-center rounded-2xl border border-black/10 bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-brand-red/30 hover:shadow-lg"
               >

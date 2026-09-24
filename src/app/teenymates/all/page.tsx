@@ -1,17 +1,15 @@
 import { BrandCatalog, brandCatalogMetadata } from "@/components/brand-catalog";
 
-type SP = Record<string, string | string[] | undefined>;
+// Clean brand catalog. ISR: never reads searchParams; filtered variants are
+// rewritten by src/proxy.ts to the /_f twin (src/app/%5Ff/teenymates/all).
+export const revalidate = 3600;
 
-export function generateMetadata({ searchParams }: { searchParams: Promise<SP> }) {
-  return brandCatalogMetadata(
-    "All TeenyMates",
-    "Browse the full TeenyMates collection — team sets, collector tins, locker room sets, gift sets, advent calendars, and more, filterable by league, team, and series.",
-    searchParams,
-  );
-}
+export const metadata = brandCatalogMetadata(
+  "All TeenyMates",
+  "Browse the full TeenyMates collection — team sets, collector tins, locker room sets, gift sets, advent calendars, and more, filterable by league, team, and series.",
+  "/teenymates/all",
+);
 
-export default function TeenyMatesAllPage({ searchParams }: { searchParams: Promise<SP> }) {
-  return (
-    <BrandCatalog name="TeenyMates" brandSlug="teenymates" base="/teenymates/all" searchParams={searchParams} />
-  );
+export default function TeenyMatesAllPage() {
+  return <BrandCatalog name="TeenyMates" brandSlug="teenymates" base="/teenymates/all" search={{}} />;
 }

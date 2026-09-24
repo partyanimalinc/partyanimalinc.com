@@ -3,14 +3,16 @@ import Image from "next/image";
 import Link from "@/components/link";
 import { getLicenses } from "@/lib/pim";
 import { TeamFinder } from "@/components/team-finder";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Team Gear",
   description:
     "Team Gear: flags and banners, drinkware, signs and homegating décor to rep your team everywhere. Officially licensed across the NFL, NBA, MLB, NHL, College and more.",
-};
+  path: "/team-gear",
+});
 
 const IMG =
   "https://prgnshkxyyxygdpowdnu.supabase.co/storage/v1/object/public/product-images";
@@ -76,6 +78,8 @@ export default async function TeamGearPage() {
     <>
       {/* Hero — designed banner (title + products baked in); intro + CTAs below */}
       <section className="bg-ink">
+        {/* The hero art carries the title; the H1 is for crawlers and readers. */}
+        <h1 className="sr-only">Team Gear: Officially Licensed Flags, Drinkware and Homegating Décor</h1>
         <Image
           src="/lineup/team-gear-hero.png"
           alt="Team Gear — Everything for Every Fan"

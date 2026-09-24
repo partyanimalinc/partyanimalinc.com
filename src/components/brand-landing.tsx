@@ -8,6 +8,7 @@ import Link from "@/components/link";
 // image above the copy on mobile.
 export function BrandLanding({
   name,
+  heading,
   base,
   heroSrc,
   heroWidth,
@@ -16,6 +17,8 @@ export function BrandLanding({
   introImage,
 }: {
   name: string;
+  // Page H1. The hero art carries the visible title, so this renders sr-only.
+  heading: string;
   base: string; // brand root, e.g. "/squeezymates"
   heroSrc: string;
   heroWidth: number;
@@ -46,6 +49,7 @@ export function BrandLanding({
   return (
     <>
       <section className="relative bg-ink">
+        <h1 className="sr-only">{heading}</h1>
         <Image src={heroSrc} alt={name} width={heroWidth} height={heroHeight} priority className="h-auto w-full" />
       </section>
 

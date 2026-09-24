@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { EXTERNAL } from "@/lib/site";
+import { relFor } from "@/lib/outbound";
 
 // "Enter to Win" CTA with the Party Animal mascot popping over the corner.
 // Links to the toys store (where the contest lives) in a new tab.
@@ -16,7 +17,7 @@ export function EnterToWinButton({
     <a
       href={EXTERNAL.enterToWin}
       target="_blank"
-      rel="noopener noreferrer"
+      rel={relFor(EXTERNAL.enterToWin)}
       onClick={onClick}
       className={[
         "group label-athletic relative inline-flex items-center justify-center rounded-full bg-brand-red text-sm text-white shadow-lg shadow-brand-red/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-red-dark",

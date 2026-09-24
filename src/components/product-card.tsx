@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/link";
 import type { CategoryProduct } from "@/lib/pim";
 import { ProductImagePlaceholder } from "@/components/product-image-placeholder";
 import { amazonAttributed } from "@/lib/amazon";

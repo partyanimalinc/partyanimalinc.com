@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/link";
 import Image from "next/image";
 import { NAV } from "@/lib/site";
 import { EnterToWinButton } from "@/components/enter-to-win-button";

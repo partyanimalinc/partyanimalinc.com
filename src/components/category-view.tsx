@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/link";
 import { PageHeader } from "@/components/page-header";
 import { ProductCard } from "@/components/product-card";
 import { categoryHref, type CategoryDetail } from "@/lib/pim";

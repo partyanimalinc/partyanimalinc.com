@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { redirect } from "next/navigation";
+import Link from "@/components/link";
+import { permanentRedirect } from "next/navigation";
 import { PageHeader } from "@/components/page-header";
 import { ProductCard } from "@/components/product-card";
 import { SortMenu } from "@/components/catalog/sort-menu";
@@ -61,7 +61,7 @@ export default async function LicensePage(props: {
   const current = parseLicenseSearch(await props.searchParams);
   const resolved = resolveLicense(await getLicenses(), slug);
   // Legacy player-association segments (nflpa, mlbpa, ...) have no landing page.
-  if (!resolved) redirect("/licenses");
+  if (!resolved) permanentRedirect("/licenses");
 
   const pageNum = Math.min(Math.max(Number(current.page) || 1, 1), 10);
 

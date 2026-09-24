@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/link";
 import Image from "next/image";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { SocialIcons } from "@/components/social-icons";

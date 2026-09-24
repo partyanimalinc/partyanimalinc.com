@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/link";
 import { catalogHref, CATALOG_BASE, editionLabel, type CatalogSearch } from "@/lib/catalog-url";
 import type { CatalogResponse } from "@/lib/pim";
 

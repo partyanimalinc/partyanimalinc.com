@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/link";
 
 // Pre-footer "Ready to Rip?" call-to-action that funnels to the full catalog.
 // Rendered above the footer on every non-catalog page (see PreFooterCTA).

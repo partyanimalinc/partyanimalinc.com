@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/link";
 
 // Lightweight placeholder body for routes whose full content is not built yet.
 export function Placeholder({

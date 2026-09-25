@@ -2,34 +2,46 @@ import type { MetadataRoute } from "next";
 
 const SITE_URL = "https://www.partyanimalinc.com";
 
-// Bots we don't want crawling at all: AI-training / bulk-scraper agents that add
-// crawl cost without driving customer discovery. Remove one to let it back in.
-const BLOCKED_BOTS = [
-  "GPTBot",
-  "ClaudeBot",
-  "CCBot",
-  "Bytespider",
-  "Amazonbot",
-  "PerplexityBot",
-];
+// Query params that fan out into the faceted catalog. Every listing route
+// renders on demand per unique URL, so a crawler walking facet permutations is
+// a function invocation per combination. Well-behaved crawlers (Google, Bing,
+// the verified AI crawlers) honour these rules; the ones that do not are
+// handled at Cloudflare (Bot Fight Mode + a rate limit on the listing routes)
+// and in proxy.ts (unknown params are stripped with a 308).
+//
+// Deliberately NOT listed: `page`. Pagination stays crawlable so the catalog is
+// reachable past the first 48 items; paged URLs carry noindex,follow and a
+// canonical to page one.
+//
+// History: this file used to be `Disallow: /*?`, added 2026-09-13 as a cost
+// fix. That also blocked /_next/image (every product photo, for Google Images),
+// the SearchAction target, and every noindex directive on filtered URLs, and it
+// did not reduce cost, because the expensive traffic ignores robots.txt.
+const FACET_PARAMS = ["collection", "league", "team", "q", "series", "line", "edition", "sort"];
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
         userAgent: "*",
-        allow: "/",
-        // Do NOT crawl the faceted catalog: /products/all and the /*/all pages
-        // filter through 9 stackable query params (league, team, series, sort,
-        // page, ...), an effectively unlimited URL space. Letting bots walk it
-        // rendered every combination on the server (function + CPU + origin
-        // fetch + ISR write) and drove a large Vercel cost spike. Blocking any
-        // URL with a query string, plus internal APIs, keeps crawlers on the
-        // canonical pages (product detail, category roots) we actually want indexed.
-        disallow: ["/*?", "/api/"],
+        allow: [
+          "/",
+          // Longer than any disallow below, so it wins the longest-match rule
+          // even though optimised image URLs carry `&q=75`.
+          "/_next/image?url=",
+        ],
+        disallow: [
+          "/api/",
+          ...FACET_PARAMS.map((p) => `/*?*${p}=`),
+          // React Server Component payloads (client-side navigation fetches).
+          "/*?*_rsc=",
+        ],
       },
-      // Full block for the scraper / AI-training agents above.
-      { userAgent: BLOCKED_BOTS, disallow: "/" },
+      // Bytespider (ByteDance) ignores crawl-delay, fetches at very high rates,
+      // and drives no discovery we care about. Verified AI crawlers (GPTBot,
+      // ClaudeBot, PerplexityBot, Amazonbot, CCBot) are allowed on purpose:
+      // being cited by assistants is part of the SEO plan.
+      { userAgent: "Bytespider", disallow: "/" },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
   };

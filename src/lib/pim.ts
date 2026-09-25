@@ -1,5 +1,7 @@
 // Client for apphub's read-only public PIM API. Server-side fetch (ISR-cached).
 // Dev: http://localhost:3002 ; Prod: https://hq.partyanimalinc.com
+import { BRAND_LANDINGS } from "@/lib/site";
+
 const BASE = process.env.PIM_API_BASE || "http://localhost:3002";
 const KEY = process.env.PIM_API_KEY;
 
@@ -34,6 +36,8 @@ export type CategoryProduct = {
   teamName: string | null;
   series: number | null;
   retailers: Retailer[];
+  /** Shopify PDP URL when the SKU is live on partyanimaltoys.com. Optional until AppHub ships it. */
+  canonicalUrl?: string | null;
 };
 
 export type CategoryDetail = {
@@ -238,6 +242,19 @@ export type ProductDetail = {
   collection: { name: string; slug: string; template: string; breadcrumb: string[] } | null;
   retailers: Retailer[];
   related: RelatedProduct[];
+  // --- Cross-domain canonical (AppHub is adding these; optional until it ships) ---
+  /** The Shopify PDP URL when the SKU is live on partyanimaltoys.com; the PDP canonical points there. */
+  canonicalUrl?: string | null;
+  /** Direct-to-consumer availability; drives the JSON-LD Offer. */
+  dtc?: DtcAvailability | null;
+  /** True when this SKU should not be indexed here (noindex,follow). */
+  excludeFromSitemap?: boolean;
+};
+
+export type DtcAvailability = {
+  available: boolean;
+  url: string | null;
+  price: number | null;
 };
 
 export async function getProduct(slug: string): Promise<ProductDetail | null> {
@@ -345,13 +362,14 @@ export function resolveLicense(
   return null;
 }
 
-// Where a category links on the site: brand nodes get their top-level landing
-// (/teenymates), standard categories use the category template (/products/slug).
+// Where a category links on the site: brand nodes WITH a landing page get it
+// (/teenymates); every other category, brand-flagged or not, uses the category
+// template (/products/slug). /products/[slug] 308s the landing slugs there too.
 export function categoryHref(c: {
   slug: string;
   web_template?: string;
   template?: string;
 }): string {
   const t = c.web_template ?? c.template;
-  return t === "brand" ? `/${c.slug}` : `/products/${c.slug}`;
+  return t === "brand" && BRAND_LANDINGS.has(c.slug) ? `/${c.slug}` : `/products/${c.slug}`;
 }

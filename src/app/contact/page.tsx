@@ -2,8 +2,14 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
 import { ContactForm } from "@/components/contact-form";
 import { ObfuscatedEmail } from "@/components/obfuscated-email";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Contact Us" };
+export const metadata: Metadata = pageMetadata({
+  title: "Contact Us",
+  description:
+    "Questions, partnerships or press? Reach Party Animal, LLC in Westlake, Ohio by form, phone or email for general, reseller sales and billing inquiries.",
+  path: "/contact",
+});
 
 function InfoHeading({ children }: { children: React.ReactNode }) {
   return (

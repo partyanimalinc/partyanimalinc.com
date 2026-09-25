@@ -1,4 +1,5 @@
 import { SOCIALS, type SocialIcon } from "@/lib/site";
+import { relFor } from "@/lib/outbound";
 
 const PATHS: Record<SocialIcon, string> = {
   instagram:
@@ -25,7 +26,7 @@ export function SocialIcons({ className = "" }: { className?: string }) {
           <a
             href={s.href}
             target="_blank"
-            rel="noopener noreferrer"
+            rel={relFor(s.href)}
             aria-label={s.label}
             className="relative grid h-9 w-9 shrink-0 place-items-center text-white transition-transform hover:scale-110"
           >

@@ -6,12 +6,14 @@ import { CollectByLeague } from "@/components/collect-by-league";
 import { FeaturedCollections } from "@/components/featured-collections";
 import { ChaseFigures } from "@/components/chase-figures";
 import { FanFavorites } from "@/components/fan-favorites";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "TeenyMates",
   description:
-    "TeenyMates are small-format collectible figures designed around the sports, teams, and players fans love most.",
-};
+    "TeenyMates are small-format collectible figures designed around the sports, teams, and players fans love most. Officially licensed NFL, NBA, MLB, NHL, WNBA and College.",
+  path: "/teenymates",
+});
 
 // Landing page only. The filterable catalog lives at /teenymates/all; the
 // sections below link into it (by league, by collection, or all).
@@ -19,6 +21,8 @@ export default function TeenyMatesPage() {
   return (
     <>
       <section className="relative bg-ink">
+        {/* The hero art carries the title; the H1 is for crawlers and readers. */}
+        <h1 className="sr-only">TeenyMates: Collectible Mini Sports Figures</h1>
         <Image
           src="/lineup/teenymates-hero.png"
           alt="TeenyMates"

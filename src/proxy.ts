@@ -55,23 +55,47 @@ const EXACT: Record<string, string> = {
   "/Reseller-Specials": "/become-a-reseller",
 };
 
+// Query params the listing pages read (catalog-url.ts, license-url.ts). A
+// listing URL that carries any of these is a filtered / sorted / paged view.
+const FACET_PARAMS = new Set([
+  "collection", "league", "team", "q", "series", "line", "edition", "sort", "page",
+]);
+
 // Query params a page on this site actually reads, plus the tracking params
 // analytics needs to see on arrival. Anything else is stripped with a 308.
 //
-// Why: the listing routes render on demand per unique URL. Legacy NetSuite
-// links still in the index and in scraper lists carry SuiteCommerce session
-// params (vid, ck, cktime, sj, chrole, promocode, gc, nxtPslug …), so every
-// visit was a never-before-seen URL and a fresh function invocation. Folding
-// them onto the canonical URL makes one URL per page again.
+// Why: legacy NetSuite links still in the index and in scraper lists carry
+// SuiteCommerce session params (vid, ck, cktime, sj, chrole, promocode, gc,
+// nxtPslug …), so every visit was a never-before-seen URL and a cache miss.
+// Folding them onto the canonical URL makes one URL per page again.
 const KNOWN_PARAMS = new Set([
-  // facets (catalog-url.ts, license-url.ts)
-  "collection", "league", "team", "q", "series", "line", "edition", "sort", "page",
+  ...FACET_PARAMS,
   // Next.js RSC fetches
   "_rsc",
   // attribution — read client-side by Umami on first paint
   "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
   "gclid", "fbclid", "msclkid", "ttclid", "ref",
 ]);
+
+// The listing routes. Their clean URL is an ISR page that never reads the
+// query; when the query still carries a FACET_PARAM after the scrub, the
+// request is rewritten to the on-demand twin at /_f<path>. Attribution params
+// and `_rsc` alone do not trigger the rewrite, so those requests hit the
+// cached page (an `_rsc`-only URL is a client navigation to the base page).
+//
+// The twins live in src/app/%5Ff/** — an `_f` folder would be a Next PRIVATE
+// folder (excluded from routing); `%5F` is the URL-encoded underscore, which
+// is Next's documented way to get a URL segment that starts with one. Each
+// twin renders the SAME shared component as its public route, reads
+// searchParams, exports dynamic = "force-dynamic", and emits noindex,follow
+// with a canonical back to the clean URL. A direct hit on /_f/... is 308'd to
+// the public path below, so the twin is never a public address. Never link to
+// /_f/... : facet links stay /licenses/nfl?collection=toys.
+const LISTING_ROUTE =
+  /^\/(?:licenses\/[^/]+|teenymates\/[^/]+|squeezymates\/[^/]+|jumbo-squeezy\/all|team-gear\/all|products\/all)$/;
+const TWIN_PREFIX = "/_f";
+// A direct request may arrive with the underscore still percent-encoded.
+const TWIN_PATH = /^\/(?:_|%5[Ff])f(?=\/|$)/;
 
 // Mutates url.searchParams; returns true when something was removed.
 function stripUnknownParams(url: URL): boolean {
@@ -85,9 +109,31 @@ function stripUnknownParams(url: URL): boolean {
   return changed;
 }
 
+function hasFacetParams(url: URL): boolean {
+  for (const key of url.searchParams.keys()) {
+    if (FACET_PARAMS.has(key)) return true;
+  }
+  return false;
+}
+
+function listingResponse(req: NextRequest, url: URL, pathname: string) {
+  if (LISTING_ROUTE.test(pathname) && hasFacetParams(url)) {
+    return NextResponse.rewrite(new URL(`${TWIN_PREFIX}${pathname}${url.search}`, req.url));
+  }
+  return NextResponse.next();
+}
+
 export function proxy(req: NextRequest) {
   const p = req.nextUrl.pathname;
   const url = req.nextUrl.clone();
+
+  // The twin is never a public address: a direct hit goes back to the public
+  // path (query intact, so a filtered view still renders there via the rewrite).
+  if (TWIN_PATH.test(p)) {
+    url.pathname = p.replace(TWIN_PATH, "") || "/";
+    return NextResponse.redirect(url, 308);
+  }
+
   // Scrub first so a legacy path with legacy params fixes both in one hop.
   const scrubbed = stripUnknownParams(url);
 
@@ -100,7 +146,8 @@ export function proxy(req: NextRequest) {
       url.pathname = `/products/${moved}`;
       return NextResponse.redirect(url, 308);
     }
-    return scrubbed ? NextResponse.redirect(url, 308) : NextResponse.next();
+    if (scrubbed) return NextResponse.redirect(url, 308);
+    return listingResponse(req, url, p);
   }
 
   if (EXACT[p]) {
@@ -131,18 +178,25 @@ export function proxy(req: NextRequest) {
     return NextResponse.redirect(url, 308);
   }
 
-  return scrubbed ? NextResponse.redirect(url, 308) : NextResponse.next();
+  if (scrubbed) return NextResponse.redirect(url, 308);
+  return listingResponse(req, url, p);
 }
 
 export const config = {
   matcher: [
     "/products/:path*",
-    // On-demand listing routes: scrub unknown query params (see KNOWN_PARAMS).
+    // Listing routes: scrub unknown query params (KNOWN_PARAMS) and rewrite
+    // filtered views to the /_f twin (LISTING_ROUTE).
     "/licenses/:path*",
     "/teenymates/:path*",
     "/squeezymates/:path*",
     "/jumbo-squeezy/all",
     "/team-gear/all",
+    // The twin itself: never served directly.
+    "/_f",
+    "/_f/:path*",
+    "/%5Ff",
+    "/%5Ff/:path*",
     "/Products",
     "/Products/:path*",
     "/Licenses",

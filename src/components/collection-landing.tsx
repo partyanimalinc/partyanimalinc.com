@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
 import { EXTERNAL } from "@/lib/site";
+import { relFor } from "@/lib/outbound";
 
 // Shared template for a brand/collection landing page. When `heroSrc` is
 // provided (e.g. the designed TeenyMates hero), it renders full-bleed;
@@ -72,7 +73,7 @@ export function CollectionLanding({
               <a
                 href={EXTERNAL.toysStore}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel={relFor(EXTERNAL.toysStore)}
                 className="label-athletic inline-flex items-center gap-2 rounded-full bg-brand-red px-5 py-2 text-sm text-white transition-colors hover:bg-brand-red-dark"
               >
                 Shop at PartyAnimalToys.com

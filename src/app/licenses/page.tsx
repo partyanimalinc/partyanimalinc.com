@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import Link from "@/components/link";
 import { PageHeader } from "@/components/page-header";
 import { getLicenses } from "@/lib/pim";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Licenses & Partners",
   description:
     "Party Animal is officially licensed across the NFL, MLB, NBA, NHL, WNBA, MLS and NCAA. Browse collectibles and fan gear by league and team.",
-};
+  path: "/licenses",
+});
 
 function LeagueCard({
   slug,

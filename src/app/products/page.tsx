@@ -3,15 +3,17 @@ import Link from "@/components/link";
 import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
 import { getCategories, getCategory, type CategoryProduct } from "@/lib/pim";
-import { EXTERNAL } from "@/lib/site";
+import { BRAND_LANDINGS } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Our Products",
   description:
     "Explore every Party Animal collection: TeenyMates, SqueezyMates, Jumbo Squeezy, flags, drinkware, homegating décor and more.",
-};
+  path: "/products",
+});
 
 // Curated featured collections. `heroSlug` overrides where the hero image is
 // sourced (e.g. SqueezyMates aggregates its Jumbo Squeezy children, so pull the
@@ -48,9 +50,8 @@ const POPULAR = [
 const RANK = new Map(POPULAR.map((t, i) => [t, i]));
 
 // Brands with a bespoke top-level landing; everything else uses the category template.
-const HAS_LANDING = new Set(["teenymates", "squeezymates", "jumbo-squeezy"]);
 const hrefFor = (slug: string) =>
-  HAS_LANDING.has(slug) ? `/${slug}` : `/products/${slug}`;
+  BRAND_LANDINGS.has(slug) ? `/${slug}` : `/products/${slug}`;
 
 // `displaySlug` is the category the tile represents (where a hand-picked
 // Featured image lives); `productSlug` is where to pull products from for the

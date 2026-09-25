@@ -8,6 +8,17 @@ export const EXTERNAL = {
   enterToWin: "https://play.partyanimaltoys.com",
 };
 
+// Category slugs that have a bespoke top-level landing (/teenymates, ...).
+// The PIM flags more nodes as `brand` template (speed-cube, big-sip, motiglow,
+// big-shot-ballers) but those have no page of their own and stay on the
+// /products/[slug] category template. Only these four ever redirect there.
+export const BRAND_LANDINGS: ReadonlySet<string> = new Set([
+  "teenymates",
+  "squeezymates",
+  "jumbo-squeezy",
+  "team-gear",
+]);
+
 // Social profiles shown in the footer.
 // NOTE: URLs are best-guess placeholders - confirm/replace with the real handles.
 export const SOCIALS: { label: string; href: string; icon: SocialIcon }[] = [

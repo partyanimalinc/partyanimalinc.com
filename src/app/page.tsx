@@ -1,9 +1,13 @@
+import type { Metadata } from "next";
 import Link from "@/components/link";
 import Image from "next/image";
 import { LINEUP, SOCIALS } from "@/lib/site";
 import { LicensesMarquee } from "@/components/licenses-marquee";
+import { JsonLd } from "@/components/json-ld";
+import { SITE_URL } from "@/lib/seo";
 
-const SITE_URL = "https://www.partyanimalinc.com";
+// Title, description and the social card come from the root layout defaults.
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 // Organization + WebSite structured data (helps the brand knowledge panel and
 // enables a potential sitelinks search box pointing at the catalog search).
@@ -51,10 +55,7 @@ const VIMEO_SRC =
 export default function HomePage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_JSONLD) }}
-      />
+      <JsonLd data={ORG_JSONLD} />
       {/* ---------------- Hero ---------------- */}
       <section className="relative overflow-hidden bg-ink">
         <div className="absolute inset-0">
@@ -73,6 +74,8 @@ export default function HomePage() {
         </div>
 
         <div className="relative mx-auto flex min-h-[520px] max-w-7xl flex-col justify-center px-4 py-16 sm:px-6 lg:min-h-[660px] lg:px-8">
+          {/* The hero art is the visible headline; the H1 is for crawlers and readers. */}
+          <h1 className="sr-only">Party Animal: Officially Licensed Sports Collectibles</h1>
           <Image
             src="/hero/ready-to-rip.png"
             alt="Ready to Rip"

@@ -4,6 +4,7 @@ import { getCatalog, type CategoryProduct } from "@/lib/pim";
 import { AdventVideoGallery } from "@/components/advent/advent-video-gallery";
 import { AdventShop, type CalendarCard } from "@/components/advent/advent-shop";
 import { dsgAttributed, DSG_BRAND_PAGE } from "@/lib/dsg";
+import { relFor } from "@/lib/outbound";
 
 export const revalidate = 3600;
 
@@ -11,10 +12,13 @@ export const metadata: Metadata = {
   title: "Advent Calendars",
   description:
     "Countdown to gameday with officially licensed TeenyMates and SqueezyMates Advent Calendars. 24 daily reveal doors, one exclusive figure per day, across NFL, NBA, MLB, NHL, WNBA and College.",
+  alternates: { canonical: "/advent-calendars" },
   openGraph: {
     title: "Countdown to Gameday: Advent Calendars",
     description: "24 days. 24 surprises. Officially licensed TeenyMates & SqueezyMates Advent Calendars.",
     type: "website",
+    siteName: "Party Animal",
+    url: "/advent-calendars",
   },
 };
 
@@ -136,7 +140,7 @@ export default async function AdventCalendarsPage() {
               <a
                 href={dsgAttributed(DSG_BRAND_PAGE, { campaign: "advent-2026", content: "hero-cta" })}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel={relFor(DSG_BRAND_PAGE)}
                 className="label-athletic inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm text-white transition-colors hover:border-white hover:bg-white/10"
               >
                 Shop at Dick&apos;s Sporting Goods

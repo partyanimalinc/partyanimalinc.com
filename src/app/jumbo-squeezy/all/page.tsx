@@ -1,17 +1,15 @@
 import { BrandCatalog, brandCatalogMetadata } from "@/components/brand-catalog";
 
-type SP = Record<string, string | string[] | undefined>;
+// Clean brand catalog. ISR: never reads searchParams; filtered variants are
+// rewritten by src/proxy.ts to the /_f twin (src/app/%5Ff/jumbo-squeezy/all).
+export const revalidate = 3600;
 
-export function generateMetadata({ searchParams }: { searchParams: Promise<SP> }) {
-  return brandCatalogMetadata(
-    "All Jumbo Squeezy",
-    "Browse the full Jumbo Squeezy collection, filterable by league, team, and series.",
-    searchParams,
-  );
-}
+export const metadata = brandCatalogMetadata(
+  "All Jumbo Squeezy",
+  "Browse the full Jumbo Squeezy collection, filterable by league, team, and series.",
+  "/jumbo-squeezy/all",
+);
 
-export default function JumboSqueezyAllPage({ searchParams }: { searchParams: Promise<SP> }) {
-  return (
-    <BrandCatalog name="Jumbo Squeezy" brandSlug="jumbo-squeezy" base="/jumbo-squeezy/all" searchParams={searchParams} />
-  );
+export default function JumboSqueezyAllPage() {
+  return <BrandCatalog name="Jumbo Squeezy" brandSlug="jumbo-squeezy" base="/jumbo-squeezy/all" search={{}} />;
 }

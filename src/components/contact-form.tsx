@@ -102,7 +102,12 @@ export function ContactForm() {
           name: data.get("name"),
           email: data.get("email"),
           message: data.get("message"),
-          topic: "Corporate Website",
+          // Which site this came from, so AppHub can file it in its own rail.
+          // This used to be sent as `topic: "Corporate Website"`, which made it
+          // the subject of every thread and left the inbox reading the same four
+          // words 37 times. `source` is the field for naming where you are;
+          // `topic` is for what the message is about, and this form does not ask.
+          source: "corporate",
           company: data.get("company"), // honeypot
           "cf-turnstile-response": token,
         }),

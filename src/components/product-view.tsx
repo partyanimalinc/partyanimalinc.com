@@ -1,6 +1,7 @@
 import Link from "@/components/link";
 import { ProductGallery } from "@/components/product-gallery";
 import { ProductCard } from "@/components/product-card";
+import { ProductReviews } from "@/components/product-reviews";
 import { JsonLd } from "@/components/json-ld";
 import { sanitizeHtml, htmlToText } from "@/lib/html";
 import { slugify } from "@/lib/slug";
@@ -170,6 +171,10 @@ export function ProductView({ p }: { p: ProductDetail }) {
           </div>
         </div>
       </div>
+
+      {/* Reviews: server-rendered summary + list, form on demand. Always
+          present so there is somewhere to write the first one. */}
+      <ProductReviews sku={p.sku} productName={p.name} reviews={p.reviews} />
 
       {/* Related */}
       {p.related.length > 0 && (

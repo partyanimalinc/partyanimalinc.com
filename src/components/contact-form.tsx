@@ -1,74 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { useTurnstile } from "@/components/use-turnstile";
 
 // Contact form. Submits into apphub's shared support inbox via the public
 // intake endpoint (the same one the Shopify store's Get Help form uses), so
 // website messages land in the ticket system alongside store and email threads.
 // Cloudflare Turnstile guards it: we render the same widget + action the intake
-// verifies against ("partyanimaltoys.com (Spin)" site key, action support-intake).
+// verifies against (site key in use-turnstile.ts, action support-intake).
 const SUPPORT_INTAKE_URL = "https://hq.partyanimalinc.com/api/support/intake";
-const TURNSTILE_SITEKEY = "0x4AAAAAAEv8MdewUdDrs1dS";
-
-declare global {
-  interface Window {
-    turnstile?: {
-      render: (el: HTMLElement, opts: Record<string, unknown>) => string;
-      reset: (id?: string) => void;
-    };
-  }
-}
 
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
   const [ref, setRef] = useState<string | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const widgetEl = useRef<HTMLDivElement>(null);
-  const widgetId = useRef<string | null>(null);
-
-  // Load the Turnstile script once and render the widget when it is ready.
-  // Explicit render (not auto) so it also works after client-side navigation,
-  // not just on a fresh page load.
-  useEffect(() => {
-    let cancelled = false;
-    function tryRender() {
-      if (cancelled || widgetId.current || !widgetEl.current || !window.turnstile) return;
-      widgetId.current = window.turnstile.render(widgetEl.current, {
-        sitekey: TURNSTILE_SITEKEY,
-        action: "support-intake",
-        theme: "dark",
-        callback: (t: string) => setToken(t),
-        "expired-callback": () => setToken(null),
-        "error-callback": () => setToken(null),
-      });
-    }
-    if (window.turnstile) {
-      tryRender();
-      return () => {
-        cancelled = true;
-      };
-    }
-    let s = document.querySelector<HTMLScriptElement>("script[data-cf-turnstile]");
-    if (!s) {
-      s = document.createElement("script");
-      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-      s.async = true;
-      s.defer = true;
-      s.dataset.cfTurnstile = "1";
-      document.head.appendChild(s);
-    }
-    s.addEventListener("load", tryRender);
-    return () => {
-      cancelled = true;
-      s?.removeEventListener("load", tryRender);
-    };
-  }, []);
-
-  function resetTurnstile() {
-    setToken(null);
-    if (window.turnstile && widgetId.current) window.turnstile.reset(widgetId.current);
-  }
+  const { widgetEl, token, reset: resetTurnstile } = useTurnstile({
+    action: "support-intake",
+    theme: "dark",
+  });
 
   if (status === "sent") {
     return (

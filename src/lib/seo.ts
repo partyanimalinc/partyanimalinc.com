@@ -111,6 +111,7 @@ export function productCanonical(p: Pick<ProductDetail, "slug" | "movedTo" | "ca
 // treats an Offer without one as an error.
 export function productJsonLd(p: ProductDetail, description: string) {
   const dtc = p.dtc;
+  const rating = productRatingJsonLd(p.reviews);
   const offer =
     dtc && dtc.available && dtc.price
       ? {
@@ -140,5 +141,40 @@ export function productJsonLd(p: ProductDetail, description: string) {
     brand: { "@type": "Brand", name: SITE_NAME },
     ...(p.upc ? { gtin12: p.upc } : {}),
     ...(offer ? { offers: offer } : {}),
+    ...rating,
+  };
+}
+
+// AggregateRating + Review[] for the Product above. Emitted only once there is
+// at least one approved review: Google flags an AggregateRating with a zero
+// count, and an empty review list says nothing. The reviewer name is the
+// short form AppHub already stores ("Jane D."), so no PII reaches the markup.
+export function productRatingJsonLd(reviews: ProductDetail["reviews"]) {
+  if (!reviews || reviews.ratingCount < 1 || reviews.ratingValue == null) return {};
+  return {
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: Math.round(reviews.ratingValue * 10) / 10,
+      reviewCount: reviews.ratingCount,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    ...(reviews.items.length
+      ? {
+          review: reviews.items.map((r) => ({
+            "@type": "Review",
+            author: { "@type": "Person", name: r.reviewerName },
+            datePublished: r.createdAt.slice(0, 10),
+            reviewBody: r.body,
+            ...(r.title ? { name: r.title } : {}),
+            reviewRating: {
+              "@type": "Rating",
+              ratingValue: r.rating,
+              bestRating: 5,
+              worstRating: 1,
+            },
+          })),
+        }
+      : {}),
   };
 }

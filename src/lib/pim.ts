@@ -249,6 +249,32 @@ export type ProductDetail = {
   dtc?: DtcAvailability | null;
   /** True when this SKU should not be indexed here (noindex,follow). */
   excludeFromSitemap?: boolean;
+  /**
+   * Approved customer reviews for this SKU. Optional until AppHub ships the
+   * field; `null`/missing renders the Reviews section as heading + button.
+   */
+  reviews?: ProductReviews | null;
+};
+
+export type ProductReview = {
+  id: string;
+  /** 1–5 */
+  rating: number;
+  title: string | null;
+  body: string;
+  /** Already shortened by AppHub ("Jane D."), never a full name. */
+  reviewerName: string;
+  verifiedPurchase: boolean;
+  /** ISO timestamp */
+  createdAt: string;
+  reply: { body: string; at: string } | null;
+};
+
+export type ProductReviews = {
+  /** Mean of approved ratings; null when ratingCount is 0. */
+  ratingValue: number | null;
+  ratingCount: number;
+  items: ProductReview[];
 };
 
 export type DtcAvailability = {

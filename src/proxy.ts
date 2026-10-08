@@ -2,6 +2,9 @@ import { NextResponse, type NextRequest } from "next/server";
 import { slugify } from "@/lib/slug";
 import legacyCats from "@/lib/legacy-product-categories.json";
 import slugRedirects from "@/lib/product-slug-redirects.json";
+import liveProductSlugs from "@/lib/live-product-slugs.json";
+import licenseSlugs from "@/lib/license-slugs.json";
+import { legacyProductTarget, type LegacySnapshots } from "@/lib/legacy-product-target";
 
 // Legacy NetSuite URL routing. Lives in proxy (not next.config
 // `redirects()`) because config sources match case-INSENSITIVELY and would
@@ -9,18 +12,20 @@ import slugRedirects from "@/lib/product-slug-redirects.json";
 // the capital-letter legacy namespaces.
 //
 // Products:
-//   /Products/{Name}.html         -> /products/{slug}   (slugify the filename;
-//        no lookup table needed here)
+//   /Products/{Name}.html         -> legacyProductTarget(): the live product
+//        (straight to its current slug when it was rebuilt), else the same
+//        product without NetSuite's `_N` copy counter, else its team or league
+//        landing page. Only when none of those exist does it fall back to the
+//        bare slugified filename (which 404s).
 //
 //        NOTE: web_slug USED to be built from this exact filename, which is
 //        what made the mapping 1:1. That is no longer true — slugs derived
 //        from the legacy NetSuite URL were wrong whenever a NetSuite item was
 //        created by copying an older one, and ~1,570 have been rebuilt from
-//        the product's own name. The old value is kept in apphub's
-//        product_slug_history, and /products/[slug] 308s a retired slug to the
-//        current one, so this rule still lands correctly — it just takes two
-//        hops now (here, then the page). Do not "optimise" it into a single
-//        hop by reintroducing a filename->slug assumption.
+//        the product's own name. Never assume filename == slug; resolve it
+//        through the snapshots (product-slug-redirects.json for rebuilt slugs,
+//        live-product-slugs.json for what exists). Before this lookup, a
+//        filename for a product that is gone 308'd straight to a 404.
 //   /Products/{Category}/         -> /products/{slug}   when that category still
 //        exists, else a curated fallback for merged/discontinued categories
 //        (legacy-product-categories.json)
@@ -45,6 +50,16 @@ const CURATED: Record<string, string> = legacyCats as Record<string, string>;
 // script after any slug change; the page keeps a movedTo fallback for renames
 // made since the last build.
 const SLUG_REDIRECTS: Record<string, string> = slugRedirects as Record<string, string>;
+
+// Same build-time snapshot script. Modern /products/{slug} URLs never consult
+// the live list: a product published after the last snapshot must still serve.
+const byLengthDesc = (a: string, b: string) => b.length - a.length;
+const LEGACY: LegacySnapshots = {
+  redirects: SLUG_REDIRECTS,
+  live: new Set(liveProductSlugs as string[]),
+  teams: [...(licenseSlugs.teams as string[])].sort(byLengthDesc),
+  leagues: [...(licenseSlugs.leagues as string[])].sort(byLengthDesc),
+};
 
 // Exact legacy paths whose new target is a lowercase page a case-INSENSITIVE
 // config redirect would shadow (e.g. `/Become-A-Reseller` -> `/become-a-reseller`
@@ -158,7 +173,7 @@ export function proxy(req: NextRequest) {
   if (p === "/Products" || p.startsWith("/Products/")) {
     if (/\.html?$/i.test(p)) {
       const base = p.replace(/\.html?$/i, "").split("/").filter(Boolean).pop() || "";
-      url.pathname = `/products/${slugify(base)}`;
+      url.pathname = legacyProductTarget(base, LEGACY) ?? `/products/${slugify(base)}`;
     } else {
       const rest = p.slice("/Products".length).replace(/^\/+|\/+$/g, "");
       const seg = rest ? rest.split("/")[0] : "";

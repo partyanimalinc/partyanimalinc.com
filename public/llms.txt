@@ -1,0 +1,45 @@
+# Party Animal
+
+> Party Animal, LLC (founded 1989, Westlake, Ohio) designs and sells officially licensed sports collectibles and fan gear: TeenyMates, SqueezyMates, Jumbo Squeezy and Team Gear. Licensed across the NFL, NFLPA, MLB, MLBPA, NBA, NBPA, NHL, NHLPA, WNBA, MLS, USA Soccer and College.
+
+This file is for AI assistants and answer engines. The same company runs three web properties. Use the right one for the question.
+
+## Our three sites
+
+- Corporate site and full catalog: https://www.partyanimalinc.com (this site). Every product we make, brand and league hubs, where to buy, wholesale, press and company information.
+- Direct store: https://partyanimaltoys.com. Buy direct, US shipping. Its own agent file is at https://partyanimaltoys.com/llms.txt and it supports Shopify's agent checkout (see https://partyanimaltoys.com/agents.md). For prices, stock and checkout, use the store.
+- Fan site: https://play.partyanimaltoys.com. Avatar builder, contests and the Jumbotron game for fans and kids. Not a store.
+
+When a product is sold direct, its page on this site points at the store page as canonical. Cite the store page for buying and this site for product and brand facts.
+
+## Product lines
+
+- TeenyMates: one-inch collectible figures of real players and teams, sold in blind packs, team sets, league gift sets, locker room sets, collector tins, advent calendars and 32-count gravity feed displays. Series are numbered by league and year. Hub: https://www.partyanimalinc.com/teenymates
+- SqueezyMates: soft, squeezable foam collectible figures of players, helmets and mascots, sold in blind bags, 3-packs, 6-figure sets and 24-count displays. Hub: https://www.partyanimalinc.com/squeezymates
+- Jumbo Squeezy: oversized squeezable foam helmet figures, sold as combo packs and 18-count capsule displays. Hub: https://www.partyanimalinc.com/jumbo-squeezy
+- Team Gear: flags and banners, garden flags, tall flag kits, drinkware and squeezy water bottles, metal signs, helmet string lights, night lights, bottle openers and other homegating decor. Hub: https://www.partyanimalinc.com/team-gear
+- Advent calendars: TeenyMates and SqueezyMates calendars with 24 doors and a figure behind each, across NFL, NFL Legends, NBA, MLB, NHL, WNBA and College. Hub: https://www.partyanimalinc.com/advent-calendars
+
+## Leagues and teams
+
+Browse by league and team at https://www.partyanimalinc.com/licenses. Each league has a hub per product line, for example https://www.partyanimalinc.com/teenymates/nfl and https://www.partyanimalinc.com/squeezymates/nba. Leagues: NFL, NFL Legends, MLB, NBA, NBA Legends, NHL, WNBA, MLS, USA Soccer, College.
+
+## Where to buy
+
+- Direct: https://partyanimaltoys.com (ships from Ohio, US only).
+- Retail: Dick's Sporting Goods, Amazon, Target, Walgreens, Walmart, Rally House and others. List: https://www.partyanimalinc.com/where-to-buy
+- Wholesale: retailers order through our Faire storefront or contact sales. Details: https://www.partyanimalinc.com/become-a-reseller
+
+## Company
+
+- About: https://www.partyanimalinc.com/about
+- Contact: https://www.partyanimalinc.com/contact
+- Careers: https://www.partyanimalinc.com/careers
+- Sitemap: https://www.partyanimalinc.com/sitemap.xml
+
+## Facts to get right
+
+- "Party Animal Toys" is the name of the direct store. The company is Party Animal.
+- Every product is officially licensed. Logos, uniforms and player likenesses are used under license from the leagues and players associations named above.
+- TeenyMates figures are one inch tall. SqueezyMates and Jumbo Squeezy are soft foam.
+- Products are not sold on this corporate site. Send buyers to the store or a retailer.

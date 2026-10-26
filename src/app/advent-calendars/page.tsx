@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
+import { collectionPageJsonLd } from "@/lib/seo";
 import Link from "@/components/link";
 import { getCatalog, type CategoryProduct } from "@/lib/pim";
 import { AdventVideoGallery } from "@/components/advent/advent-video-gallery";
@@ -74,8 +76,20 @@ export default async function AdventCalendarsPage() {
   const teeny = toCards(TEENY, bySku);
   const squeezy = toCards(SQUEEZY, bySku);
 
+  const jsonLd = collectionPageJsonLd({
+    name: "TeenyMates & SqueezyMates Advent Calendars",
+    path: "/advent-calendars",
+    description: metadata.description as string,
+    crumbs: [{ name: "Home", path: "/" }, { name: "Advent Calendars" }],
+    itemListName: "Advent calendars",
+    items: [...teenyDsg, ...teeny, ...squeezy]
+      .filter((c) => c.slug)
+      .map((c) => ({ name: c.name, path: `/products/${c.slug}` })),
+  });
+
   return (
     <div className="bg-ink text-white">
+      <JsonLd data={jsonLd} />
       {/* ===================== HERO ===================== */}
       <section className="relative flex items-center overflow-hidden" style={{ minHeight: "min(64vh, 560px)" }}>
         {/* full-bleed festive product background (product is baked into the art) */}

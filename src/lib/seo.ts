@@ -142,3 +142,105 @@ export function productJsonLd(p: ProductDetail, description: string) {
     ...(offer ? { offers: offer } : {}),
   };
 }
+
+// ---------------------------------------------------------------------------
+// Brand hubs and collection pages
+// ---------------------------------------------------------------------------
+
+// The four product lines as schema.org Brands. One definition, referenced by
+// the Organization on the home page (`brand`), by each hub's CollectionPage
+// (`about`) and by the league landings under it, so answer engines resolve
+// "TeenyMates" to one entity that belongs to Party Animal rather than to four
+// unrelated mentions.
+export const BRAND_HUBS = {
+  teenymates: {
+    name: "TeenyMates",
+    path: "/teenymates",
+    description:
+      "TeenyMates are one-inch collectible figures of real players and teams, sold in blind packs, team sets, gift sets, collector tins, advent calendars and gravity feed displays. Officially licensed NFL, MLB, NBA, NHL, WNBA, MLS and College.",
+  },
+  squeezymates: {
+    name: "SqueezyMates",
+    path: "/squeezymates",
+    description:
+      "SqueezyMates are soft, squeezable foam collectible figures of players, helmets and mascots, sold in blind bags, 3-packs, 6-figure sets and gravity feed displays. Officially licensed NFL, MLB, NBA, NHL, WNBA and College.",
+  },
+  "jumbo-squeezy": {
+    name: "Jumbo Squeezy",
+    path: "/jumbo-squeezy",
+    description:
+      "Jumbo Squeezy are oversized squeezable foam helmet figures, sold as team combo packs and capsule displays. Officially licensed across the NFL, MLB, NBA, NHL, WNBA and College.",
+  },
+  "team-gear": {
+    name: "Team Gear",
+    path: "/team-gear",
+    description:
+      "Team Gear is Party Animal's officially licensed fan gear: flags and banners, garden flags, drinkware, metal signs, lights and homegating decor for NFL, MLB, NBA, NHL, MLS and College fans.",
+  },
+} as const;
+
+export type BrandHubKey = keyof typeof BRAND_HUBS;
+
+const WEBSITE_REF = { "@type": "WebSite", "@id": `${SITE_URL}/#website`, name: SITE_NAME, url: SITE_URL };
+
+// A Brand node. `@id` is the hub URL plus #brand so every page that mentions
+// the brand points at the same node.
+export function brandJsonLd(key: BrandHubKey) {
+  const b = BRAND_HUBS[key];
+  return {
+    "@type": "Brand",
+    "@id": `${absoluteUrl(b.path)}#brand`,
+    name: b.name,
+    url: absoluteUrl(b.path),
+    description: b.description,
+    logo: `${SITE_URL}/brand/pa-logo.png`,
+  };
+}
+
+export type ListEntry = { name: string; path: string };
+
+// CollectionPage + BreadcrumbList (+ Brand and ItemList when given), as one
+// @graph. Used by the brand hubs, the league landings and the advent page.
+// `items` are the page's own child pages (league hubs, calendars), which is
+// what tells a crawler this page is the parent of those.
+export function collectionPageJsonLd(opts: {
+  name: string;
+  path: string;
+  description: string;
+  crumbs: Crumb[];
+  brand?: BrandHubKey;
+  items?: ListEntry[];
+  itemListName?: string;
+}) {
+  const url = absoluteUrl(opts.path);
+  const brand = opts.brand ? brandJsonLd(opts.brand) : null;
+  const graph: object[] = [
+    {
+      "@type": "CollectionPage",
+      "@id": `${url}#page`,
+      name: opts.name,
+      url,
+      description: opts.description,
+      isPartOf: WEBSITE_REF,
+      ...(brand ? { about: { "@id": brand["@id"] } } : {}),
+      ...(opts.items?.length ? { mainEntity: { "@id": `${url}#list` } } : {}),
+    },
+    ...(brand ? [brand] : []),
+    { ...breadcrumbJsonLd(opts.crumbs), "@context": undefined },
+  ];
+  if (opts.items?.length) {
+    graph.push({
+      "@type": "ItemList",
+      "@id": `${url}#list`,
+      name: opts.itemListName ?? opts.name,
+      numberOfItems: opts.items.length,
+      itemListElement: opts.items.map((it, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: it.name,
+        url: absoluteUrl(it.path),
+      })),
+    });
+  }
+  return { "@context": "https://schema.org", "@graph": graph.map((n) => JSON.parse(JSON.stringify(n))) };
+}

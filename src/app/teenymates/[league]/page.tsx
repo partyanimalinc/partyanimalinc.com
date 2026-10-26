@@ -35,6 +35,7 @@ export default async function TeenyMatesLeaguePage(props: { params: Promise<{ le
       brandSlug="teenymates"
       base="/teenymates/all"
       search={{}}
+      path={`/teenymates/${league.slug}`}
       league={{ id: league.id, name: league.name }}
     />
   );

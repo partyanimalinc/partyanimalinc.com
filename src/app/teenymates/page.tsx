@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { getLicenses } from "@/lib/pim";
+import { JsonLd } from "@/components/json-ld";
 import Image from "next/image";
 import Link from "@/components/link";
 import { WhatAreTeenymates } from "@/components/what-are-teenymates";
@@ -6,7 +8,7 @@ import { CollectByLeague } from "@/components/collect-by-league";
 import { FeaturedCollections } from "@/components/featured-collections";
 import { ChaseFigures } from "@/components/chase-figures";
 import { FanFavorites } from "@/components/fan-favorites";
-import { pageMetadata } from "@/lib/seo";
+import { collectionPageJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "TeenyMates",
@@ -17,11 +19,22 @@ export const metadata: Metadata = pageMetadata({
 
 // Landing page only. The filterable catalog lives at /teenymates/all; the
 // sections below link into it (by league, by collection, or all).
-export default function TeenyMatesPage() {
+export default async function TeenyMatesPage() {
+  const leagues = await getLicenses();
+  const jsonLd = collectionPageJsonLd({
+    name: "TeenyMates",
+    path: "/teenymates",
+    description: metadata.description as string,
+    crumbs: [{ name: "Home", path: "/" }, { name: "TeenyMates" }],
+    brand: "teenymates",
+    itemListName: "TeenyMates by league",
+    items: leagues.map((l) => ({ name: `TeenyMates ${l.name}`, path: `/teenymates/${l.slug}` })),
+  });
   return (
     <>
       <section className="relative bg-ink">
         {/* The hero art carries the title; the H1 is for crawlers and readers. */}
+        <JsonLd data={jsonLd} />
         <h1 className="sr-only">TeenyMates: Collectible Mini Sports Figures</h1>
         <Image
           src="/lineup/teenymates-hero.png"

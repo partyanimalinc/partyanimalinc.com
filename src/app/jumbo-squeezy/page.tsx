@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
 import { BrandLanding } from "@/components/brand-landing";
-import { pageMetadata } from "@/lib/seo";
+import { collectionPageJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Jumbo Squeezy",
@@ -10,8 +11,18 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function JumboSqueezyPage() {
+  const jsonLd = collectionPageJsonLd({
+    name: "Jumbo Squeezy",
+    path: "/jumbo-squeezy",
+    description: metadata.description as string,
+    crumbs: [{ name: "Home", path: "/" }, { name: "Jumbo Squeezy" }],
+    brand: "jumbo-squeezy",
+    items: [{ name: "All Jumbo Squeezy", path: "/jumbo-squeezy/all" }],
+  });
   return (
-    <BrandLanding
+    <>
+      <JsonLd data={jsonLd} />
+      <BrandLanding
       name="Jumbo Squeezy"
       heading="Jumbo Squeezy: Oversized Squeezable Helmet Figures"
       base="/jumbo-squeezy"
@@ -19,6 +30,7 @@ export default function JumboSqueezyPage() {
       heroWidth={1672}
       heroHeight={953}
       description="Jumbo Squeezy takes the squeezable fun and sizes it up. Big, bold, and built to show off your team pride."
-    />
+      />
+    </>
   );
 }

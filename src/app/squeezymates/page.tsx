@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { getLicenses } from "@/lib/pim";
+import { JsonLd } from "@/components/json-ld";
 import { BrandLanding } from "@/components/brand-landing";
 import { SqueezyByLeague } from "@/components/squeezy-by-league";
 import { SqueezyFeaturedCollections } from "@/components/squeezy-featured-collections";
 import { ChaseFigures } from "@/components/chase-figures";
 import { SqueezyFanFavorites } from "@/components/squeezy-fan-favorites";
-import { pageMetadata } from "@/lib/seo";
+import { collectionPageJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "SqueezyMates",
@@ -13,9 +15,20 @@ export const metadata: Metadata = pageMetadata({
   path: "/squeezymates",
 });
 
-export default function SqueezyMatesPage() {
+export default async function SqueezyMatesPage() {
+  const leagues = await getLicenses();
+  const jsonLd = collectionPageJsonLd({
+    name: "SqueezyMates",
+    path: "/squeezymates",
+    description: metadata.description as string,
+    crumbs: [{ name: "Home", path: "/" }, { name: "SqueezyMates" }],
+    brand: "squeezymates",
+    itemListName: "SqueezyMates by league",
+    items: leagues.map((l) => ({ name: `SqueezyMates ${l.name}`, path: `/squeezymates/${l.slug}` })),
+  });
   return (
     <>
+      <JsonLd data={jsonLd} />
       <BrandLanding
         name="SqueezyMates"
         heading="SqueezyMates: Squeezable Collectible Sports Figures"

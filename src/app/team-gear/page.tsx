@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
 import Image from "next/image";
 import Link from "@/components/link";
 import { getLicenses } from "@/lib/pim";
 import { TeamFinder } from "@/components/team-finder";
-import { pageMetadata } from "@/lib/seo";
+import { collectionPageJsonLd, pageMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -54,6 +55,20 @@ const FEATURED_LINES = [
 ];
 
 export default async function TeamGearPage() {
+  const jsonLd = collectionPageJsonLd({
+    name: "Team Gear",
+    path: "/team-gear",
+    description: metadata.description as string,
+    crumbs: [{ name: "Home", path: "/" }, { name: "Team Gear" }],
+    brand: "team-gear",
+    itemListName: "Team Gear collections",
+    items: [
+      { name: "All Team Gear", path: "/team-gear/all" },
+      { name: "Flags & Banners", path: "/products/flags-banners" },
+      { name: "Drinkware", path: "/products/drinkware" },
+      { name: "Homegating & Décor", path: "/products/homegating-decor" },
+    ],
+  });
   const leagues = await getLicenses();
 
   // Curated, ordered league subset for the finder + league tiles.
@@ -79,6 +94,7 @@ export default async function TeamGearPage() {
       {/* Hero — designed banner (title + products baked in); intro + CTAs below */}
       <section className="bg-ink">
         {/* The hero art carries the title; the H1 is for crawlers and readers. */}
+        <JsonLd data={jsonLd} />
         <h1 className="sr-only">Team Gear: Officially Licensed Flags, Drinkware and Homegating Décor</h1>
         <Image
           src="/lineup/team-gear-hero.png"

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { LINEUP, SOCIALS } from "@/lib/site";
 import { LicensesMarquee } from "@/components/licenses-marquee";
 import { JsonLd } from "@/components/json-ld";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL, brandJsonLd } from "@/lib/seo";
 
 // Title, description and the social card come from the root layout defaults.
 export const metadata: Metadata = { alternates: { canonical: "/" } };
@@ -25,6 +25,8 @@ const ORG_JSONLD = {
       description:
         "Party Animal creates fun, high-quality officially licensed sports products: TeenyMates, SqueezyMates, Jumbo Squeezy, Team Gear and more.",
       sameAs: SOCIALS.filter((s) => s.icon !== "amazon").map((s) => s.href),
+      // The four product lines as Brand nodes, the same @ids the hub pages use.
+      brand: (["teenymates", "squeezymates", "jumbo-squeezy", "team-gear"] as const).map(brandJsonLd),
     },
     {
       "@type": "WebSite",

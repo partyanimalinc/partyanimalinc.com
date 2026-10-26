@@ -5,7 +5,8 @@ import type { SubCategory } from "@/components/catalog/filter-groups";
 import { getCatalog } from "@/lib/pim";
 import { editionLabel, type CatalogSearch } from "@/lib/catalog-url";
 import { FEATURED_COLLECTIONS, TEAM_GEAR_SUBCATEGORIES } from "@/lib/featured-collections";
-import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
+import { BRAND_HUBS, collectionPageJsonLd, pageMetadata, type BrandHubKey } from "@/lib/seo";
 
 // Metadata for the clean, indexable /{brand}/all page. The filtered variants
 // (rendered by the /_f twin) wrap this with filteredVariantMetadata().
@@ -28,6 +29,7 @@ export async function BrandCatalog({
   base,
   search,
   league,
+  path,
 }: {
   name: string;
   brandSlug: string;
@@ -38,6 +40,9 @@ export async function BrandCatalog({
   // to it and the sidebar reflects it. Filter interactions still use `base`
   // (the query-mode /all route, which is noindexed).
   league?: { id: string; name: string };
+  // The page's own clean path, for its CollectionPage structured data. Defaults
+  // to `base`; the league landings pass /{brand}/{league}.
+  path?: string;
 }) {
   const current = league ? { ...search, league: league.id } : search;
   const page = Math.min(Math.max(Number(current.page) || 1, 1), 10);
@@ -79,8 +84,24 @@ export async function BrandCatalog({
         subName ??
         (teamName ? `${name} — ${teamName}` : leagueName ? `${name} — ${leagueName}` : `All ${name}`));
 
+  const hubPath = base.replace(/\/all$/, "");
+  const jsonLd = collectionPageJsonLd({
+    name: heading,
+    path: path ?? base,
+    description: league
+      ? `${name} ${league.name}: officially licensed ${league.name} collectible figures and fan gear from Party Animal.`
+      : `The full ${name} range from Party Animal, filterable by league, team and series.`,
+    crumbs: [
+      { name: "Home", path: "/" },
+      { name, path: hubPath },
+      ...(league ? [{ name: "All", path: base }, { name: league.name }] : [{ name: "All" }]),
+    ],
+    brand: brandSlug in BRAND_HUBS ? (brandSlug as BrandHubKey) : undefined,
+  });
+
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <JsonLd data={jsonLd} />
       <nav aria-label="Breadcrumb" className="mb-5 text-xs uppercase tracking-wide text-white/45">
         <Link href="/" className="transition-colors hover:text-white">
           Home

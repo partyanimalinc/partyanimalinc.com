@@ -35,6 +35,7 @@ export default async function SqueezyMatesLeaguePage(props: { params: Promise<{ 
       brandSlug="squeezymates"
       base="/squeezymates/all"
       search={{}}
+      path={`/squeezymates/${league.slug}`}
       league={{ id: league.id, name: league.name }}
     />
   );

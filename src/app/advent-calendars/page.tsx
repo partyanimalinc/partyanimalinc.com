@@ -45,6 +45,12 @@ const TEENY: [string, string][] = [
   ["TMANW26", "WNBA"],
   ["TMACO26", "College Football"],
 ];
+// General 2026 calendars that also get a "Shop direct" button to our own store.
+// The URL itself comes from the PIM (canonicalUrl = the partyanimaltoys.com
+// PDP). Not the Dick's editions or College (Dick's exclusives), and not
+// SqueezyMates (Fanatics exclusive).
+const SHOP_DIRECT = new Set(["TMANF26", "TMANL26", "TMANB26", "TMAML26", "TMANH26", "TMANW26"]);
+
 const SQUEEZY: [string, string][] = [
   ["SHANF26", "NFL Helmet"],
   ["SHAML26", "MLB Cap"],
@@ -59,7 +65,8 @@ function toCards(
     .map(([sku, league]): CalendarCard | null => {
       const p = bySku.get(sku);
       if (!p) return null;
-      return { sku, league, slug: p.slug, name: p.name, image: p.image, exclusive };
+      const direct = SHOP_DIRECT.has(sku) ? (p.canonicalUrl ?? null) : null;
+      return { sku, league, slug: p.slug, name: p.name, image: p.image, exclusive, direct };
     })
     .filter((c): c is CalendarCard => c !== null);
 }

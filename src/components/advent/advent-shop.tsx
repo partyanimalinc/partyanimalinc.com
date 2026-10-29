@@ -14,10 +14,25 @@ export type CalendarCard = {
   league: string;
   image: string | null;
   exclusive?: string;
+  /** Our own store's PDP (partyanimaltoys.com), for the general calendars only. */
+  direct?: string | null;
 };
 
 const AMAZON_ADVENT =
   "https://www.amazon.com/stores/page/6A6BA724-BD28-4888-868B-B57287C3DFCB/search?terms=Advent%20Calendar";
+
+// UTMs for the hand-off to our own store, so Umami there can attribute the visit.
+function directAttributed(url: string): string {
+  try {
+    const u = new URL(url);
+    u.searchParams.set("utm_source", "partyanimalinc.com");
+    u.searchParams.set("utm_medium", "referral");
+    u.searchParams.set("utm_campaign", "advent26_corp");
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
 
 function Star() {
   return <span className="text-brand-gold">★</span>;
@@ -32,43 +47,59 @@ function Arrow() {
 }
 
 function Card({ c }: { c: CalendarCard }) {
-  // Always our own product page. The retailer hand-off belongs on the PDP,
-  // where every product exposes the same "Shop on Dick's Sporting Goods"
-  // button from products.dsg_url -- one consistent path for shoppers, rather
-  // than some cards jumping straight out to a retailer and others not.
+  // The card itself always opens our own product page. Retailer hand-offs
+  // (Amazon, Dick's) belong on the PDP, from the PIM's retailer list. The one
+  // exception is our own store: the general calendars get a "Shop direct" pill
+  // under the card, a sibling because a link cannot sit inside the card's link.
   const href = c.slug ? `/products/${c.slug}` : "/products";
   return (
-    <Link
-      href={href}
-      className="group flex flex-col items-center text-center"
-      aria-label={`Shop the ${c.league} advent calendar`}
-    >
-      <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-brand-red/50 group-hover:bg-white/[0.06]">
-        {c.exclusive && (
-          <span className="label-athletic absolute left-2 top-2 z-10 rounded-full bg-brand-gold px-2.5 py-0.5 text-[10px] font-bold uppercase text-ink shadow">
-            {c.exclusive}
-          </span>
-        )}
-        {c.image ? (
-          <Image
-            src={c.image}
-            alt={c.name}
-            width={500}
-            height={500}
-            className="max-h-full w-full object-contain drop-shadow-[0_10px_24px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-[1.04]"
-          />
-        ) : (
-          <span className="font-heading text-lg uppercase text-white/40">{c.league}</span>
-        )}
-      </div>
-      <span className="mt-4 font-heading text-lg uppercase leading-tight text-white">{c.league}</span>
-      <span className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-white/25 px-5 py-2 text-xs uppercase tracking-wide text-white transition-colors group-hover:border-brand-red group-hover:bg-brand-red">
-        Shop Now
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
-          <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </span>
-    </Link>
+    <div className="flex flex-col items-center">
+      <Link
+        href={href}
+        className="group flex w-full flex-col items-center text-center"
+        aria-label={`Shop the ${c.league} advent calendar`}
+      >
+        <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-brand-red/50 group-hover:bg-white/[0.06]">
+          {c.exclusive && (
+            <span className="label-athletic absolute left-2 top-2 z-10 rounded-full bg-brand-gold px-2.5 py-0.5 text-[10px] font-bold uppercase text-ink shadow">
+              {c.exclusive}
+            </span>
+          )}
+          {c.image ? (
+            <Image
+              src={c.image}
+              alt={c.name}
+              width={500}
+              height={500}
+              className="max-h-full w-full object-contain drop-shadow-[0_10px_24px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-[1.04]"
+            />
+          ) : (
+            <span className="font-heading text-lg uppercase text-white/40">{c.league}</span>
+          )}
+        </div>
+        <span className="mt-4 font-heading text-lg uppercase leading-tight text-white">{c.league}</span>
+        <span className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-white/25 px-5 py-2 text-xs uppercase tracking-wide text-white transition-colors group-hover:border-brand-red group-hover:bg-brand-red">
+          Shop Now
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+      </Link>
+      {c.direct && (
+        <a
+          href={directAttributed(c.direct)}
+          target="_blank"
+          rel={relFor(c.direct)}
+          className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-white/25 px-5 py-2 text-xs uppercase tracking-wide text-white transition-colors hover:border-brand-red hover:bg-brand-red"
+          aria-label={`Shop the ${c.league} advent calendar direct from Party Animal`}
+        >
+          Shop direct
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </a>
+      )}
+    </div>
   );
 }
 
